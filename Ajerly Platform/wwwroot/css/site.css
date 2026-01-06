@@ -20,3 +20,231 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* الناف بار */
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  z-index: 1000;
+  direction: rtl; /* لأن الواجهة عربية */
+}
+
+/* الجهة اليمنى (زر اجري!) */
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+/* الجهة اليسرى (تسجيل + دخول) */
+.nav-left {
+  display: flex;
+  gap: 12px;
+}
+
+/* زر تسجيل */
+.btn-register {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* زر دخول */
+.btn-login {
+  background: white;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* زر اجري! */
+.btn-run {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* أيقونة */
+.icon {
+  font-size: 18px;
+}
+
+
+.hero-section {
+  background: linear-gradient(to right, #007bff, #ff7e5f);
+  color: white;
+  padding: 100px 20px 60px;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  width: 60%;
+  max-width: 500px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-request {
+  background-color: #ff7e5f;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-add {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.create-section {
+  padding: 60px 20px;
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+.create-section h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.create-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+textarea.form-control {
+  height: 100px;
+  resize: vertical;
+}
+
+.btn-publish {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto 0;
+}
+
+/**Request Order */
+.btn-request-offer {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 40px auto 0;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.btn-request-offer:hover {
+  background-color: #0056b3;
+}
+
+/**---------------------------------Request Order----------------------*/
+
+
+/*          Filter buttons     */
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 40px 0;
+  direction: rtl;
+}
+
+.category-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+
+/*          ------Filter buttons ---------     */
+
+
+

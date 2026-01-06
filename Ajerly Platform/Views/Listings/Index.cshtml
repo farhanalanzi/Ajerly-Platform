@@ -1,0 +1,12 @@
+@model IEnumerable<Ajerly_Platform.Models.Listing>
+
+<h2>العروض - @ViewBag.SelectedCategory</h2>
+
+<h1>قائمة العروض</h1>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.Title - @item.Price @item.PriceUnit</li>
+    }
+</ul>

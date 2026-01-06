@@ -3,6 +3,54 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>أرني منتجاتك</h1>
+            <p>منصة أجرلي - أسهل طريقة لتأجير واستئجار المنتجات بين الأفراد</p>
+
+            <input type="text" class="search-bar" placeholder="ابحث عن منتج...">
+
+            <div class="hero-buttons">
+                <button class="btn-request" onclick="location.href='@Url.Action("Create", "Requests")'">طلب عرض</button>
+
+                <button class="btn-add" onclick="location.href='@Url.Action("Create", "Listings")'">إضافة عرض</button>
+            </div>
+        </div>
+    </section>
+
+
+
+  
+
+    <!-- ✅ تصنيفات -->
+    <section class="category-filter">
+        <button class="category-btn active" data-category="الكل">الكل</button>
+        <button class="category-btn" data-category="ألعاب وترفيه">ألعاب وترفيه</button>
+        <button class="category-btn" data-category="مستلزمات المنزل">مستلزمات المنزل</button>
+        <button class="category-btn" data-category="مستلزمات السفر">مستلزمات السفر</button>
+        <button class="category-btn" data-category="السيارة">السيارة</button>
+        <button class="category-btn" data-category="الأجهزة">الأجهزة</button>
+        <button class="category-btn" data-category="الأثاث">الأثاث</button>
+        <button class="category-btn" data-category="الملابس والأزياء">الملابس والأزياء</button>
+    </section>
+
+    <!-- عرض المنتجات أو العروض -->
+    <div class="listings-grid">
+        <!-- هنا تعرض العروض حسب التصنيف -->
+    </div>
+
+
+
+
 </div>
+
+
+<script>
+    const buttons = document.querySelectorAll('.category-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.dataset.category;
+            window.location.href = `/Listings/Category?name=${encodeURIComponent(category)}`;
+        });
+    });
+</script>
