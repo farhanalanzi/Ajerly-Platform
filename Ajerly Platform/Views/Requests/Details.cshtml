@@ -1,14 +1,30 @@
 @model Ajerly_Platform.Models.Request
 
-<h2>تفاصيل الطلب</h2>
-<div class="request-details">
-    <h3>@Model.Title</h3>
-    <p><strong>التصنيف:</strong> @Model.Category</p>
-    <p><strong>الوصف:</strong> @Model.Description</p>
-    <p><strong>المدينة:</strong> @Model.City</p>
-    <p><strong>السعر المتوقع:</strong> @Model.Price ريال / @Model.PriceUnit</p>
-    <p><strong>الجوال:</strong> @Model.Phone</p>
-    <p><strong>تاريخ النشر:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</p>
+<div class="details-container">
+    <button class="btn-back" onclick="history.back()">&larr; العودة</button>
 
-    <button onclick="history.back()">عودة</button>
+    <div class="details-grid">
+        <div class="details-image">
+            <img src="/images/default.jpg" alt="@Model.Title" />
+        </div>
+
+        <div class="details-info">
+            <span class="listing-tag request">طلب</span>
+            <h1>@Model.Title</h1>
+
+            <p class="meta"><strong>التصنيف:</strong> <span>@Model.Category</span></p>
+            <p class="desc">@Model.Description</p>
+
+            <p class="meta"><strong>المدينة:</strong> <span>@Model.City</span></p>
+            <p class="meta"><strong>السعر المتوقع:</strong> <span class="price">@Model.Price ريال/@Model.PriceUnit</span></p>
+            <p class="meta"><strong>الجوال:</strong> <a class="phone-link" href="tel:@Model.Phone">@Model.Phone</a></p>
+
+            <p class="created"><small>نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</small></p>
+
+            <div class="details-actions">
+                <a class="btn-contact" href="tel:@Model.Phone">اتصل</a>
+                <a class="btn-message" href="mailto:?subject=استفسار عن: @Model.Title">راسل</a>
+            </div>
+        </div>
+    </div>
 </div>

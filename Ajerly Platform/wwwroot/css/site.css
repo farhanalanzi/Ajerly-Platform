@@ -248,47 +248,247 @@ textarea.form-control {
 
 .listings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* make cards larger by increasing minimum column width */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 30px;
   padding: 40px 20px;
   direction: rtl;
+  justify-content: start;
+  justify-items: start;
 }
 
+/* Make the whole card clickable and remove default anchor styles */
+.listing-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Square, elegant cards: use aspect-ratio so height == width, with image on top and info below */
 .listing-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  direction: rtl;
+  text-align: right;
+  /* make the card square */
+  aspect-ratio: 1 / 1;
+  min-height: 320px; /* fallback for older browsers */
 }
 
+.listing-link:hover .listing-card,
 .listing-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Image: take the main portion of the card, cover fully */
+.listing-image {
+  flex: 1 1 60%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .listing-image img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
+/* Card content sits below the image; keep it compact */
 .listing-info {
-  padding: 20px;
+  padding: 14px 18px;
   text-align: right;
+  display: block;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+}
+
+.listing-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.listing-info p {
+  margin: 0 0 6px 0;
+  color: #444;
+  font-size: 14px;
 }
 
 .listing-tag {
   background-color: #007bff;
   color: white;
-  padding: 4px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .listing-tag.request {
   background-color: #ff7e5f;
 }
 
+/* make price stand out */
+.listing-info .price {
+  font-weight: 700;
+  color: #222;
+}
 
+/* Responsive: use smaller squares on narrow screens */
+@media (max-width: 900px) {
+  .listings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  .listing-card {
+    aspect-ratio: 1 / 1;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .listings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+    padding: 24px 12px;
+  }
+  .listing-card {
+    aspect-ratio: 1 / 1;
+    min-height: 200px;
+  }
+  .listing-info h3 { font-size: 16px; }
+  .listing-info p { font-size: 13px; }
+}
+
+/* Details page styles (updated: full-width, larger text, RTL right-aligned) */
+.details-container {
+  max-width: none; /* allow full page width */
+  width: 100%;
+  margin: 20px 0 60px;
+  padding: 0 24px;
+  direction: rtl;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+/* single-column layout so text starts at the right and spans full width */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* single column always */
+  gap: 20px;
+  align-items: start;
+}
+
+.details-image {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 360px;
+  max-height: 70vh;
+}
+
+.details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbs {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end; /* thumbnails on the right for RTL */
+}
+
+.thumbs .thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumbs .thumb:hover {
+  border-color: #007bff;
+}
+
+.details-info {
+  text-align: right; /* force right alignment for Arabic */
+  padding: 20px 12px;
+}
+
+.details-info h1 {
+  margin-top: 0;
+  font-size: 36px; /* larger title */
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.details-info .meta {
+  margin: 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.details-info .desc {
+  margin: 14px 0 18px 0;
+  color: #444;
+  line-height: 1.75;
+  font-size: 18px; /* larger body text */
+}
+
+.details-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end; /* align buttons to the right */
+}
+
+.btn-contact, .btn-message {
+  display: inline-block;
+  padding: 12px 18px; /* larger buttons */
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.btn-contact {
+  background: #ff7e5f; /* orange */
+}
+
+.btn-message {
+  background: #007bff; /* blue */
+}
+
+.phone-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.created { color: #666; margin-top: 12px; font-size: 14px; }
+
+@media (max-width: 900px) {
+  .details-grid { grid-template-columns: 1fr; }
+  .details-actions { justify-content: center; }
+  .thumbs { justify-content: center; }
+  .details-info h1 { font-size: 28px; }
+  .details-info .desc { font-size: 16px; }
+}
