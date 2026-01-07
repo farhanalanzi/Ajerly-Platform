@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Ajerly_Platform.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -11,22 +16,48 @@
 <body>
 <nav class="custom-navbar">
     <div class="nav-right">
-        <button class="btn-run">
+        <button class="btn-run" onclick="location.href='@Url.Action("Index","Home")'">
             <span class="icon">✏️</span>
           اجرلي
         </button>
     </div>
 
     <div class="nav-left">
-        <button class="btn-login">دخول</button>
-        <button class="btn-register">تسجيل</button>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <a class="btn-login" href="/Identity/Account/Login">دخول</a>
+            <a class="btn-register" href="/Identity/Account/Register">تسجيل</a>
+        }
+        else
+        {
+            var currentUser = UserManager.GetUserAsync(User).Result;
+            var displayName = currentUser?.FullName ?? currentUser?.UserName ?? User.Identity?.Name;
+            <div class="dropdown">
+                <button class="btn-register dropdown-toggle" type="button" id="accountMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    حسابي (@displayName)
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountMenu">
+                    <li><a class="dropdown-item" href="@Url.Action("MyAds","Listings")">إعلاناتي</a></li>
+                    <li><a class="dropdown-item" href="/Identity/Account/Manage">معلوماتي</a></li>
+                    <li><a class="dropdown-item" href="/Identity/Account/Manage">تغيير كلمة المرور</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="dropdown-item">تسجيل خروج</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        }
     </div>
 </nav>
 
 
 
-
 @RenderBody()
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

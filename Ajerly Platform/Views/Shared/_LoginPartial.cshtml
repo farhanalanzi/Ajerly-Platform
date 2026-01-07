@@ -1,0 +1,23 @@
+@using Microsoft.AspNetCore.Identity
+@using Ajerly_Platform.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = UserManager.GetUserAsync(User).Result;
+    <div class="login-partial">
+        <span class="me-2">@user?.UserName</span>
+        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-link p-0">تسجيل خروج</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="login-partial">
+        <a class="btn btn-link" href="/Identity/Account/Login">دخول</a>
+        <a class="btn btn-link" href="/Identity/Account/Register">تسجيل</a>
+    </div>
+}

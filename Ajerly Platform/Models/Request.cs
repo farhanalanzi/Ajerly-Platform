@@ -24,6 +24,10 @@ namespace Ajerly_Platform.Models
 
         [Required]
         public string Phone { get; set; }
-        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
+
+        // owner
+        public string? UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }

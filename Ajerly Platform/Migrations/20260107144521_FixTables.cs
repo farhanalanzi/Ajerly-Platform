@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -14,7 +14,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Type",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -22,7 +22,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -30,7 +30,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "PriceUnit",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -38,7 +38,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
                 table: "Requests",
-                type: "TEXT",
+                type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(decimal),
                 oldType: "decimal(18,2)");
@@ -46,7 +46,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Phone",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -54,7 +54,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -62,7 +62,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
                 table: "Requests",
-                type: "TEXT",
+                type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
@@ -70,7 +70,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "City",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -78,7 +78,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Category",
                 table: "Requests",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -86,17 +86,17 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
                 table: "Requests",
-                type: "INTEGER",
+                type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Type",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -104,7 +104,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -112,7 +112,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "PriceUnit",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -120,7 +120,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
                 table: "Listings",
-                type: "TEXT",
+                type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(decimal),
                 oldType: "decimal(18,2)");
@@ -128,7 +128,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Phone",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -136,7 +136,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -144,7 +144,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
                 table: "Listings",
-                type: "TEXT",
+                type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
@@ -152,7 +152,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "City",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -160,7 +160,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "Category",
                 table: "Listings",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -168,17 +168,17 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
                 table: "Listings",
-                type: "INTEGER",
+                type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<int>(
                 name: "ListingId",
                 table: "ListingImages",
-                type: "INTEGER",
+                type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int");
@@ -186,7 +186,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "ImageUrl",
                 table: "ListingImages",
-                type: "TEXT",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -194,7 +194,7 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
                 table: "ListingImages",
-                type: "TEXT",
+                type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
@@ -202,12 +202,12 @@ namespace Ajerly_Platform.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
                 table: "ListingImages",
-                type: "INTEGER",
+                type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
         }
 
         /// <inheritdoc />
@@ -219,7 +219,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -227,7 +227,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "PriceUnit",
@@ -235,7 +235,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
@@ -243,7 +243,7 @@ namespace Ajerly_Platform.Migrations
                 type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "TEXT");
+                oldType: "decimal(18,2)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Phone",
@@ -251,7 +251,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
@@ -259,7 +259,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -267,7 +267,7 @@ namespace Ajerly_Platform.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "TEXT");
+                oldType: "datetime2");
 
             migrationBuilder.AlterColumn<string>(
                 name: "City",
@@ -275,7 +275,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Category",
@@ -283,7 +283,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
@@ -291,9 +291,9 @@ namespace Ajerly_Platform.Migrations
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                oldType: "int")
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Type",
@@ -301,7 +301,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -309,7 +309,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "PriceUnit",
@@ -317,7 +317,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "Price",
@@ -325,7 +325,7 @@ namespace Ajerly_Platform.Migrations
                 type: "decimal(18,2)",
                 nullable: false,
                 oldClrType: typeof(decimal),
-                oldType: "TEXT");
+                oldType: "decimal(18,2)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Phone",
@@ -333,7 +333,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
@@ -341,7 +341,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -349,7 +349,7 @@ namespace Ajerly_Platform.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "TEXT");
+                oldType: "datetime2");
 
             migrationBuilder.AlterColumn<string>(
                 name: "City",
@@ -357,7 +357,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Category",
@@ -365,7 +365,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
@@ -373,9 +373,9 @@ namespace Ajerly_Platform.Migrations
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                oldType: "int")
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AlterColumn<int>(
                 name: "ListingId",
@@ -383,7 +383,7 @@ namespace Ajerly_Platform.Migrations
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER");
+                oldType: "int");
 
             migrationBuilder.AlterColumn<string>(
                 name: "ImageUrl",
@@ -391,7 +391,7 @@ namespace Ajerly_Platform.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -399,7 +399,7 @@ namespace Ajerly_Platform.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "TEXT");
+                oldType: "datetime2");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Id",
@@ -407,9 +407,9 @@ namespace Ajerly_Platform.Migrations
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(int),
-                oldType: "INTEGER")
-                .Annotation("Sqlite:Autoincrement", true)
-                .OldAnnotation("Sqlite:Autoincrement", true);
+                oldType: "int")
+                .Annotation("SqlServer:Identity", "1, 1")
+                .OldAnnotation("SqlServer:Identity", "1, 1");
         }
     }
 }

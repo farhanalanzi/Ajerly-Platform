@@ -1,0 +1,28 @@
+@model IEnumerable<Ajerly_Platform.Models.Listing>
+
+<h2>إعلاناتي</h2>
+
+<div class="listings-grid">
+    @foreach (var item in Model)
+    {
+        <div style="position:relative;">
+        <a class="listing-link" href="@Url.Action("Details","Listings", new { id = item.Id })">
+            <div class="listing-card" data-category="@item.Category">
+                <div class="listing-image">
+                    <img src="/images/default.jpg" alt="@item.Title" />
+                </div>
+                <div class="listing-info">
+                    <span class="listing-tag">عرض</span>
+                    <h3>@item.Title</h3>
+                    <p class="desc">@item.Description</p>
+                    <p class="meta"><strong>السعر:</strong> @item.Price ريال</p>
+                </div>
+            </div>
+        </a>
+        <div style="position:absolute; top:8px; left:8px; display:flex; gap:8px;">
+            <a class="btn btn-sm btn-warning" href="@Url.Action("Edit","Listings", new { id = item.Id })">تعديل</a>
+            <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","Listings", new { id = item.Id })">حذف</a>
+        </div>
+        </div>
+    }
+</div>

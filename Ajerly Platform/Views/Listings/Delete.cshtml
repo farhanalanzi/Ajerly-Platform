@@ -1,0 +1,16 @@
+@model Ajerly_Platform.Models.Listing
+
+<h2>حذف الإعلان</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    <p>@Model.Description</p>
+    <p><strong>السعر:</strong> @Model.Price</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">تأكيد الحذف</button>
+    <a class="btn btn-secondary" href="@Url.Action("MyAds","Listings")">إلغاء</a>
+</form>

@@ -135,3 +135,6 @@
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.pdb
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.genruntimeconfig.cache
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/ref/Ajerly Platform.dll
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.MvcApplicationPartsAssemblyInfo.cs

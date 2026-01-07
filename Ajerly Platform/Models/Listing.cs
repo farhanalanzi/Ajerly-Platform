@@ -26,6 +26,9 @@ public class Listing
 
       
         public virtual ICollection<ListingImage> Images { get; set; }
+
+        // new: owner
+        public string? UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
         
     }
-

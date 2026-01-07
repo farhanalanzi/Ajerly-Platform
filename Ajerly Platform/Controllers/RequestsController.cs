@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Ajerly_Platform.Models;
 using Ajerly_Platform.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Ajerly_Platform.Controllers
 {
@@ -14,18 +16,21 @@ namespace Ajerly_Platform.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(Request model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             model.CreatedAt = DateTime.Now;
+            model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             _context.Requests.Add(model);
             await _context.SaveChangesAsync();
