@@ -31,10 +31,10 @@ ViewData["Title"] = "Home Page";
     </section>
 
     <!-- ✅ عرض العروض والطلبات -->
-    <section class="listings-grid">
+    <section class="listings-grid" id="listingsContainer">
         @foreach (var item in Model.Listings)
         {
-        <div class="listing-card">
+        <div class="listing-card" data-category="@item.Category">
             <div class="listing-image">
                 <img src="~/images/default.jpg" alt="صورة المنتج" />
             </div>
@@ -51,7 +51,7 @@ ViewData["Title"] = "Home Page";
 
         @foreach (var item in Model.Requests)
         {
-        <div class="listing-card">
+        <div class="listing-card" data-category="@item.Category">
             <div class="listing-image">
                 <img src="~/images/default.jpg" alt="صورة المنتج" />
             </div>
@@ -65,15 +65,68 @@ ViewData["Title"] = "Home Page";
             </div>
         </div>
         }
+
+        <div id="noResults" style="display:none; padding:20px; text-align:center; font-weight:bold;">لا توجد نتائج لهذا التصنيف</div>
     </section>
 </div>
 
 <script>
-    const buttons = document.querySelectorAll('.category-btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const category = btn.dataset.category;
-            window.location.href = `/Listings/Category?name=${encodeURIComponent(category)}`;
+    // Client-side filtering: show/hide cards in-place without navigation
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.category-btn');
+        const container = document.getElementById('listingsContainer');
+        const noResultsEl = document.getElementById('noResults');
+        if (!container) return;
+
+        function normalize(s) {
+            return (s || '').toLowerCase().trim();
+        }
+
+        function applyFilter(category) {
+            const q = normalize(category);
+            const showAll = q === '' || q === 'الكل';
+
+            const cards = Array.from(container.querySelectorAll('.listing-card'));
+            let visibleCount = 0;
+            console.log('[Filter] applying, query:', q, 'cards:', cards.length);
+
+            cards.forEach(card => {
+                const catRaw = card.dataset.category || '';
+                const cat = normalize(catRaw);
+                const matched = showAll || (cat && (cat === q || cat.includes(q)));
+                card.style.display = matched ? '' : 'none';
+                if (matched) visibleCount++;
+            });
+
+            if (noResultsEl) {
+                noResultsEl.style.display = visibleCount === 0 ? '' : 'none';
+            }
+            console.log('[Filter] visible:', visibleCount);
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault(); // prevent any default navigation
+                // update active class
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.dataset.category || '';
+                applyFilter(category);
+            });
         });
+
+        // If a server-selected category exists in Model, apply it on load
+        const serverCategory = '@(Model.Category ?? "")';
+        if (serverCategory) {
+            const matchBtn = Array.from(buttons).find(b => normalize(b.dataset.category) === normalize(serverCategory));
+            if (matchBtn) {
+                matchBtn.classList.add('active');
+                applyFilter(serverCategory);
+            }
+        }
+
+        // initial: show all (hide noResults if any)
+        applyFilter('الكل');
     });
 </script>
