@@ -1,31 +1,35 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Ajerly_Platform.Models;
+using Ajerly_Platform.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace Ajerly_Platform.Controllers;
-
-public class HomeController : Controller
+namespace Ajerly_Platform.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            var vm = new HomeIndexViewModel
+            {
+                Category = "الكل",
+                Listings = _context.Listings
+                    .Include(l => l.Images)
+                    .OrderByDescending(l => l.CreatedAt)
+                    .ToList(),
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                Requests = _context.Requests
+                    .OrderByDescending(r => r.CreatedAt)
+                    .ToList()
+            };
+
+            return View(vm);
+        }
     }
 }
