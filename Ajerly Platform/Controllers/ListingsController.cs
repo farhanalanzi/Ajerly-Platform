@@ -51,5 +51,18 @@ namespace Ajerly_Platform.Controllers
             ViewBag.SelectedCategory = name;
             return View("Index", listings);
         }
+
+        // New: Details view for a listing
+        public async Task<IActionResult> Details(int id)
+        {
+            var listing = await _context.Listings
+                .Include(l => l.Images)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (listing == null)
+                return NotFound();
+
+            return View(listing);
+        }
     }
 }

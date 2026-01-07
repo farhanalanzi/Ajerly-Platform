@@ -1,0 +1,28 @@
+@model Ajerly_Platform.Models.Listing
+
+<h2>تفاصيل العرض</h2>
+<div class="listing-details">
+    <div class="images">
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            foreach (var img in Model.Images)
+            {
+                <img src="@img.ImageUrl" alt="صورة" style="max-width:200px; margin:8px;" />
+            }
+        }
+        else
+        {
+            <img src="/images/default.jpg" alt="صورة" style="max-width:200px; margin:8px;" />
+        }
+    </div>
+
+    <h3>@Model.Title</h3>
+    <p><strong>التصنيف:</strong> @Model.Category</p>
+    <p><strong>الوصف:</strong> @Model.Description</p>
+    <p><strong>المدينة:</strong> @Model.City</p>
+    <p><strong>السعر:</strong> @Model.Price ريال / @Model.PriceUnit</p>
+    <p><strong>الجوال:</strong> @Model.Phone</p>
+    <p><strong>تاريخ النشر:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</p>
+
+    <button onclick="history.back()">عودة</button>
+</div>

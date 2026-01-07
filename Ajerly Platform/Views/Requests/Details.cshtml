@@ -1,0 +1,14 @@
+@model Ajerly_Platform.Models.Request
+
+<h2>تفاصيل الطلب</h2>
+<div class="request-details">
+    <h3>@Model.Title</h3>
+    <p><strong>التصنيف:</strong> @Model.Category</p>
+    <p><strong>الوصف:</strong> @Model.Description</p>
+    <p><strong>المدينة:</strong> @Model.City</p>
+    <p><strong>السعر المتوقع:</strong> @Model.Price ريال / @Model.PriceUnit</p>
+    <p><strong>الجوال:</strong> @Model.Phone</p>
+    <p><strong>تاريخ النشر:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</p>
+
+    <button onclick="history.back()">عودة</button>
+</div>

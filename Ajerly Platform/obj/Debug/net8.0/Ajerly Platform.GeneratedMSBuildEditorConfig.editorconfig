@@ -30,12 +30,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGlzdGluZ3MvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/Views/Listings/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGlzdGluZ3MvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/Views/Listings/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTGlzdGluZ3MvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/Views/Requests/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdHMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/Views/Requests/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVxdWVzdHMvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/Views/Shared/Error.cshtml]

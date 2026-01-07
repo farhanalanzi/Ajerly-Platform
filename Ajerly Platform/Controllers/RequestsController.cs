@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Ajerly_Platform.Models;
 using Ajerly_Platform.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ajerly_Platform.Controllers
 {
@@ -30,6 +31,16 @@ namespace Ajerly_Platform.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        // New: Details view for a request
+        public async Task<IActionResult> Details(int id)
+        {
+            var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == id);
+            if (request == null)
+                return NotFound();
+
+            return View(request);
         }
     }
 }
