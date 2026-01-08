@@ -25,7 +25,7 @@ public class Listing
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
       
-        public virtual ICollection<ListingImage> Images { get; set; }
+        public virtual ICollection<ListingImage> Images { get; set; } = new List<ListingImage>();
 
         // new: owner
         public string? UserId { get; set; }

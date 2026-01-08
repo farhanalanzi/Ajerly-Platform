@@ -5,7 +5,7 @@
 
     <div class="details-grid">
         <div class="details-image">
-            <img src="/images/default.jpg" alt="@Model.Title" />
+            <img src="@(string.IsNullOrEmpty(Model.ImagePath) ? "/images/default.jpg" : Model.ImagePath)" alt="@Model.Title" />
         </div>
 
         <div class="details-info">

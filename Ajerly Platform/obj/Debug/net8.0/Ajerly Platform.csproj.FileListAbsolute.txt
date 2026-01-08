@@ -1,3 +1,13 @@
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.csproj.AssemblyReference.cache
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.GeneratedMSBuildEditorConfig.editorconfig
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.AssemblyInfoInputs.cache
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.AssemblyInfo.cs
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.csproj.CoreCompileInputs.cache
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.MvcApplicationPartsAssemblyInfo.cs
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.MvcApplicationPartsAssemblyInfo.cache
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.RazorAssemblyInfo.cache
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.RazorAssemblyInfo.cs
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.sourcelink.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/appsettings.Development.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/appsettings.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Ajerly Platform.staticwebassets.runtime.json
@@ -9,6 +19,8 @@
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Azure.Core.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Azure.Identity.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Humanizer.dll
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
@@ -110,15 +122,6 @@
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.csproj.AssemblyReference.cache
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.GeneratedMSBuildEditorConfig.editorconfig
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.AssemblyInfoInputs.cache
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.AssemblyInfo.cs
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.csproj.CoreCompileInputs.cache
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.MvcApplicationPartsAssemblyInfo.cache
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.RazorAssemblyInfo.cache
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.RazorAssemblyInfo.cs
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.sourcelink.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/staticwebassets.build.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/staticwebassets.development.json
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/staticwebassets/msbuild.Ajerly Platform.Microsoft.AspNetCore.StaticWebAssets.props
@@ -135,6 +138,3 @@
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.pdb
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.genruntimeconfig.cache
 /Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/ref/Ajerly Platform.dll
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.UI.dll
-/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/obj/Debug/net8.0/Ajerly Platform.MvcApplicationPartsAssemblyInfo.cs

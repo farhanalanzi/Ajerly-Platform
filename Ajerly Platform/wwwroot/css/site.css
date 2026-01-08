@@ -297,7 +297,7 @@ textarea.form-control {
 .listing-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Adjusted to ensure the entire image fits within the container */
   display: block;
 }
 

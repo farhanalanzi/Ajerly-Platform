@@ -4,16 +4,19 @@ using Ajerly_Platform.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Ajerly_Platform.Controllers
 {
     public class ListingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public ListingsController(ApplicationDbContext context)
+        public ListingsController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
        
@@ -45,6 +48,43 @@ namespace Ajerly_Platform.Controllers
 
             _context.Listings.Add(listing);
             await _context.SaveChangesAsync();
+
+            // Handle image uploads
+            if (images != null && images.Any())
+            {
+                foreach (var image in images)
+                {
+                    if (image.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                        
+                        // Ensure the directory exists - use web root path
+                        var uploadsFolder = Path.Combine(_env.WebRootPath ?? "wwwroot", "images", "uploads");
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
+                        // Update filePath to use the ensured directory
+                        var filePath = Path.Combine(uploadsFolder, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(stream);
+                        }
+
+                        var listingImage = new ListingImage
+                        {
+                            ImageUrl = $"/images/uploads/{fileName}",
+                            Listing = listing
+                        };
+
+                        _context.ListingImages.Add(listingImage);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Index");
         }

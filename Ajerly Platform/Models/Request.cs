@@ -7,27 +7,38 @@ namespace Ajerly_Platform.Models
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        [MaxLength(255)]
+        public string? Title { get; set; }
 
-        public string Category { get; set; }
+        [MaxLength(255)]
+        public string? Category { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        [MaxLength(1000)]
+        public string? Description { get; set; }
 
         [Required]
         public decimal Price { get; set; }
 
-        public string PriceUnit { get; set; }
+        [MaxLength(50)]
+        public string? PriceUnit { get; set; }
 
         [Required]
-        public string City { get; set; }
+        [MaxLength(255)]
+        public string? City { get; set; }
 
         [Required]
-        public string Phone { get; set; }
+        [MaxLength(20)]
+        public string? Phone { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         // owner
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
+
+        // Path to the image
+        [MaxLength(500)]
+        public string? ImagePath { get; set; }
     }
 }
