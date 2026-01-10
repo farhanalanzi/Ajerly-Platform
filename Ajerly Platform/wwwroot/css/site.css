@@ -408,16 +408,37 @@ textarea.form-control {
 .details-image {
   width: 100%;
   border-radius: 12px;
-  overflow: hidden;
-  min-height: 360px;
+  /* make container a centered flex box so the image sits centered both axes */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* allow the container to size based on content; keep a sensible maximum height */
   max-height: 70vh;
+  overflow: visible; /* allow image to be fully visible within the viewport constraints */
 }
 
 .details-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  /* do NOT force height:100% here; allow the image to keep its natural aspect ratio */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 70vh; /* constrain to viewport height so it never overflows the screen */
+  object-fit: contain; /* fallback, keeps aspect */
+  object-position: center center;
   display: block;
+}
+
+/* Force details page main image to show fully (override conflicts) */
+.details-container .details-image img#mainImg,
+.details-container .details-image img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 .thumbs {

@@ -1,3 +1,4 @@
+@using System.Linq
 @model Ajerly_Platform.Models.Listing
 
 <div class="details-container">
@@ -5,13 +6,13 @@
 
     <div class="details-grid">
         <div class="details-image">
-            @if (Model.Images != null && Model.Images.Any())
+            @if (Model.Images.Any())
             {
-                <img src="@Model.Images.First().ImageUrl" alt="@Model.Title" />
+                <img id="mainImg" src="@Model.Images.First().ImageUrl" alt="@Model.Title" />
                 <div class="thumbs">
-                    @foreach (var img in Model.Images)
+                    @foreach (var img in Model.Images.Skip(1))
                     {
-                        <img src="@img.ImageUrl" alt="thumb" class="thumb" onclick="document.getElementById('mainImg').src='@img.ImageUrl'" />
+                        <img src="@img.ImageUrl" alt="thumb" class="thumb" onclick="document.getElementById('mainImg').src='@img.ImageUrl';" />
                     }
                 </div>
             }

@@ -66,12 +66,15 @@ ViewData["Title"] = "Home Page";
 </div>
 
 <script>
-    // Client-side filtering: show/hide cards in-place without navigation
+    // Client-side filtering: preserve the original order of the cards by hiding/showing existing anchors
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('.category-btn');
         const container = document.getElementById('listingsContainer');
         const noResultsEl = document.getElementById('noResults');
         if (!container) return;
+
+        // Capture the original ordered list of anchor elements (preserves exact order rendered on server)
+        const originalAnchors = Array.from(container.querySelectorAll('.listing-link'));
 
         function normalize(s) {
             return (s || '').toLowerCase().trim();
@@ -81,28 +84,26 @@ ViewData["Title"] = "Home Page";
             const q = normalize(category);
             const showAll = q === '' || q === 'الكل';
 
-            const cards = Array.from(container.querySelectorAll('.listing-card'));
             let visibleCount = 0;
-            console.log('[Filter] applying, query:', q, 'cards:', cards.length);
 
-            cards.forEach(card => {
-                const catRaw = card.dataset.category || '';
+            // Toggle visibility instead of removing/re-appending nodes to keep the original order
+            originalAnchors.forEach(anchor => {
+                const card = anchor.querySelector('.listing-card');
+                const catRaw = card?.dataset.category || '';
                 const cat = normalize(catRaw);
                 const matched = showAll || (cat && (cat === q || cat.includes(q)));
-                card.style.display = matched ? '' : 'none';
+                anchor.style.display = matched ? '' : 'none';
                 if (matched) visibleCount++;
             });
 
             if (noResultsEl) {
                 noResultsEl.style.display = visibleCount === 0 ? '' : 'none';
             }
-            console.log('[Filter] visible:', visibleCount);
         }
 
         buttons.forEach(btn => {
             btn.addEventListener('click', function (e) {
-                e.preventDefault(); // prevent any default navigation
-                // update active class
+                e.preventDefault();
                 buttons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
