@@ -292,12 +292,24 @@ textarea.form-control {
   flex: 1 1 60%;
   width: 100%;
   overflow: hidden;
+  background: white; /* ensure empty area is white */
+  border: none; /* remove any border */
 }
 
 .listing-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Adjusted to ensure the entire image fits within the container */
+  object-fit: contain; /* show whole image without cropping */
+  object-position: center center; /* center the image */
+  background: white; /* ensure any empty area is white */
+  display: block;
+}
+
+/* When there is no image, render an empty white block without borders or placeholder text */
+.empty-image {
+  width: 100%;
+  height: 100%;
+  background: white;
   display: block;
 }
 

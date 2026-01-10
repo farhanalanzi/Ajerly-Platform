@@ -39,7 +39,15 @@ ViewData["Title"] = "Home Page";
         <a class="listing-link" href="@Url.Action("Details", controller, new { id = item.Id })" style="text-decoration:none; color:inherit;">
             <div class="listing-card" data-category="@item.Category" data-type="@(item.Type.ToLower())" data-id="@item.Id">
                 <div class="listing-image">
-                    <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? Url.Content("~/images/default.jpg") : Url.Content(item.ImageUrl))" alt="صورة المنتج" />
+                    @* Render image only if ImageUrl exists. Otherwise render an empty white area without borders or placeholder text *@
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@Url.Content(item.ImageUrl)" alt="" />
+                    }
+                    else
+                    {
+                        <div class="empty-image" aria-hidden="true"></div>
+                    }
                 </div>
                 <div class="listing-info">
                     <span class="listing-tag">@tag</span>
