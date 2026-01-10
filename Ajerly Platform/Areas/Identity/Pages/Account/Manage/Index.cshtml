@@ -1,0 +1,39 @@
+@page
+@model Ajerly_Platform.Areas.Identity.Pages.Account.ManageIndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="create-section" style="max-width:700px;margin:40px auto;">
+    <h1>معلوماتي</h1>
+    <p>قم بتحديث معلومات حسابك هنا</p>
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Input.FullName">الاسم الكامل</label>
+            <input asp-for="Input.FullName" class="form-control" placeholder="الاسم الكامل" />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input value="@Model.Email" class="form-control" readonly />
+            <small class="text-muted">لأسباب أمنية لا يمكن تغيير البريد الإلكتروني من هنا</small>
+        </div>
+
+        <button type="submit" class="btn-publish">حفظ التغييرات</button>
+
+    </form>
+
+    @if (Model.StatusMessage != null)
+    {
+        <div style="margin-top:12px;color:green;">@Model.StatusMessage</div>
+    }
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+</section>

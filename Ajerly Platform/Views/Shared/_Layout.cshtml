@@ -42,10 +42,8 @@
                     <li><a class="dropdown-item" href="/Identity/Account/Manage">تغيير كلمة المرور</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
-                        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="dropdown-item">تسجيل خروج</button>
-                        </form>
+                        <!-- Open a confirmation page instead of directly posting logout -->
+                        <a class="dropdown-item" href="/Identity/Account/Logout">تسجيل خروج</a>
                     </li>
                 </ul>
             </div>
