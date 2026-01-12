@@ -118,6 +118,18 @@ body {
   margin-bottom: 30px;
 }
 
+/* Align search input text to the right for RTL languages (affects homepage and listings search) */
+#searchInput,
+.search-bar {
+  direction: rtl;
+  text-align: right;
+}
+
+#searchInput::placeholder,
+.search-bar::placeholder {
+  text-align: right;
+}
+
 .hero-buttons {
   display: flex;
   justify-content: center;
