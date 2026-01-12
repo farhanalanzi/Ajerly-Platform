@@ -9,7 +9,7 @@ ViewData["Title"] = "Home Page";
             <h1>أرني منتجاتك</h1>
             <p>منصة أجرلي - أسهل طريقة لتأجير واستئجار المنتجات بين الأفراد</p>
 
-            <input type="text" class="search-bar" placeholder="ابحث عن منتج...">
+            <input id="homeSearchInput" type="text" class="search-bar" placeholder="ابحث عن منتج...">
 
             <div class="hero-buttons">
                 <button class="btn-request" onclick="location.href='@Url.Action("Create", "Requests")'">طلب عرض</button>
@@ -124,5 +124,51 @@ ViewData["Title"] = "Home Page";
 
         // initial: show all (hide noResults if any)
         applyFilter('الكل');
+
+        // --- New: home search live filter (no redirect) ---
+        try {
+            const homeInput = document.getElementById('homeSearchInput');
+            if (homeInput) {
+                let t = null;
+                function normalizeStr(s) { return (s || '').toLowerCase().trim(); }
+
+                homeInput.addEventListener('input', function (e) {
+                    const q = normalizeStr(e.target.value || '');
+                    if (t) clearTimeout(t);
+                    t = setTimeout(() => {
+                        // if empty, restore category filter state (show currently visible by category)
+                        if (!q) {
+                            // reapply current category selection
+                            const activeBtn = Array.from(buttons).find(b => b.classList.contains('active'));
+                            applyFilter(activeBtn ? activeBtn.dataset.category : 'الكل');
+                            return;
+                        }
+
+                        let visibleCount = 0;
+                        // iterate original anchors to preserve order
+                        originalAnchors.forEach(anchor => {
+                            const card = anchor.querySelector('.listing-card');
+                            const title = normalizeStr(anchor.querySelector('h3')?.textContent || '');
+                            const desc = normalizeStr(anchor.querySelector('p')?.textContent || '');
+                            const tag = normalizeStr(anchor.querySelector('.listing-tag')?.textContent || '');
+                            const cat = normalizeStr(card?.dataset.category || '');
+                            const type = normalizeStr(card?.dataset.type || '');
+
+                            const matched = title.includes(q) || desc.includes(q) || tag.includes(q) || cat.includes(q) || type.includes(q);
+
+                            anchor.style.display = matched ? '' : 'none';
+                            if (matched) visibleCount++;
+                        });
+
+                        if (noResultsEl) {
+                            noResultsEl.style.display = visibleCount === 0 ? '' : 'none';
+                        }
+                    }, 250);
+                });
+            }
+        } catch (ex) {
+            // ignore non-fatal
+        }
     });
 </script>
+

@@ -20,10 +20,48 @@ namespace Ajerly_Platform.Controllers
         }
 
        
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var listings = await _context.Listings.ToListAsync();
+            // preserve the current search so the view can show it
+            ViewData["CurrentFilter"] = searchString;
+
+            // start query including images so views can use them
+            var query = _context.Listings
+                .Include(l => l.Images)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                var pattern = $"%{searchString}%";
+                query = query.Where(l => EF.Functions.Like(l.Title, pattern) || EF.Functions.Like(l.Description, pattern));
+            }
+
+            var listings = await query
+                .OrderByDescending(l => l.CreatedAt)
+                .ToListAsync();
+
             return View(listings);
+        }
+
+        // Ajax partial endpoint for live search
+        [HttpGet]
+        public async Task<IActionResult> IndexPartial(string searchString)
+        {
+            var query = _context.Listings
+                .Include(l => l.Images)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                var pattern = $"%{searchString}%";
+                query = query.Where(l => EF.Functions.Like(l.Title, pattern) || EF.Functions.Like(l.Description, pattern));
+            }
+
+            var listings = await query
+                .OrderByDescending(l => l.CreatedAt)
+                .ToListAsync();
+
+            return PartialView("_ListingsGrid", listings);
         }
 
         
