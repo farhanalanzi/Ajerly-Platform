@@ -86,7 +86,8 @@ namespace Ajerly_Platform.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            // After publishing a listing, redirect the user to the site home page
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Category(string name)

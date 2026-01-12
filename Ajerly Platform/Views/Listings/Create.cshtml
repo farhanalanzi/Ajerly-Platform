@@ -4,7 +4,8 @@
     <h1>أضف عرضك</h1>
     <p>شارك منتجك وحقق دخلاً إضافياً من خلال تأجيره</p>
 
-    <form asp-action="Create" enctype="multipart/form-data">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
         <div class="form-group">
             <label>عنوان الإعلان *</label>
             <input asp-for="Title" class="form-control" placeholder="مثال: دراجة جبلية للإيجار" />
