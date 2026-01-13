@@ -160,19 +160,50 @@ ViewData["Title"] = "Home Page";
                 var categoryBtns = categoryContainer ? Array.from(categoryContainer.querySelectorAll('.category-btn')) : [];
                 var listings = Array.from(document.querySelectorAll('#listingsContainer .listing-card'));
                 var noResults = document.getElementById('noResults');
+                var searchInput = document.getElementById('homeSearchInput');
 
                 function norm(s){ return (s||'').toString().trim().toLowerCase(); }
 
-                function applyFilter(category){
-                    var catNorm = norm(category);
+                // Debounce helper to avoid filtering on every keystroke immediately
+                function debounce(fn, delay){
+                    var t;
+                    return function(){
+                        var args = arguments;
+                        clearTimeout(t);
+                        t = setTimeout(function(){ fn.apply(null, args); }, delay);
+                    };
+                }
+
+                // Check whether a card matches the active category (or 'الكل')
+                function matchesCategory(card, activeCat){
+                    var catNorm = norm(activeCat);
+                    if(!catNorm || catNorm === 'الكل' || catNorm === 'all') return true;
+                    var cardCat = norm(card.dataset.category);
+                    if(!cardCat) return false;
+                    return cardCat === catNorm || cardCat.indexOf(catNorm) !== -1 || catNorm.indexOf(cardCat) !== -1;
+                }
+
+                // Check whether a card matches the search query across عدة fields
+                function matchesSearch(card, q){
+                    if(!q) return true; // empty query matches everything
+                    var infoJson = card.dataset.info;
+                    try{
+                        var info = infoJson ? JSON.parse(infoJson) : {};
+                    }catch(e){ var info = {}; }
+                    var hay = (info.title || '') + ' ' + (info.city || '') + ' ' + (info.desc || '') + ' ' + (info.seller || '') + ' ' + (card.dataset.category || '');
+                    return norm(hay).indexOf(q) !== -1;
+                }
+
+                // Apply both category and search filters
+                function filterAll(){
+                    var activeBtn = document.querySelector('.category-filter .category-btn.active');
+                    var activeCat = activeBtn ? (activeBtn.getAttribute('data-category') || '') : '';
+                    var q = norm(searchInput ? searchInput.value : '');
                     var anyVisible = false;
                     listings.forEach(function(card){
-                        var cardCat = norm(card.dataset.category);
-                        if(catNorm === '' || catNorm === 'الكل' || catNorm === 'all'){
-                            card.style.display = '';
-                            anyVisible = true;
-                        } else if(cardCat === catNorm || cardCat.indexOf(catNorm) !== -1 || catNorm.indexOf(cardCat) !== -1){
-                            // exact match or substring match (either direction)
+                        var okCat = matchesCategory(card, activeCat);
+                        var okSearch = matchesSearch(card, q);
+                        if(okCat && okSearch){
                             card.style.display = '';
                             anyVisible = true;
                         } else {
@@ -182,6 +213,13 @@ ViewData["Title"] = "Home Page";
                     if(noResults) noResults.style.display = anyVisible ? 'none' : 'block';
                 }
 
+                // Wire up search input (debounced for performance)
+                if(searchInput){
+                    searchInput.addEventListener('input', debounce(function(){
+                        filterAll();
+                    }, 180));
+                }
+
                 // Wire up buttons
                 categoryBtns.forEach(function(btn){
                     btn.addEventListener('click', function(e){
@@ -189,15 +227,15 @@ ViewData["Title"] = "Home Page";
                         // toggle active class
                         categoryBtns.forEach(function(b){ b.classList.remove('active'); });
                         btn.classList.add('active');
-                        var category = btn.getAttribute('data-category') || '';
-                        applyFilter(category);
+                        // apply combined filter (category + current search text)
+                        filterAll();
                     });
                 });
 
                 // Apply server-side selected category on load if present
                 var initial = (document.querySelector('.category-filter .category-btn.active') || {}).dataset || {}; 
-                if(initial && initial.category){ applyFilter(initial.category); }
-            });
-        })();
-    </script>
-}
+                if(initial && initial.category){ filterAll(); }
+             });
+         })();
+     </script>
+ }
