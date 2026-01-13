@@ -42,12 +42,9 @@
             <div class="section title-section">
                 <div class="category">@Model.Category</div>
                 <h1 class="title">@Model.Title</h1>
-            </div>
-
-            <div class="section location-section">
-                <div class="location-row">
+                <div class="city-under">
+                    <span class="city-value">@Model.City</span>
                     <svg class="loc-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
-                    <div class="city">@Model.City</div>
                 </div>
             </div>
 
@@ -60,8 +57,7 @@
                 <div class="price-box">
                     <div class="price-label">السعر المتوقع</div>
                     <div class="price-row">
-                        <div class="price-number">@priceDisplay</div>
-                        <div class="price-currency">ر.س</div>
+                        <div class="price-number">@priceDisplay <span class="price-currency">ر.س</span></div>
                     </div>
                     <div class="price-type">@priceTypeText</div>
                 </div>
@@ -71,16 +67,7 @@
 
             <div class="section seller-section">
                 <div class="seller-header"><h2>البائع</h2></div>
-                <div class="seller-row">
-                    <div class="seller-avatar">@{ var sellerName = Model.User?.FullName ?? string.Empty; var avatar = string.IsNullOrEmpty(sellerName) ? "؟" : sellerName.Substring(0,1); }@avatar</div>
-                    <div class="seller-info">
-                        <div class="seller-name">@Model.User?.FullName</div>
-                        <div class="seller-meta">
-                            <span class="verified">✓ بائع موثوق</span>
-                            <span class="transactions">15 مبيعات</span>
-                        </div>
-                    </div>
-                </div>
+                <div class="seller-name-under">@Model.User?.FullName</div>
             </div>
 
             <div class="section contact-section">

@@ -1147,21 +1147,16 @@ textarea.form-control {
 
 .price-box { background:#f3f4f6; padding:14px; border-radius:10px; text-align:right; }
 .price-label { color:#6b7280; font-size:14px; margin-bottom:8px; }
-.price-row { display:flex; justify-content:flex-end; align-items:baseline; gap:8px; }
-.price-number { font-size:40px; font-weight:900; color:#111827; }
-.price-currency { font-size:18px; color:#111827; }
-.price-type { color:#6b7280; margin-top:8px; font-weight:700; }
-
+.price-row { display:block; text-align:right; margin-top:6px; }
+.price-number { font-size:36px; font-weight:900; color:#111827; }
+.price-currency { font-size:16px; margin-inline-start:6px; color:#111827; }
 .posted-date { text-align:center; color:#6b7280; font-size:13px; }
 
 .seller-section .seller-header h2 { font-size:20px; font-weight:900; margin:0 0 8px 0; text-align:right; }
 .seller-row { display:flex; align-items:center; gap:12px; justify-content:flex-end; }
 .seller-avatar { width:64px; height:64px; border-radius:999px; background:linear-gradient(90deg,#06b6d4,#a855f7); display:flex; align-items:center; justify-content:center; color:white; font-weight:900; font-size:24px; }
 .seller-info { text-align:right; }
-.seller-name { font-size:18px; font-weight:800; }
-.seller-meta { margin-top:6px; display:flex; gap:10px; align-items:center; justify-content:flex-end; }
-.verified { color:#10B981; font-weight:700; }
-.transactions { color:#6b7280; }
+.seller-name { font-size:18px; font-weight:800; margin-top:8px; color:#111827; }
 
 /* Contact CTA */
 .contact-btn { display:flex; align-items:center; gap:12px; justify-content:flex-end; background:#2563EB; color:#fff; border:none; padding:14px 18px; border-radius:12px; font-weight:900; cursor:pointer; width:100%; max-width:420px; transition:transform 200ms ease, box-shadow 200ms ease; }
@@ -1179,7 +1174,7 @@ textarea.form-control {
 .btn-wa { background:#34D399; color:#063E2B; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:800; }
 .btn-call:hover, .btn-wa:hover { opacity:0.9; transform:translateY(-2px); }
 
-/* Responsive adjustments */
+/* responsive */
 @media (max-width: 880px) {
   .offer-hero .hero-image { height: 320px; }
   .title-section .title { font-size:24px; }
@@ -1188,3 +1183,10 @@ textarea.form-control {
   .contact-btn { max-width:100%; }
 }
 
+/* City under title: keep it directly under the title, right-aligned, no left shift */
+.title-section .city-under { display:inline-flex; flex-direction: row-reverse; align-items:center; gap:8px; margin-top:8px; justify-content:flex-end; }
+.title-section .city-under .city-value { font-weight:800; color:#111827; font-size:16px; }
+.title-section .city-under .loc-icon { color:#6b7280; }
+
+/* ensure loc-icon SVG vertical alignment */
+.title-section .city-under svg { transform: translateY(1px); }

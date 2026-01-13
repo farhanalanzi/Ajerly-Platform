@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "A+MZ/NLanrvl7XW5QhB2PNwqha9DBHldQJK7AbsvgH0=",
+  "Hash": "4otm1xTGsxCtXslMx4+RKb7d0G1vKjpUcK1O+R8vMHM=",
   "Source": "Ajerly Platform",
   "BasePath": "_content/Ajerly Platform",
   "Mode": "Default",
@@ -1478,6 +1478,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/uploads/c78e90c3-f7fd-4b22-ad5f-b6170187b57e.png"
+    },
+    {
+      "Identity": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/ec3e4e94-f3d2-4fd6-8ccd-daf2655f0707.png",
+      "SourceId": "Ajerly Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/",
+      "BasePath": "_content/Ajerly Platform",
+      "RelativePath": "images/uploads/ec3e4e94-f3d2-4fd6-8ccd-daf2655f0707.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/uploads/ec3e4e94-f3d2-4fd6-8ccd-daf2655f0707.png"
     },
     {
       "Identity": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/js/site.js",
