@@ -35,7 +35,14 @@
             <!-- Arrow pointing right (over image) -->
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <img class="hero-image" src="@(string.IsNullOrEmpty(Model.ImagePath)? "/images/default.jpg" : Model.ImagePath)" alt="@Model.Title" />
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img class="hero-image" src="@Model.ImagePath" alt="@Model.Title" />
+        }
+        else
+        {
+            <div class="hero-empty" aria-hidden="true"></div>
+        }
     </section>
 
     <!-- Main content container (white background) -->

@@ -6,6 +6,9 @@
     var pu = Model.PriceUnit?.ToLower() ?? string.Empty;
     bool isRental = pu.Contains("ساعة") || pu.Contains("يوم") || pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("hour") || pu.Contains("day") || pu.Contains("week");
 
+    // get first image if any
+    var firstImageUrl = Model.Images?.FirstOrDefault()?.ImageUrl;
+
     // price display
     var priceValue = Model.Price;
     string priceDisplay;
@@ -37,7 +40,14 @@
             <!-- Arrow pointing right (over image) -->
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <img class="hero-image" src="@(Model.Images?.FirstOrDefault()?.ImageUrl ?? "/images/default.jpg")" alt="@Model.Title" />
+        @if (!string.IsNullOrEmpty(firstImageUrl))
+        {
+            <img class="hero-image" src="@firstImageUrl" alt="@Model.Title" />
+        }
+        else
+        {
+            <div class="hero-empty" aria-hidden="true"></div>
+        }
     </section>
 
     <!-- Main content container (white background) -->
