@@ -1159,13 +1159,30 @@ textarea.form-control {
 .seller-name { font-size:18px; font-weight:800; margin-top:8px; color:#111827; }
 
 /* Contact CTA */
-.contact-btn { display:flex; align-items:center; gap:12px; justify-content:flex-end; background:#2563EB; color:#fff; border:none; padding:14px 18px; border-radius:12px; font-weight:900; cursor:pointer; width:100%; max-width:420px; transition:transform 200ms ease, box-shadow 200ms ease; }
+.contact-btn {
+  display: inline-flex; /* keep as inline so width auto fits content */
+  align-items: center;
+  justify-content: center; /* center text horizontally */
+  gap: 8px;
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  padding: 8px 12px; /* smaller padding (about half) */
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  width: auto;
+  max-width: 210px; /* roughly half of previous 420px */
+  height: 40px; /* fixed comfortable height */
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
 .contact-btn .chev { display:inline-block; transition: transform 300ms ease; }
 .contact-btn.open .chev { transform: rotate(180deg); }
 .contact-btn:hover { transform: translateY(-2px); box-shadow:0 10px 30px rgba(2,6,23,0.12); }
-.contact-text { font-size:16px; }
-.phone-icon { font-size:18px; }
+.contact-text { font-size:14px; text-align:center; }
+.phone-icon { font-size:16px; }
 
+/* Phone box under contact button */
 .phone-box { max-width:420px; background: #fff; border: 2px solid #2563EB; padding:14px; border-radius:10px; margin-top:12px; overflow:hidden; height:0; opacity:0; transition: height 300ms ease, opacity 300ms ease, transform 300ms ease; transform-origin: top; }
 .phone-box.open { height:120px; opacity:1; transform: translateY(0); }
 .phone-number { text-align:center; font-weight:900; font-size:20px; margin-bottom:10px; }
@@ -1188,5 +1205,15 @@ textarea.form-control {
 .title-section .city-under .city-value { font-weight:800; color:#111827; font-size:16px; }
 .title-section .city-under .loc-icon { color:#6b7280; }
 
-/* ensure loc-icon SVG vertical alignment */
-.title-section .city-under svg { transform: translateY(1px); }
+/* Center the contact button block on the details page without changing the button markup */
+.contact-section {
+  max-width: 420px; /* match button max-width so it stays the same size */
+  margin: 0 auto;   /* center the block horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure phone box appears centered under the button */
+.phone-box { margin: 12px auto 0; }

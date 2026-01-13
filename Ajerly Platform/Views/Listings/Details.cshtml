@@ -72,9 +72,6 @@
                 </div>
             </div>
 
-            <!-- Posted date centered -->
-            <div class="section posted-date">نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</div>
-
             <!-- Seller information: show seller name directly under the heading -->
             <div class="section seller-section">
                 <div class="seller-header"><h2>البائع</h2></div>
@@ -97,6 +94,9 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Posted date centered (moved under contact section) -->
+            <div class="section posted-date">نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</div>
 
         </div>
     </main>
