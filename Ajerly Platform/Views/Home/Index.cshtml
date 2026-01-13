@@ -36,13 +36,14 @@ ViewData["Title"] = "Home Page";
         {
             var controller = item.Type == "Listing" ? "Listings" : "Requests";
             var tag = item.Type == "Listing" ? "عرض" : "طلب";
+            var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? "/images/default.jpg" : Url.Content(item.ImageUrl);
         <a class="listing-link" href="@Url.Action("Details", controller, new { id = item.Id })" style="text-decoration:none; color:inherit;">
-            <div class="listing-card" data-category="@item.Category" data-type="@(item.Type.ToLower())" data-id="@item.Id">
+            <div class="listing-card" data-category="@item.Category" data-type="@(item.Type?.ToLower())" data-id="@item.Id"
+                 data-info='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { title = item.Title, city = item.City, desc = item.Description, image = imageUrl, seller = item.SellerName, phone = item.Phone, createdAt = item.CreatedAt.ToString("yyyy-MM-dd") }))'>
                 <div class="listing-image">
-                    @* Render image only if ImageUrl exists. Otherwise render an empty white area without borders or placeholder text *@
                     @if (!string.IsNullOrEmpty(item.ImageUrl))
                     {
-                        <img src="@Url.Content(item.ImageUrl)" alt="" />
+                        <img src="@imageUrl" alt="" />
                     }
                     else
                     {
@@ -52,10 +53,18 @@ ViewData["Title"] = "Home Page";
                 <div class="listing-info">
                     <span class="listing-tag">@tag</span>
                     <h3>@item.Title</h3>
-                    <p>@item.Description</p>
-                    <p><strong>المدينة:</strong> @item.City</p>
-                    <p><strong>السعر:</strong> @((item.Price ?? 0)) ريال/@item.PriceUnit</p>
-                    <p><strong>الجوال:</strong> @item.Phone</p>
+
+                    <p>
+                        <strong>
+                           <!-- location svg -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#6b7280" viewBox="0 0 16 16" style="vertical-align:middle;margin-inline-start:6px;">
+                             <path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
+                           </svg>
+                           @item.City
+                        </strong>
+                    </p>
+
+                    <p><strong>بواسطة:</strong> @item.SellerName</p>
                 </div>
             </div>
         </a>
@@ -65,110 +74,50 @@ ViewData["Title"] = "Home Page";
     </section>
 </div>
 
-<script>
-    // Client-side filtering: preserve the original order of the cards by hiding/showing existing anchors
-    document.addEventListener('DOMContentLoaded', function () {
-        const buttons = document.querySelectorAll('.category-btn');
-        const container = document.getElementById('listingsContainer');
-        const noResultsEl = document.getElementById('noResults');
-        if (!container) return;
+<!-- Modal preview markup (appended to the page) -->
+<div id="cardPreviewOverlay" class="card-preview-overlay" style="display:none;">
+    <div class="card-preview vertical">
+        <button class="preview-close" aria-label="إغلاق">×</button>
+        <div class="preview-image">
+            <img id="previewImg" src="" alt="" />
+        </div>
+        <div class="preview-content">
+            <h2 id="previewTitle"></h2>
+            <div class="preview-city"><span class="icon">📍</span> <span id="previewCity"></span></div>
+            <div class="preview-desc" id="previewDesc"></div>
 
-        // Capture the original ordered list of anchor elements (preserves exact order rendered on server)
-        const originalAnchors = Array.from(container.querySelectorAll('.listing-link'));
+            <div class="preview-seller">
+                <div class="seller-box">
+                    <div>
+                        <div class="seller-label" style="font-size:12px;color:#6b7280">المعلن</div>
+                        <div class="seller-name" id="previewSeller"></div>
+                    </div>
+                    <a id="previewPhone" class="btn-contact large" href="#">اتصل</a>
+                </div>
+            </div>
 
-        function normalize(s) {
-            return (s || '').toLowerCase().trim();
-        }
+            <div class="preview-meta" style="margin-top:12px;padding:10px;background:#f8fafc;border-radius:8px;text-align:right;">
+                <small>نُشر في: <span id="previewCreatedAt"></span></small>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function applyFilter(category) {
-            const q = normalize(category);
-            const showAll = q === '' || q === 'الكل';
+@section Scripts {
+    <script>
+        (function(){
+            // Removed preview open handlers so clicking a card navigates to its details page.
+            // Previously we intercepted clicks to show a modal; now we want normal navigation.
 
-            let visibleCount = 0;
+            // Keep simple helper functions in case we need them later
+            function qs(sel, base) { return (base || document).querySelector(sel); }
 
-            // Toggle visibility instead of removing/re-appending nodes to keep the original order
-            originalAnchors.forEach(anchor => {
-                const card = anchor.querySelector('.listing-card');
-                const catRaw = card?.dataset.category || '';
-                const cat = normalize(catRaw);
-                const matched = showAll || (cat && (cat === q || cat.includes(q)));
-                anchor.style.display = matched ? '' : 'none';
-                if (matched) visibleCount++;
+            document.addEventListener('DOMContentLoaded', function(){
+                // No interception: anchors behave normally and navigate to /Listings/Details/{id}
+                // We still wire the modal close if modal is ever opened by other means.
+                var close = qs('.preview-close');
+                if (close) close.addEventListener('click', function(){ document.getElementById('cardPreviewOverlay').style.display = 'none'; document.body.style.overflow = ''; });
             });
-
-            if (noResultsEl) {
-                noResultsEl.style.display = visibleCount === 0 ? '' : 'none';
-            }
-        }
-
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                buttons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const category = btn.dataset.category || '';
-                applyFilter(category);
-            });
-        });
-
-        // If a server-selected category exists in Model, apply it on load
-        const serverCategory = '@(Model.Category ?? "")';
-        if (serverCategory) {
-            const matchBtn = Array.from(buttons).find(b => normalize(b.dataset.category) === normalize(serverCategory));
-            if (matchBtn) {
-                matchBtn.classList.add('active');
-                applyFilter(serverCategory);
-            }
-        }
-
-        // initial: show all (hide noResults if any)
-        applyFilter('الكل');
-
-        // --- New: home search live filter (no redirect) ---
-        try {
-            const homeInput = document.getElementById('homeSearchInput');
-            if (homeInput) {
-                let t = null;
-                function normalizeStr(s) { return (s || '').toLowerCase().trim(); }
-
-                homeInput.addEventListener('input', function (e) {
-                    const q = normalizeStr(e.target.value || '');
-                    if (t) clearTimeout(t);
-                    t = setTimeout(() => {
-                        // if empty, restore category filter state (show currently visible by category)
-                        if (!q) {
-                            // reapply current category selection
-                            const activeBtn = Array.from(buttons).find(b => b.classList.contains('active'));
-                            applyFilter(activeBtn ? activeBtn.dataset.category : 'الكل');
-                            return;
-                        }
-
-                        let visibleCount = 0;
-                        // iterate original anchors to preserve order
-                        originalAnchors.forEach(anchor => {
-                            const card = anchor.querySelector('.listing-card');
-                            const title = normalizeStr(anchor.querySelector('h3')?.textContent || '');
-                            const desc = normalizeStr(anchor.querySelector('p')?.textContent || '');
-                            const tag = normalizeStr(anchor.querySelector('.listing-tag')?.textContent || '');
-                            const cat = normalizeStr(card?.dataset.category || '');
-                            const type = normalizeStr(card?.dataset.type || '');
-
-                            const matched = title.includes(q) || desc.includes(q) || tag.includes(q) || cat.includes(q) || type.includes(q);
-
-                            anchor.style.display = matched ? '' : 'none';
-                            if (matched) visibleCount++;
-                        });
-
-                        if (noResultsEl) {
-                            noResultsEl.style.display = visibleCount === 0 ? '' : 'none';
-                        }
-                    }, 250);
-                });
-            }
-        } catch (ex) {
-            // ignore non-fatal
-        }
-    });
-</script>
-
+        })();
+    </script>
+}

@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets/images/default.jpg"
     },
     {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/logo.svg",
+      "PackagePath": "staticwebassets/images/logo.svg"
+    },
+    {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/0990bce8-1b1b-4b8a-908a-c500297ac684.png",
       "PackagePath": "staticwebassets/images/uploads/0990bce8-1b1b-4b8a-908a-c500297ac684.png"
     },
@@ -27,6 +31,10 @@
     {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/2a1de476-2617-45c3-90f2-4aeb6252dabb.png",
       "PackagePath": "staticwebassets/images/uploads/2a1de476-2617-45c3-90f2-4aeb6252dabb.png"
+    },
+    {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/546ac580-76d8-4c56-be44-e3ad3f9f52f2.png",
+      "PackagePath": "staticwebassets/images/uploads/546ac580-76d8-4c56-be44-e3ad3f9f52f2.png"
     },
     {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/5f12b07e-5307-4c5f-8d71-a7d1fe3c0493.png",

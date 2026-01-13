@@ -143,6 +143,7 @@ namespace Ajerly_Platform.Controllers
         {
             var listing = await _context.Listings
                 .Include(l => l.Images)
+                .Include(l => l.User)
                 .FirstOrDefaultAsync(l => l.Id == id);
 
             if (listing == null)

@@ -366,6 +366,136 @@ textarea.form-control {
   color: #222;
 }
 
+/* Card preview overlay */
+.card-preview-overlay {
+  position: fixed;
+  inset: 0;
+  display: none; /* toggled via JS */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+  padding: 24px;
+}
+
+.card-preview {
+  background: #ffffff;
+  width: min(980px, 96%);
+  max-height: 90vh;
+  border-radius: 12px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  direction: rtl;
+  align-items: start;
+  padding: 18px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(2,6,23,0.2); /* subtle pop */
+}
+
+.preview-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: #374151;
+}
+
+.preview-image {
+  background: #f8f9fb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  max-height: 70vh;
+  overflow: hidden;
+}
+
+.preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* show whole image without cropping */
+  object-position: center center;
+  display: block;
+  background: white;
+}
+
+.preview-content {
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.preview-content h2 {
+  font-size: 26px;
+  margin: 4px 0 8px 0;
+  color: #111827;
+  text-align: right;
+}
+
+.preview-city {
+  color: #6b7280;
+  font-size: 15px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.preview-desc {
+  font-size: 18px;
+  color: #374151;
+  margin: 8px 0 14px 0;
+  text-align: right;
+}
+
+/* seller box: light gray rounded box with seller name and call button */
+.seller-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f4f6;
+  padding: 10px 12px;
+  border-radius: 10px;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.seller-name {
+  font-weight: 700;
+  color: #111827;
+  font-size: 16px;
+  text-align: right;
+}
+
+.preview-meta {
+  color: #6b7280;
+  font-size: 14px;
+  text-align: right;
+  margin-top: auto;
+}
+
+/* phone btn appears styled like CTA */
+.card-preview .btn-contact.large {
+  background: linear-gradient(90deg,#ff7e5f,#feb47b);
+  color: white;
+  border-radius: 10px;
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* Responsive: single column on narrow screens */
+@media (max-width: 880px) {
+  .card-preview { grid-template-columns: 1fr; max-height: 90vh; }
+  .preview-image { min-height: 260px; }
+}
+
 /* Responsive: use smaller squares on narrow screens */
 @media (max-width: 900px) {
   .listings-grid {
@@ -530,10 +660,312 @@ textarea.form-control {
 
 .created { color: #666; margin-top: 12px; font-size: 14px; }
 
+/* Centered professional details page */
+.centered-details {
+  max-width: 1100px;
+  margin: 28px auto 60px;
+  padding: 12px 20px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+  direction: rtl;
+}
+
+.details-image {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  max-height: 80vh;
+}
+
+.details-image img#mainImg {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.thumbs {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.details-info.professional {
+  /* make it plain and centered instead of a white card */
+  padding: 8px 12px;
+  background: transparent; /* remove white background */
+  border-radius: 0;
+  box-shadow: none;
+  text-align: right; /* change to right alignment */
+  max-width: 900px; /* keep content narrow and centered */
+  margin: 0 auto; /* center the block */
+}
+
+.details-info.professional h1 {
+  margin-top: 0;
+  font-size: 36px; /* larger title */
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+/* center metadata and description text for a clean, minimal layout */
+.details-info.professional .meta,
+.details-info.professional .desc {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-actions { display:flex; justify-content:flex-end; }
+
+.btn-contact.large {
+  background: #ff7e5f; /* prominent orange */
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 8px 20px rgba(255,126,95,0.18);
+}
+
+.btn-contact.large:hover { transform: translateY(-2px); }
+
+/* single-column on narrow screens */
 @media (max-width: 900px) {
   .details-grid { grid-template-columns: 1fr; }
-  .details-actions { justify-content: center; }
-  .thumbs { justify-content: center; }
-  .details-info h1 { font-size: 28px; }
-  .details-info .desc { font-size: 16px; }
+  .centered-details { padding: 12px; }
+  .centered-actions { justify-content:center; }
+}
+
+/* Compact, stacked details: details above, image below, call button under image */
+.compact-details .single-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* 'fixed-size' image should use same height as card image area (keep aspect ratio centered) */
+.details-image.fixed-size {
+  width: 100%;
+  height: 320px; /* match .listing-card min-height to keep consistent */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.details-image.fixed-size img#mainImg,
+.details-image.fixed-size img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* show whole image, no cropping */
+  display: block;
+  margin: 0 auto;
+}
+
+/* small thumbs row under the main image (optional) */
+.small-thumbs { margin-top: 8px; }
+.small-thumbs .thumb { width: 54px; height: 40px; }
+
+/* keep details card compact and centered text */
+.top-details { padding: 16px; background: transparent; box-shadow: none; }
+.top-details h1 { font-size: 24px; margin-bottom: 8px; }
+
+/* ensure top-details keep compact spacing */
+.top-details { padding: 8px 12px; }
+.top-details h1 { font-size: 26px; }
+
+/* Title box in the top-details: large, right-aligned, light-gray box */
+.top-details h1 {
+  font-size: 34px; /* larger */
+  font-weight: 900;
+  color: #6b7280; /* slate/lead color */
+  background: #f3f4f6; /* very light gray box */
+  display: inline-block; /* shrink to content like a pill/box */
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-align: right; /* ensure text in the box is right-aligned */
+  margin: 0 0 12px 0; /* spacing below the title */
+  margin-left: auto;
+}
+
+/* Keep description below the title and slightly muted, right-aligned */
+.top-details .desc {
+  color: #374151; /* darker text for body */
+  margin-top: 8px;
+  text-align: right; /* description right-aligned */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.below-image { margin-top: 12px; }
+
+/* center the call button below the image */
+.centered-actions.below-image { justify-content: center; }
+
+/* larger, prominent CTA */
+.btn-contact.large { padding: 12px 28px; font-size: 18px; border-radius: 10px; }
+
+/* On mobile, reduce image height slightly */
+@media (max-width: 480px) {
+  .details-image.fixed-size { height: 260px; }
+  .btn-contact.large { width: 90%; }
+}
+
+/* Vertical modal variant: big modal with image covering the top */
+.card-preview.vertical {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: min(900px, 96%);
+  max-height: 90vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-preview.vertical .preview-image {
+  width: 100%;
+  height: 420px; /* prominent top image area */
+  min-height: 240px;
+  max-height: 60vh;
+  border-radius: 12px 12px 0 0; /* rounded top corners */
+  overflow: hidden;
+  background: #000; /* helps during image load */
+}
+
+.card-preview.vertical .preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* cover so it fills area and may crop edges */
+  object-position: center center;
+  display: block;
+}
+
+.card-preview.vertical .preview-content {
+  padding: 18px 20px 28px 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Place close button over the image, top-right inside the modal */
+.card-preview.vertical .preview-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 40;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+}
+
+.card-preview.vertical .preview-city,
+.card-preview.vertical .preview-desc,
+.card-preview.vertical .seller-box,
+.card-preview.vertical .preview-meta {
+  text-align: right;
+}
+
+.card-preview.vertical .preview-content h2 {
+  font-size: 28px;
+  color: #111827;
+  margin: 0;
+}
+
+.card-preview.vertical .preview-desc { font-size: 18px; color: #374151; }
+
+/* Remove boxed card appearance for full-page details (make it look like a normal page) */
+.card-preview.vertical.details-page {
+  background: transparent; /* remove white card background */
+  box-shadow: none; /* remove shadow */
+  border-radius: 0; /* no rounded corners */
+  padding: 0; /* no inner padding so image can touch edges */
+  width: 100%;
+  max-width: 1100px; /* keep content width constraint centered */
+  margin: 18px auto; /* center the content */
+  overflow: visible;
+  display: block; /* use block layout for page feel */
+}
+
+.card-preview.vertical.details-page .preview-image {
+  border-radius: 0; /* flush image to page edges */
+  width: 100%;
+  height: 60vh; /* prominent tall image */
+  max-height: 80vh;
+}
+
+.card-preview.vertical.details-page .preview-content {
+  background: transparent; /* no white box under content */
+  padding: 20px 18px 36px 18px; /* comfortable padding for text */
+  border-radius: 0;
+}
+
+/* ensure links and seller box align nicely in page layout */
+.card-preview.vertical.details-page .seller-box {
+  background: transparent; /* make seller box blend with page */
+  padding: 8px 0;
+}
+
+/* keep the title style but allow it to flow with the page */
+.card-preview.vertical.details-page h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Site logo in navbar */
+.site-logo {
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+  margin-inline-end: 10px; /* space between logo and text */
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  background: white;
+  padding: 4px;
+}
+
+.btn-run {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ensure navbar buttons keep proper padding with logo */
+.btn-run .icon { display: none; }
+
+/* Ensure listing card images and preview/details images render whole image (not cropped) */
+.listing-image img,
+.preview-image img,
+.details-image img#mainImg {
+  object-fit: contain !important; /* show whole image without cropping */
 }

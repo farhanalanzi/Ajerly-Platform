@@ -34,7 +34,8 @@ namespace Ajerly_Platform.Controllers
                 City = l.City,
                 Price = l.Price,
                 PriceUnit = l.PriceUnit,
-                Phone = l.Phone
+                Phone = l.Phone,
+                SellerName = l.User.FullName // may be null
             });
 
             var requests = _context.Requests.Select(r => new
@@ -49,7 +50,8 @@ namespace Ajerly_Platform.Controllers
                 City = r.City,
                 Price = r.Price,
                 PriceUnit = r.PriceUnit,
-                Phone = r.Phone
+                Phone = r.Phone,
+                SellerName = r.User.FullName
             });
 
             // Perform the set operation on the IQueryable results, then order and
@@ -70,7 +72,8 @@ namespace Ajerly_Platform.Controllers
                     City = i.City,
                     Price = i.Price,
                     PriceUnit = i.PriceUnit,
-                    Phone = i.Phone
+                    Phone = i.Phone,
+                    SellerName = i.SellerName // map seller name
                 })
                 .ToList();
 
@@ -112,4 +115,3 @@ namespace Ajerly_Platform.Controllers
         }
     }
 }
-

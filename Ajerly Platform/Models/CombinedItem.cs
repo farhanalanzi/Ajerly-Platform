@@ -17,5 +17,8 @@ namespace Ajerly_Platform.Models
         public decimal? Price { get; set; }
         public string? PriceUnit { get; set; }
         public string? Phone { get; set; }
+
+        // seller/display name
+        public string? SellerName { get; set; }
     }
 }

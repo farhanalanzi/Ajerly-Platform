@@ -1,20 +1,14 @@
 @using System.Linq
 @model Ajerly_Platform.Models.Listing
 
-<div class="details-container">
+<div class="details-container centered-details">
     <button class="btn-back" onclick="history.back()">&larr; العودة</button>
 
-    <div class="details-grid">
-        <div class="details-image">
+    <div class="card-preview vertical details-page">
+        <div class="preview-image">
             @if (Model.Images.Any())
             {
                 <img id="mainImg" src="@Model.Images.First().ImageUrl" alt="@Model.Title" />
-                <div class="thumbs">
-                    @foreach (var img in Model.Images.Skip(1))
-                    {
-                        <img src="@img.ImageUrl" alt="thumb" class="thumb" onclick="document.getElementById('mainImg').src='@img.ImageUrl';" />
-                    }
-                </div>
             }
             else
             {
@@ -22,23 +16,40 @@
             }
         </div>
 
-        <div class="details-info">
+        <div class="preview-content">
             <span class="listing-tag">عرض</span>
-            <h1>@Model.Title</h1>
-
-            <p class="meta"><strong>التصنيف:</strong> <span>@Model.Category</span></p>
-            <p class="desc">@Model.Description</p>
-
-            <p class="meta"><strong>المدينة:</strong> <span>@Model.City</span></p>
-            <p class="meta"><strong>السعر:</strong> <span class="price">@Model.Price ريال/@Model.PriceUnit</span></p>
-            <p class="meta"><strong>الجوال:</strong> <a class="phone-link" href="tel:@Model.Phone">@Model.Phone</a></p>
-
-            <p class="created"><small>نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</small></p>
-
-            <div class="details-actions">
-                <a class="btn-contact" href="tel:@Model.Phone">اتصل بالبائع</a>
-                <a class="btn-message" href="mailto:?subject=استفسار عن: @Model.Title">راسل البائع</a>
+            <h2>@Model.Title</h2>
+            <div class="preview-city">
+                <!-- Bootstrap-style location SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6b7280" viewBox="0 0 16 16" style="vertical-align:middle;margin-inline-start:6px;">
+                  <path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
+                </svg>
+                @Model.City
             </div>
+            <div class="preview-desc">@Model.Description</div>
+
+            @{ var unit = Model.PriceUnit ?? ""; var priceText = unit.Trim() == "ريال" ? $"السعر: {Model.Price} ريال" : $"السعر: {Model.Price} {unit}"; }
+            <div class="listing-price" style="font-size:20px;font-weight:800;color:#111827;margin-top:6px;">@Html.Raw(priceText)</div>
+
+            <div class="seller-box">
+                <div>
+                    <div class="seller-label" style="font-size:12px;color:#6b7280">المعلن</div>
+                    <div class="seller-name">@Model.User?.FullName</div>
+                </div>
+                <a class="btn-contact large" href="tel:@Model.Phone">اتصل الآن</a>
+            </div>
+
+            <div class="preview-meta"><small>نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</small></div>
+
+            @if (Model.Images.Skip(1).Any())
+            {
+                <div class="thumbs small-thumbs" style="margin-top:8px;">
+                    @foreach (var img in Model.Images.Skip(1))
+                    {
+                        <img src="@img.ImageUrl" alt="thumb" class="thumb" onclick="document.getElementById('mainImg').src='@img.ImageUrl';" />
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>

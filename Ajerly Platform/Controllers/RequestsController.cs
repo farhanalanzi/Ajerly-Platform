@@ -68,7 +68,9 @@ namespace Ajerly_Platform.Controllers
         // New: Details view for a request
         public async Task<IActionResult> Details(int id)
         {
-            var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == id);
+            var request = await _context.Requests
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.Id == id);
             if (request == null)
                 return NotFound();
 
