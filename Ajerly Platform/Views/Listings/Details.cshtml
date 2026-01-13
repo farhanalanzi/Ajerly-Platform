@@ -3,10 +3,8 @@
 
 @{
     // determine if this is a rental (has a unit) or sale
-    var pu = (Model.PriceUnit ?? string.Empty).ToLower();
+    var pu = Model.PriceUnit?.ToLower() ?? string.Empty;
     bool isRental = pu.Contains("ساعة") || pu.Contains("يوم") || pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("hour") || pu.Contains("day") || pu.Contains("week");
-    var badgeText = isRental ? "للإيجار" : "للبيع";
-    var badgeClass = isRental ? "badge-rent" : "badge-sale";
 
     // price display
     var priceValue = Model.Price;
@@ -40,12 +38,14 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <img class="hero-image" src="@(Model.Images?.FirstOrDefault()?.ImageUrl ?? "/images/default.jpg")" alt="@Model.Title" />
-        <div class="hero-badge @badgeClass">@badgeText</div>
     </section>
 
     <!-- Main content container (white background) -->
     <main class="offer-content">
         <div class="content-inner">
+            <!-- Offer type badge shown under the image and above the title -->
+            <div class="offer-type">عرض</div>
+
             <!-- Title & Category (right-aligned) with city under the title -->
             <div class="section title-section">
                 <div class="category">@Model.Category</div>

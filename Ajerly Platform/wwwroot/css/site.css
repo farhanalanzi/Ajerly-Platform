@@ -1279,3 +1279,16 @@ textarea.form-control {
   justify-content: center;
 }
 
+/* Offer type badge under hero image */
+.offer-type {
+  max-width: 120px;
+  margin: 12px 0 6px auto; /* align to right */
+  padding: 6px 10px;
+  background: linear-gradient(90deg,#06b6d4,#a855f7);
+  color: white;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 999px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+}
