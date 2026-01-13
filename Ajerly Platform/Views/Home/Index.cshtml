@@ -46,10 +46,11 @@ ViewData["Title"] = "Home Page";
 
             string unitText = string.Empty;
             var pu = (item.PriceUnit ?? string.Empty).ToLower();
-            if (pu == "hour" || pu == "hour") unitText = "ساعة";
-            else if (pu == "day" || pu == "day") unitText = "يوم";
-            else if (pu == "week" || pu == "week") unitText = "أسبوع";
-            else if (pu == "month" || pu == "month") unitText = "شهر";
+            if (pu.Contains("ساعة") || pu.Contains("hour")) unitText = "ساعة";
+            else if (pu.Contains("يوم") || pu.Contains("day")) unitText = "يوم";
+            else if (pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("week")) unitText = "أسبوع";
+            else if (pu.Contains("شهر") || pu.Contains("month")) unitText = "شهر";
+            else unitText = string.Empty;
 
             var unitSuffix = string.IsNullOrEmpty(unitText) ? string.Empty : " / " + unitText;
         <div class="listing-card" data-category="@item.Category" data-type="@(item.Type?.ToLower())" data-id="@item.Id"
@@ -74,14 +75,20 @@ ViewData["Title"] = "Home Page";
 
                 <div class="listing-info">
                     <h3 class="card-title">@item.Title</h3>
-                    <div class="seller-name" style="color:#6b7280;font-size:13px;">@item.SellerName</div>
+                    <div class="seller-name" style="color:#6b7280;font-size:13px;">بواسطة : @item.SellerName</div>
+                    <div class="listing-meta">
+                        <span class="loc-icon" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+                        </span>
+                        <span class="city-name">@item.City</span>
+                    </div>
                 </div>
             </a>
 
             <div class="card-footer">
                 <div class="footer-right">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/></svg>
-                    <span>@item.City</span>
+                    <span class="city-name">@item.City</span>
                 </div>
             </div>
 

@@ -978,6 +978,36 @@ textarea.form-control {
   gap: 12px;
 }
 
+/* Ensure city text is visible and styled */
+.city-name {
+  color: #374151; /* dark slate */
+  font-size: 14px;
+  font-weight: 600;
+  margin-inline-start: 8px;
+}
+
+/* Seller label styling */
+.seller-name {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* listing-meta: icon + city under seller */
+.listing-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  color: #374151; /* dark slate for visibility */
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.listing-meta .loc-icon svg { color: #059669; /* teal accent */ }
+
+/* ensure footer-right svg doesn't clash (use muted color) */
+.card-footer .footer-right svg { color: #6b7280; }
+
 /* entrance animation: fade-in + slide-up */
 @keyframes cardFadeUp {
   from { opacity: 0; transform: translateY(12px); }
