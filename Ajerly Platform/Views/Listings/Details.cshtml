@@ -89,32 +89,35 @@
                 <div class="seller-name-under">@Model.User?.FullName</div>
             </div>
 
-            @* Owner actions: show centered Edit & Delete buttons only to the owner *@
-            @if (User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.UserId)
-            {
-                <div class="section myads-actions">
-                    <a class="btn btn-warning" href="@Url.Action("Edit","Listings", new { id = Model.Id })">تعديل</a>
-                    <form id="deleteForm" method="post" action="@Url.Action("Delete","Listings", new { id = Model.Id })" style="display:inline-block;">
-                        @Html.AntiForgeryToken()
-                        <button type="button" id="openDeleteModal" class="btn btn-danger">حذف</button>
-                        <noscript>
-                            <!-- If JS is disabled, provide a classical submit button fallback -->
-                            <button type="submit" class="btn btn-danger">حذف</button>
-                        </noscript>
-                    </form>
-                </div>
+            @{
+                var fromQuery = (Context?.Request?.Query["from"].ToString() ?? string.Empty).ToLower();
+                var isOwner = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.UserId;
+                if (isOwner && fromQuery == "myads")
+                {
+                    <div class="section myads-actions">
+                        <a class="btn btn-warning" href="@Url.Action("Edit","Listings", new { id = Model.Id })">تعديل</a>
+                        <form id="deleteForm" method="post" action="@Url.Action("Delete","Listings", new { id = Model.Id })" style="display:inline-block;">
+                            @Html.AntiForgeryToken()
+                            <button type="button" id="openDeleteModal" class="btn btn-danger">حذف</button>
+                            <noscript>
+                                <!-- If JS is disabled, provide a classical submit button fallback -->
+                                <button type="submit" class="btn btn-danger">حذف</button>
+                            </noscript>
+                        </form>
+                    </div>
 
-                <!-- Delete confirmation modal (hidden by default) -->
-                <div id="deleteConfirmModal" class="delete-modal" aria-hidden="true" style="display:none;">
-                    <div class="delete-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
-                        <h3 id="deleteTitle">تأكيد الحذف</h3>
-                        <p>هل أنت متأكد أنك تريد حذف هذا الإعلان؟ سيتم حذف الإعلان نهائياً ولا يمكن استعادته.</p>
-                        <div class="delete-actions">
-                            <button id="confirmDelete" class="btn btn-danger">حذف</button>
-                            <button id="cancelDelete" class="btn btn-secondary">إلغاء</button>
+                    <!-- Delete confirmation modal (hidden by default) -->
+                    <div id="deleteConfirmModal" class="delete-modal" aria-hidden="true" style="display:none;">
+                        <div class="delete-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+                            <h3 id="deleteTitle">تأكيد الحذف</h3>
+                            <p>هل أنت متأكد أنك تريد حذف هذا الإعلان؟ سيتم حذف الإعلان نهائياً ولا يمكن استعادته.</p>
+                            <div class="delete-actions">
+                                <button id="confirmDelete" class="btn btn-danger">حذف</button>
+                                <button id="cancelDelete" class="btn btn-secondary">إلغاء</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
 
             <!-- Contact button and phone box -->

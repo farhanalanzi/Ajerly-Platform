@@ -18,7 +18,7 @@
         var unitSuffix = string.IsNullOrEmpty(unitText) ? string.Empty : " / " + unitText;
 
         <div class="listing-card" data-category="@item.Category" data-id="@item.Id">
-            <a class="listing-link" href="@Url.Action("Details","Listings", new { id = item.Id })" style="text-decoration:none; color:inherit;">
+            <a class="listing-link" href="@Url.Action("Details","Listings", new { id = item.Id, from = "myads" })" style="text-decoration:none; color:inherit;">
                 <div class="listing-image">
                     @if (!string.IsNullOrEmpty(firstImage))
                     {
