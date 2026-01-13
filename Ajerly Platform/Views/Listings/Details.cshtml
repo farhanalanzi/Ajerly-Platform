@@ -89,6 +89,34 @@
                 <div class="seller-name-under">@Model.User?.FullName</div>
             </div>
 
+            @* Owner actions: show centered Edit & Delete buttons only to the owner *@
+            @if (User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.UserId)
+            {
+                <div class="section myads-actions">
+                    <a class="btn btn-warning" href="@Url.Action("Edit","Listings", new { id = Model.Id })">تعديل</a>
+                    <form id="deleteForm" method="post" action="@Url.Action("Delete","Listings", new { id = Model.Id })" style="display:inline-block;">
+                        @Html.AntiForgeryToken()
+                        <button type="button" id="openDeleteModal" class="btn btn-danger">حذف</button>
+                        <noscript>
+                            <!-- If JS is disabled, provide a classical submit button fallback -->
+                            <button type="submit" class="btn btn-danger">حذف</button>
+                        </noscript>
+                    </form>
+                </div>
+
+                <!-- Delete confirmation modal (hidden by default) -->
+                <div id="deleteConfirmModal" class="delete-modal" aria-hidden="true" style="display:none;">
+                    <div class="delete-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+                        <h3 id="deleteTitle">تأكيد الحذف</h3>
+                        <p>هل أنت متأكد أنك تريد حذف هذا الإعلان؟ سيتم حذف الإعلان نهائياً ولا يمكن استعادته.</p>
+                        <div class="delete-actions">
+                            <button id="confirmDelete" class="btn btn-danger">حذف</button>
+                            <button id="cancelDelete" class="btn btn-secondary">إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
             <!-- Contact button and phone box -->
             <div class="section contact-section">
                 <button id="contactToggle" class="contact-btn">
@@ -151,6 +179,61 @@
             window.addEventListener('resize', positionBackButton);
             // also run once more after a short delay to account for images loading
             setTimeout(positionBackButton, 600);
+
+            // Delete confirmation modal logic - run after DOM content loaded to ensure elements exist
+            window.addEventListener('DOMContentLoaded', function(){
+                var deleteModal = document.getElementById('deleteConfirmModal');
+                var openDeleteModalBtn = document.getElementById('openDeleteModal');
+                var cancelDeleteBtn = document.getElementById('cancelDelete');
+                var confirmDeleteBtn = document.getElementById('confirmDelete');
+
+                if(openDeleteModalBtn && deleteModal){
+                    openDeleteModalBtn.addEventListener('click', function(){
+                        deleteModal.style.display = 'flex';
+                        deleteModal.setAttribute('aria-hidden', 'false');
+                        // focus confirm button for keyboard users
+                        if(confirmDeleteBtn) confirmDeleteBtn.focus();
+                    });
+                }
+
+                function closeDeleteModal(){
+                    if(!deleteModal) return;
+                    deleteModal.style.display = 'none';
+                    deleteModal.setAttribute('aria-hidden', 'true');
+                    if(openDeleteModalBtn) openDeleteModalBtn.focus();
+                }
+
+                if(cancelDeleteBtn){
+                    cancelDeleteBtn.addEventListener('click', function(){
+                        closeDeleteModal();
+                    });
+                }
+
+                if(confirmDeleteBtn){
+                    confirmDeleteBtn.addEventListener('click', function(){
+                        var form = document.getElementById('deleteForm');
+                        if(form){
+                            // submit the form to delete the listing
+                            form.submit();
+                        }
+                    });
+                }
+
+                // Close modal if clicking outside of it
+                window.addEventListener('click', function(event) {
+                    if (deleteModal && event.target == deleteModal) {
+                        closeDeleteModal();
+                    }
+                });
+
+                // Close on Escape key
+                window.addEventListener('keydown', function(event){
+                    if(event.key === 'Escape' || event.key === 'Esc'){
+                        if(deleteModal && deleteModal.style.display === 'flex') closeDeleteModal();
+                    }
+                });
+                
+            });
         })();
     </script>
 }
