@@ -154,6 +154,49 @@ ViewData["Title"] = "Home Page";
             document.addEventListener('DOMContentLoaded', function(){
                 var close = qs('.preview-close');
                 if (close) close.addEventListener('click', function(){ document.getElementById('cardPreviewOverlay').style.display = 'none'; document.body.style.overflow = ''; });
+
+                // Category filter logic
+                var categoryContainer = document.querySelector('.category-filter');
+                var categoryBtns = categoryContainer ? Array.from(categoryContainer.querySelectorAll('.category-btn')) : [];
+                var listings = Array.from(document.querySelectorAll('#listingsContainer .listing-card'));
+                var noResults = document.getElementById('noResults');
+
+                function norm(s){ return (s||'').toString().trim().toLowerCase(); }
+
+                function applyFilter(category){
+                    var catNorm = norm(category);
+                    var anyVisible = false;
+                    listings.forEach(function(card){
+                        var cardCat = norm(card.dataset.category);
+                        if(catNorm === '' || catNorm === 'الكل' || catNorm === 'all'){
+                            card.style.display = '';
+                            anyVisible = true;
+                        } else if(cardCat === catNorm || cardCat.indexOf(catNorm) !== -1 || catNorm.indexOf(cardCat) !== -1){
+                            // exact match or substring match (either direction)
+                            card.style.display = '';
+                            anyVisible = true;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    if(noResults) noResults.style.display = anyVisible ? 'none' : 'block';
+                }
+
+                // Wire up buttons
+                categoryBtns.forEach(function(btn){
+                    btn.addEventListener('click', function(e){
+                        e.preventDefault();
+                        // toggle active class
+                        categoryBtns.forEach(function(b){ b.classList.remove('active'); });
+                        btn.classList.add('active');
+                        var category = btn.getAttribute('data-category') || '';
+                        applyFilter(category);
+                    });
+                });
+
+                // Apply server-side selected category on load if present
+                var initial = (document.querySelector('.category-filter .category-btn.active') || {}).dataset || {}; 
+                if(initial && initial.category){ applyFilter(initial.category); }
             });
         })();
     </script>
