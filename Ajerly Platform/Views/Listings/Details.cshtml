@@ -1,55 +1,135 @@
-@using System.Linq
 @model Ajerly_Platform.Models.Listing
+@using System.Globalization
 
-<div class="details-container centered-details">
-    <button class="btn-back" onclick="history.back()">&larr; العودة</button>
+@{
+    // determine if this is a rental (has a unit) or sale
+    var pu = (Model.PriceUnit ?? string.Empty).ToLower();
+    bool isRental = pu.Contains("ساعة") || pu.Contains("يوم") || pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("hour") || pu.Contains("day") || pu.Contains("week");
+    var badgeText = isRental ? "للإيجار" : "للبيع";
+    var badgeClass = isRental ? "badge-rent" : "badge-sale";
 
-    <div class="card-preview vertical details-page">
-        <div class="preview-image">
-            @if (Model.Images.Any())
-            {
-                <img id="mainImg" src="@Model.Images.First().ImageUrl" alt="@Model.Title" />
-            }
-            else
-            {
-                <img id="mainImg" src="/images/default.jpg" alt="@Model.Title" />
-            }
+    // price display
+    var priceValue = Model.Price;
+    string priceDisplay;
+    if (priceValue == 0m) priceDisplay = "0";
+    else if (decimal.Truncate(priceValue) == priceValue) priceDisplay = ((int)priceValue).ToString(CultureInfo.InvariantCulture);
+    else priceDisplay = priceValue.ToString("0.##", CultureInfo.InvariantCulture);
+
+    // price type text
+    string priceTypeText = isRental ? "سعر الإيجار" : "سعر البيع";
+    if (isRental && !string.IsNullOrEmpty(pu))
+    {
+        if (pu.Contains("ساعة") || pu.Contains("hour")) priceTypeText += " / ساعة";
+        else if (pu.Contains("يوم") || pu.Contains("day")) priceTypeText += " / يوم";
+        else if (pu.Contains("أسبوع") || pu.Contains("week") || pu.Contains("اسبوع")) priceTypeText += " / أسبوع";
+    }
+}
+
+<div class="offer-details-root">
+    <!-- Header: sticky white with thin bottom border -->
+    <header class="offer-header" role="banner">
+        <div class="header-inner">
+            <button class="back-btn" onclick="history.back()" aria-label="رجوع">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="header-title">تفاصيل العرض</div>
         </div>
+    </header>
 
-        <div class="preview-content">
-            <span class="listing-tag">عرض</span>
-            <h2>@Model.Title</h2>
-            <div class="preview-city">
-                <!-- Bootstrap-style location SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6b7280" viewBox="0 0 16 16" style="vertical-align:middle;margin-inline-start:6px;">
-                  <path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
-                </svg>
-                @Model.City
-            </div>
-            <div class="preview-desc">@Model.Description</div>
+    <!-- Hero image full-width -->
+    <section class="offer-hero">
+        <img class="hero-image" src="@(Model.Images?.FirstOrDefault()?.ImageUrl ?? "/images/default.jpg")" alt="@Model.Title" />
+        <div class="hero-badge @badgeClass">@badgeText</div>
+    </section>
 
-            @{ var unit = Model.PriceUnit ?? ""; var priceText = unit.Trim() == "ريال" ? $"السعر: {Model.Price} ريال" : $"السعر: {Model.Price} {unit}"; }
-            <div class="listing-price" style="font-size:20px;font-weight:800;color:#111827;margin-top:6px;">@Html.Raw(priceText)</div>
-
-            <div class="seller-box">
-                <div>
-                    <div class="seller-label" style="font-size:12px;color:#6b7280">المعلن</div>
-                    <div class="seller-name">@Model.User?.FullName</div>
-                </div>
-                <a class="btn-contact large" href="tel:@Model.Phone">اتصل الآن</a>
+    <!-- Main content container (white background) -->
+    <main class="offer-content">
+        <div class="content-inner">
+            <!-- Title & Category (right-aligned) -->
+            <div class="section title-section">
+                <div class="category">@Model.Category</div>
+                <h1 class="title">@Model.Title</h1>
             </div>
 
-            <div class="preview-meta"><small>نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</small></div>
-
-            @if (Model.Images.Skip(1).Any())
-            {
-                <div class="thumbs small-thumbs" style="margin-top:8px;">
-                    @foreach (var img in Model.Images.Skip(1))
-                    {
-                        <img src="@img.ImageUrl" alt="thumb" class="thumb" onclick="document.getElementById('mainImg').src='@img.ImageUrl';" />
-                    }
+            <!-- Location -->
+            <div class="section location-section">
+                <div class="location-row">
+                    <svg class="loc-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+                    <div class="city">@Model.City</div>
                 </div>
-            }
+            </div>
+
+            <!-- Listing Details -->
+            <div class="section details-section">
+                <h2>التفاصيل</h2>
+                <div class="details-box">@Model.Description</div>
+            </div>
+
+            <!-- Price -->
+            <div class="section price-section">
+                <div class="price-box">
+                    <div class="price-label">السعر</div>
+                    <div class="price-row">
+                        <div class="price-number">@priceDisplay</div>
+                        <div class="price-currency">ر.س</div>
+                    </div>
+                    <div class="price-type">@priceTypeText</div>
+                </div>
+            </div>
+
+            <!-- Posted date centered -->
+            <div class="section posted-date">نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd")</div>
+
+            <!-- Seller information -->
+            <div class="section seller-section">
+                <div class="seller-header"><h2>البائع</h2></div>
+                <div class="seller-row">
+                    <div class="seller-avatar">@{ var sellerName = Model.User?.FullName ?? string.Empty; var avatar = string.IsNullOrEmpty(sellerName) ? "؟" : sellerName.Substring(0,1); }@avatar</div>
+                    <div class="seller-info">
+                        <div class="seller-name">@Model.User?.FullName</div>
+                        <div class="seller-meta">
+                            <span class="verified">✓ بائع موثوق</span>
+                            <span class="transactions">15 مبيعات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact button and phone box -->
+            <div class="section contact-section">
+                <button id="contactToggle" class="contact-btn">
+                    <span class="chev" aria-hidden="true">▾</span>
+                    <span class="contact-text">اتصل بالبائع</span>
+                    <span class="phone-icon" aria-hidden="true">📞</span>
+                </button>
+
+                <div id="phoneBox" class="phone-box" aria-hidden="true">
+                    <div class="phone-number">@Model.Phone</div>
+                    <div class="phone-actions">
+                        <a class="btn-call" href="tel:@Model.Phone">اتصال</a>
+                        <a class="btn-wa" target="_blank" href="https://wa.me/@(Model.Phone?.Replace("+","").Replace(" ",""))">واتساب</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
+    </main>
 </div>
+
+@section Scripts {
+    <script>
+        (function(){
+            // contact toggle with smooth transition
+            var toggle = document.getElementById('contactToggle');
+            var box = document.getElementById('phoneBox');
+            if(toggle && box){
+                toggle.addEventListener('click', function(){
+                    var open = box.classList.toggle('open');
+                    // rotate chevron
+                    toggle.classList.toggle('open');
+                    box.setAttribute('aria-hidden', !open);
+                });
+            }
+        })();
+    </script>
+}
