@@ -974,39 +974,61 @@ textarea.form-control {
   display: flex;
   justify-content: flex-end; /* align only city to the right */
   align-items: center;
-  padding: 10px 16px 16px;
+  padding: 4px 12px 12px; /* raised the content slightly more */
   gap: 12px;
+  box-sizing: border-box; /* ensure padding doesn't cause overflow */
+  width: 100%;
+  overflow: hidden; /* prevent children from visually escaping the card */
 }
 
-/* Ensure city text is visible and styled */
+/* Ensure footer-right groups icon + city and stays inside the card */
+.footer-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  /* reverse row so the DOM ordering appears mirrored: icon will be placed at the far right visually */
+  flex-direction: row-reverse;
+}
+
+/* Ensure city text is visible and styled for RTL: use margin-inline-end */
 .city-name {
-  color: #374151; /* dark slate */
-  font-size: 14px;
-  font-weight: 600;
-  margin-inline-start: 8px;
-}
-
-/* Seller label styling */
-.seller-name {
-  color: #6b7280;
-  font-size: 13px;
-}
-
-/* listing-meta: icon + city under seller */
-.listing-meta {
+   color: #374151; /* dark slate */
+   font-size: 14px;
+   font-weight: 600;
+   display: inline-block;
+   vertical-align: middle;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   order: 1; /* show city first in visual order when using row-reverse */
+ }
+ 
+ /* listing-meta inside the card info (ensure proper RTL alignment) */
+ .listing-meta {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 6px;
+  margin-top: 0; /* moved up slightly more */
   color: #374151; /* dark slate for visibility */
   font-size: 14px;
   font-weight: 600;
-}
-
-.listing-meta .loc-icon svg { color: #059669; /* teal accent */ }
-
-/* ensure footer-right svg doesn't clash (use muted color) */
-.card-footer .footer-right svg { color: #6b7280; }
+  justify-content: flex-end; /* right-align the row inside card */
+  /* put icon visually at the far right and city to its left */
+  flex-direction: row-reverse;
+ }
+ 
+ /* Ensure the icon appears to the right of the city name */
+ .listing-meta .loc-icon { order: 2; margin-inline-start: 8px; display: inline-flex; align-items: center; }
+ .listing-meta .loc-icon svg { width:16px; height:16px; display:block; }
+ 
+ /* Footer icon ordering (same logic as listing-meta) */
+ .footer-right .loc-icon, .footer-right svg { order: 2; margin-inline-start: 8px; }
+ /* ensure city in footer appears to the right (first) when using row-reverse */
+ .footer-right .city-name { order: 1; }
 
 /* entrance animation: fade-in + slide-up */
 @keyframes cardFadeUp {
