@@ -5,33 +5,57 @@
 <div class="listings-grid" id="myListingsContainer">
     @foreach (var item in Model)
     {
-        <div style="position:relative;">
-        <a class="listing-link" href="@Url.Action("Details","Listings", new { id = item.Id })" style="text-decoration:none; color:inherit;">
-            <div class="listing-card" data-category="@item.Category" data-id="@item.Id">
+        var firstImage = item.Images?.FirstOrDefault()?.ImageUrl;
+        var imageUrl = string.IsNullOrEmpty(firstImage) ? "/images/default.jpg" : Url.Content(firstImage);
+        var priceValue = item.Price;
+        string priceDisplay = priceValue == 0m ? "0" : (decimal.Truncate(priceValue) == priceValue ? ((int)priceValue).ToString() : priceValue.ToString("0.##"));
+        string unitText = (item.PriceUnit ?? string.Empty).ToLower() switch
+        {
+            "hour" => "ساعة",
+            "day" => "يوم",
+            "week" => "أسبوع",
+            "month" => "شهر",
+            _ => string.Empty
+        };
+        var unitSuffix = string.IsNullOrEmpty(unitText) ? string.Empty : " / " + unitText;
+
+        <div class="listing-card" data-category="@item.Category" data-id="@item.Id">
+            <a class="listing-link" href="@Url.Action("Details","Listings", new { id = item.Id })" style="text-decoration:none; color:inherit;">
                 <div class="listing-image">
-                    @* If there are images, render the first one. Otherwise render an empty white area without borders. Use FirstOrDefault() to be null-safe *@
-                    @{ var firstImage = item.Images?.FirstOrDefault()?.ImageUrl; }
                     @if (!string.IsNullOrEmpty(firstImage))
                     {
-                        <img src="@Url.Content(firstImage)" alt="@item.Title" />
+                        <img src="@imageUrl" alt="@item.Title" />
                     }
                     else
                     {
                         <div class="empty-image" aria-hidden="true"></div>
                     }
+
+                    <div class="image-overlay"></div>
+                    <div class="badge-category">@item.Category</div>
+                    <div class="badge-type">عرض</div>
+                    <div class="price-pill">@priceDisplay ر.س@unitSuffix</div>
                 </div>
+
                 <div class="listing-info">
-                    <span class="listing-tag">عرض</span>
-                    <h3>@item.Title</h3>
-                    <p class="desc">@item.Description</p>
-                    <p class="meta"><strong>السعر:</strong> @item.Price ريال</p>
+                    <h3 class="card-title">@item.Title</h3>
+                    <div class="seller-name" style="color:#6b7280;font-size:13px;">@item.User?.FullName</div>
+                </div>
+            </a>
+
+            <div class="card-footer">
+                <div class="footer-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                    <span>@item.City</span>
                 </div>
             </div>
-        </a>
-        <div style="position:absolute; top:8px; left:8px; display:flex; gap:8px;">
-            <a class="btn btn-sm btn-warning" href="@Url.Action("Edit","Listings", new { id = item.Id })">تعديل</a>
-            <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","Listings", new { id = item.Id })">حذف</a>
-        </div>
+
+            <div class="card-actions">
+                <a class="btn btn-warning btn-sm" href="@Url.Action("Edit","Listings", new { id = item.Id })">تعديل</a>
+                <form method="post" action="@Url.Action("Delete","Listings", new { id = item.Id })" style="display:inline; margin-inline-start:6px;">
+                    <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                </form>
+            </div>
         </div>
     }
 </div>

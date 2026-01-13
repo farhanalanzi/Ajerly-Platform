@@ -20,5 +20,8 @@ namespace Ajerly_Platform.Models
 
         // seller/display name
         public string? SellerName { get; set; }
+
+        // Id of the user who posted this item (used to show edit/delete to owner)
+        public string? OwnerId { get; set; }
     }
 }

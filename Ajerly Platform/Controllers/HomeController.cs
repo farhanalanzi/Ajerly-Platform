@@ -35,7 +35,8 @@ namespace Ajerly_Platform.Controllers
                 Price = l.Price,
                 PriceUnit = l.PriceUnit,
                 Phone = l.Phone,
-                SellerName = l.User.FullName // may be null
+                SellerName = l.User.FullName, // may be null
+                OwnerId = l.UserId
             });
 
             var requests = _context.Requests.Select(r => new
@@ -51,7 +52,8 @@ namespace Ajerly_Platform.Controllers
                 Price = r.Price,
                 PriceUnit = r.PriceUnit,
                 Phone = r.Phone,
-                SellerName = r.User.FullName
+                SellerName = r.User.FullName,
+                OwnerId = r.UserId
             });
 
             // Perform the set operation on the IQueryable results, then order and
@@ -74,6 +76,7 @@ namespace Ajerly_Platform.Controllers
                     PriceUnit = i.PriceUnit,
                     Phone = i.Phone,
                     SellerName = i.SellerName // map seller name
+                    , OwnerId = i.OwnerId
                 })
                 .ToList();
 

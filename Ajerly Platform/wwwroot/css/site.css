@@ -293,202 +293,55 @@ textarea.form-control {
   min-height: 320px; /* fallback for older browsers */
 }
 
-.listing-link:hover .listing-card,
-.listing-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+بب/* Card image sizing: use consistent heights for a professional grid */
+.listing-card {
+  /* keep flex column so content stacks */
+  display: flex;
+  flex-direction: column;
+  /* ensure card content doesn't overflow visually */
+  overflow: hidden;
+  min-height: 320px; /* ensure reasonable card height */
 }
 
-/* Image: take the main portion of the card, cover fully */
 .listing-image {
-  flex: 1 1 60%;
+  /* fixed height area for the image to create consistent cards */
+  flex: 0 0 auto;
+  height: 220px; /* desktop image height */
   width: 100%;
-  overflow: hidden;
-  background: white; /* ensure empty area is white */
-  border: none; /* remove any border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
 }
 
 .listing-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* show whole image without cropping */
-  object-position: center center; /* center the image */
-  background: white; /* ensure any empty area is white */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain !important; /* show whole image */
   display: block;
+  margin: 0 auto;
 }
 
-/* When there is no image, render an empty white block without borders or placeholder text */
-.empty-image {
-  width: 100%;
-  height: 100%;
-  background: white;
-  display: block;
-}
-
-/* Card content sits below the image; keep it compact */
-.listing-info {
-  padding: 14px 18px;
-  text-align: right;
-  display: block;
-  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
-}
-
-.listing-info h3 {
-  margin: 0 0 6px 0;
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.listing-info p {
-  margin: 0 0 6px 0;
-  color: #444;
-  font-size: 14px;
-}
-
-.listing-tag {
-  background-color: #007bff;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  display: inline-block;
-  margin-bottom: 8px;
-}
-
-.listing-tag.request {
-  background-color: #ff7e5f;
-}
-
-/* make price stand out */
-.listing-info .price {
-  font-weight: 700;
-  color: #222;
-}
-
-/* Card preview overlay */
-.card-preview-overlay {
-  position: fixed;
-  inset: 0;
-  display: none; /* toggled via JS */
+/* Buttons area inside card so they don't overflow */
+.card-actions {
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end; /* place actions on the left or right as needed; for RTL, right is start */
   align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.45);
-  z-index: 2000;
-  padding: 24px;
-}
-
-.card-preview {
-  background: #ffffff;
-  width: min(980px, 96%);
-  max-height: 90vh;
-  border-radius: 12px;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  direction: rtl;
-  align-items: start;
-  padding: 18px;
-  position: relative;
-  box-shadow: 0 20px 50px rgba(2,6,23,0.2); /* subtle pop */
-}
-
-.preview-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  box-sizing: border-box;
+  width: 100%;
   background: transparent;
-  border: none;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  color: #374151;
 }
 
-.preview-image {
-  background: #f8f9fb;
+.card-actions .btn {
+  padding: 6px 10px;
+  font-size: 13px;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 320px;
-  max-height: 70vh;
-  overflow: hidden;
 }
 
-.preview-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* show whole image without cropping */
-  object-position: center center;
-  display: block;
-  background: white;
-}
-
-.preview-content {
-  padding: 6px 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.preview-content h2 {
-  font-size: 26px;
-  margin: 4px 0 8px 0;
-  color: #111827;
-  text-align: right;
-}
-
-.preview-city {
-  color: #6b7280;
-  font-size: 15px;
-  margin-bottom: 10px;
-  text-align: right;
-}
-
-.preview-desc {
-  font-size: 18px;
-  color: #374151;
-  margin: 8px 0 14px 0;
-  text-align: right;
-}
-
-/* seller box: light gray rounded box with seller name and call button */
-.seller-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f3f4f6;
-  padding: 10px 12px;
-  border-radius: 10px;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.seller-name {
-  font-weight: 700;
-  color: #111827;
-  font-size: 16px;
-  text-align: right;
-}
-
-.preview-meta {
-  color: #6b7280;
-  font-size: 14px;
-  text-align: right;
-  margin-top: auto;
-}
-
-/* phone btn appears styled like CTA */
-.card-preview .btn-contact.large {
-  background: linear-gradient(90deg,#ff7e5f,#feb47b);
-  color: white;
-  border-radius: 10px;
-  padding: 10px 18px;
-  text-decoration: none;
-  font-weight: 700;
-}
+.card-actions .btn-warning { background-color: #f59e0b; border: none; color: white; }
+.card-actions .btn-danger { background-color: #ef4444; border: none; color: white; }
 
 /* Responsive: single column on narrow screens */
 @media (max-width: 880px) {
@@ -969,3 +822,178 @@ textarea.form-control {
 .details-image img#mainImg {
   object-fit: contain !important; /* show whole image without cropping */
 }
+
+/* Modern rental product card (RTL-ready) */
+.listing-card {
+  /* make corners more rounded */
+  border-radius: 1rem; /* rounded-2xl */
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease, filter 300ms ease;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  text-align: right;
+}
+
+.listing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15,23,42,0.18);
+}
+
+/* image container with 4:3 aspect ratio */
+.listing-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* modern browsers */
+  overflow: hidden;
+  flex: 0 0 auto;
+  background: #fff;
+}
+
+.listing-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* full-bleed */
+  display: block;
+  transform-origin: center center;
+  transition: transform 300ms ease;
+}
+
+/* zoom on hover */
+.listing-card:hover .listing-image img {
+  transform: scale(1.10);
+}
+
+/* gradient overlay that fades in on hover */
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 50%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.listing-card:hover .image-overlay { opacity: 1; }
+
+/* frosted category badge (top-right) */
+.badge-category {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #0f172a; /* dark text */
+  box-shadow: 0 2px 8px rgba(2,6,23,0.06);
+}
+
+/* availability badge (top-left) */
+.badge-unavailable {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(2,6,23,0.06);
+}
+
+/* Type badge (عرض/طلب) - top-left */
+.badge-type {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15,23,42,0.9);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(2,6,23,0.08);
+}
+
+/* price pill (bottom-right overlay) */
+.price-pill {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: linear-gradient(90deg, #06b6d4, #f59e0b); /* teal to gold */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  white-space: nowrap; /* adjust price pill to not include extra text placeholders */
+}
+
+/* content section */
+.listing-info {
+  padding: 14px 16px 12px;
+  color: #0f172a; /* dark text */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 17px;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.1;
+  /* clamp 1 line */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 300ms ease;
+}
+.listing-card:hover .card-title { color: #059669; /* teal primary on hover */ }
+
+.card-desc {
+  color: #6b7280; /* muted */
+  font-size: 14px;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* footer: location (right) and rating (left) */
+.card-footer {
+  display: flex;
+  justify-content: flex-end; /* align only city to the right */
+  align-items: center;
+  padding: 10px 16px 16px;
+  gap: 12px;
+}
+
+/* entrance animation: fade-in + slide-up */
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.listings-grid .listing-card { animation: cardFadeUp 400ms ease both; }
+
+/* make empty-image white without borders */
+.empty-image { background: #ffffff; width:100%; height:100%; }
+
+/* Ensure card-actions stay inside and do not overflow */
+.card-actions { padding: 10px 16px 18px; display:flex; gap:8px; justify-content:flex-end; }
+
+/* small responsive tweaks */
+@media (max-width: 900px) {
+  .price-pill { font-size: 13px; padding: 6px 10px; }
+  .card-title { font-size: 15px; }
+}
+

@@ -1,4 +1,5 @@
 ﻿@model Ajerly_Platform.Models.HomeIndexViewModel
+@using System.Security.Claims
 @{
 ViewData["Title"] = "Home Page";
 }
@@ -35,11 +36,25 @@ ViewData["Title"] = "Home Page";
         @foreach (var item in Model.CombinedItems)
         {
             var controller = item.Type == "Listing" ? "Listings" : "Requests";
-            var tag = item.Type == "Listing" ? "عرض" : "طلب";
             var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? "/images/default.jpg" : Url.Content(item.ImageUrl);
-        <a class="listing-link" href="@Url.Action("Details", controller, new { id = item.Id })" style="text-decoration:none; color:inherit;">
-            <div class="listing-card" data-category="@item.Category" data-type="@(item.Type?.ToLower())" data-id="@item.Id"
-                 data-info='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { title = item.Title, city = item.City, desc = item.Description, image = imageUrl, seller = item.SellerName, phone = item.Phone, createdAt = item.CreatedAt.ToString("yyyy-MM-dd") }))'>
+            // format price display (no trailing .00), default 0 -> "0"
+            var priceValue = item.Price ?? 0m;
+            string priceDisplay;
+            if (priceValue == 0m) priceDisplay = "0";
+            else if (decimal.Truncate(priceValue) == priceValue) priceDisplay = ((int)priceValue).ToString();
+            else priceDisplay = priceValue.ToString("0.##");
+
+            string unitText = string.Empty;
+            var pu = (item.PriceUnit ?? string.Empty).ToLower();
+            if (pu == "hour" || pu == "hour") unitText = "ساعة";
+            else if (pu == "day" || pu == "day") unitText = "يوم";
+            else if (pu == "week" || pu == "week") unitText = "أسبوع";
+            else if (pu == "month" || pu == "month") unitText = "شهر";
+
+            var unitSuffix = string.IsNullOrEmpty(unitText) ? string.Empty : " / " + unitText;
+        <div class="listing-card" data-category="@item.Category" data-type="@(item.Type?.ToLower())" data-id="@item.Id"
+             data-info='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { title = item.Title, city = item.City, desc = item.Description, image = imageUrl, seller = item.SellerName, phone = item.Phone, createdAt = item.CreatedAt.ToString("yyyy-MM-dd") }))'>
+            <a class="listing-link" href="@Url.Action("Details", controller, new { id = item.Id })" style="text-decoration:none; color:inherit;">
                 <div class="listing-image">
                     @if (!string.IsNullOrEmpty(item.ImageUrl))
                     {
@@ -49,25 +64,47 @@ ViewData["Title"] = "Home Page";
                     {
                         <div class="empty-image" aria-hidden="true"></div>
                     }
+
+                    <div class="image-overlay"></div>
+
+                    <div class="badge-category">@item.Category</div>
+                    <div class="badge-type">@(item.Type == "Listing" ? "عرض" : "طلب")</div>
+                    <div class="price-pill">@($"{priceDisplay} ر.س{unitSuffix}")</div>
                 </div>
+
                 <div class="listing-info">
-                    <span class="listing-tag">@tag</span>
-                    <h3>@item.Title</h3>
+                    <h3 class="card-title">@item.Title</h3>
+                    <div class="seller-name" style="color:#6b7280;font-size:13px;">@item.SellerName</div>
+                </div>
+            </a>
 
-                    <p>
-                        <strong>
-                           <!-- location svg -->
-                           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#6b7280" viewBox="0 0 16 16" style="vertical-align:middle;margin-inline-start:6px;">
-                             <path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
-                           </svg>
-                           @item.City
-                        </strong>
-                    </p>
-
-                    <p><strong>بواسطة:</strong> @item.SellerName</p>
+            <div class="card-footer">
+                <div class="footer-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                    <span>@item.City</span>
                 </div>
             </div>
-        </a>
+
+            <div class="card-actions">
+                @if (User?.FindFirst(ClaimTypes.NameIdentifier)?.Value == item.OwnerId)
+                {
+                    if (item.Type == "Listing")
+                    {
+                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit","Listings", new { id = item.Id })">تعديل</a>
+                        <form method="post" action="@Url.Action("Delete","Listings", new { id = item.Id })" style="display:inline; margin-inline-start:6px;">
+                            <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit","Requests", new { id = item.Id })">تعديل</a>
+                        <form method="post" action="@Url.Action("Delete","Requests", new { id = item.Id })" style="display:inline; margin-inline-start:6px;">
+                            <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                        </form>
+                    }
+                }
+            </div>
+        </div>
         }
 
         <div id="noResults" style="display:none; padding:20px; text-align:center; font-weight:bold;">لا توجد نتائج لهذا التصنيف</div>
@@ -106,15 +143,8 @@ ViewData["Title"] = "Home Page";
 @section Scripts {
     <script>
         (function(){
-            // Removed preview open handlers so clicking a card navigates to its details page.
-            // Previously we intercepted clicks to show a modal; now we want normal navigation.
-
-            // Keep simple helper functions in case we need them later
             function qs(sel, base) { return (base || document).querySelector(sel); }
-
             document.addEventListener('DOMContentLoaded', function(){
-                // No interception: anchors behave normally and navigate to /Listings/Details/{id}
-                // We still wire the modal close if modal is ever opened by other means.
                 var close = qs('.preview-close');
                 if (close) close.addEventListener('click', function(){ document.getElementById('cardPreviewOverlay').style.display = 'none'; document.body.style.overflow = ''; });
             });
