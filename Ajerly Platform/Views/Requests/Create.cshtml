@@ -4,11 +4,14 @@
     <h1>ابحث عن عرض</h1>
     <p>ابحث عن المنتج الذي تريده وتواصل مع الآخرين</p>
 
-    <form asp-action="Create" enctype="multipart/form-data">
-        <div class="form-group">
-            <label>عنوان الإعلان *</label>
-            <input asp-for="Title" class="form-control" placeholder="مثال: دراجة جبلية للإيجار" />
-        </div>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger" style="margin-bottom:12px;"></div>
+         <div class="form-group">
+             <label>عنوان الإعلان *</label>
+             <input asp-for="Title" class="form-control" placeholder="مثال: مطلوب دراجة نارية للايجار" maxlength="20" />
+            
+         </div>
 
         <div class="form-group">
             <label>التصنيف</label>
@@ -26,13 +29,15 @@
 
         <div class="form-group">
             <label>تفاصيل الإعلان *</label>
-            <textarea asp-for="Description" class="form-control" placeholder="اكتب تفاصيل المنتج، الحالة، والميزات..."></textarea>
-        </div>
+            <textarea asp-for="Description" class="form-control" placeholder="اكتب تفاصيل المنتج، الحالة، والميزات..." maxlength="70"></textarea>
+         </div>
 
         <div class="form-group">
             <label>سعر الإيجار *</label>
-            <input asp-for="Price" class="form-control" placeholder="100" />
-        </div>
+            <input asp-for="Price" class="form-control" placeholder="100" maxlength="5" pattern="^\d{1,5}$" inputmode="numeric" />
+
+             
+         </div>
 
         <div class="form-group">
             <label>الوحدة</label>
@@ -45,13 +50,16 @@
 
         <div class="form-group">
             <label>المدينة *</label>
-            <input asp-for="City" class="form-control" placeholder="اختر المدينة" />
-        </div>
+            <input asp-for="City" class="form-control" placeholder="اختر المدينة" maxlength="12" />
 
-        <div class="form-group">
-            <label>رقم الجوال للتواصل *</label>
-            <input asp-for="Phone" class="form-control" placeholder="05xxxxxxxx" />
-        </div>
+     
+         </div>
+ 
+         <div class="form-group">
+             <label>رقم الجوال للتواصل *</label>
+             <input asp-for="Phone" class="form-control" placeholder="05xxxxxxxx" maxlength="10" pattern="^\d{1,10}$" inputmode="numeric" />
+
+         </div>
 
         <div class="form-group">
             <label>صور المنتج (اختياري)</label>
@@ -62,3 +70,25 @@
         <button type="submit" class="btn-request-offer">إرسال الطلب</button>
     </form>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function(){
+            function enforceNumeric(el){
+                el.addEventListener('input', function(){
+                    var cleaned = this.value.replace(/[^0-9]/g, '');
+                    if(this.maxLength > 0) cleaned = cleaned.slice(0, this.maxLength);
+                    if(this.value !== cleaned) this.value = cleaned;
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                var price = document.querySelector('input[asp-for="Price"], input[name="Price"]') || document.querySelector('input[inputmode="numeric"]');
+                var phone = document.querySelector('input[asp-for="Phone"], input[name="Phone"]');
+                if(price) enforceNumeric(price);
+                if(phone) enforceNumeric(phone);
+            });
+        })();
+    </script>
+}
