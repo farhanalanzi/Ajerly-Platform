@@ -293,7 +293,7 @@ textarea.form-control {
   min-height: 320px; /* fallback for older browsers */
 }
 
-بب/* Card image sizing: use consistent heights for a professional grid */
+/* Card image sizing: use consistent heights for a professional grid */
 .listing-card {
   /* keep flex column so content stacks */
   display: flex;
@@ -1050,7 +1050,29 @@ textarea.form-control {
   backdrop-filter: blur(6px);
   z-index: 2000;
 }
-.details-header .btn-back { background: transparent; border:none; color: white; font-size:16px; padding:8px 12px; cursor:pointer; }
+.details-header .btn-back {
+  /* fixed and always visible on top-right above the hero image */
+  position: fixed !important;
+  top: 12px !important;
+  right: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #111827 !important; /* black/dark for contrast as requested */
+  padding: 6px !important;
+  cursor: pointer !important;
+  border-radius: 6px !important;
+  z-index: 999999 !important; /* very high so it sits above images */
+  box-shadow: none !important;
+  transition: none !important; /* completely static */
+}
+.details-header .btn-back svg { display:block; }
+.details-header .btn-back:hover,
+.details-header .btn-back:focus,
+.details-header .btn-back:active {
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
 .details-header h1 { color: white; margin:0; font-weight:800; font-size:20px; }
 
 .details-main {
@@ -1112,23 +1134,65 @@ textarea.form-control {
 .details-page-root, .product-card, .price-card, .seller-card, .image-card img { transition: all 300ms ease; }
 
 /* Offer detail page styles (new design per user prompt) */
-.offer-details-root { background: #fff; color: #0f172a; font-family: 'Cairo', sans-serif; direction: rtl; }
+.offer-details-root { background: #fff; color: #0f172a; font-family: 'Cairo', sans-serif; direction: rtl; padding-top: 72px; }
 
 /* Header */
 .offer-header { position: sticky; top:0; z-index:2000; background: #fff; border-bottom: 1px solid #e6e6e6; }
-.offer-header .header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:12px 20px; }
-.back-btn { background:transparent; border:none; color:#111827; padding:8px; cursor:pointer; border-radius:8px; }
-.back-btn svg { display:block; }
-.header-title { margin-right: auto; font-weight:800; font-size:18px; }
+.offer-header .header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:12px 20px; position:relative; }
+/* position back button on the top-right */
+.offer-header .back-btn { position:fixed; top:12px; right:20px; background:transparent; border:none; color:#111827; padding:6px; cursor:pointer; border-radius:6px; z-index:999999; }
+.offer-header .back-btn svg { display:block; }
+.offer-header .header-title { display:none; }
 
 /* Hero */
-.offer-hero { position: relative; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.offer-hero .hero-image { width:100%; height:500px; object-fit:cover; display:block; transition:transform 400ms ease; }
-.offer-hero .hero-image:hover { transform: scale(1.03); }
+.offer-hero { position: relative; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-top: 48px; }
+.offer-hero .hero-image {
+  /* show the whole image, not cropped; keep it a bit smaller so full image fits */
+  width: 100%;
+  height: auto;            /* let image determine height */
+  max-height: 420px;      /* limit visual height so full image is visible */
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;     /* ensure whole image is visible */
+  object-position: center center;
+  border-radius: 0 0 12px 12px; /* keep bottom corners rounded */
+}
 
-.hero-badge { position:absolute; top:18px; right:18px; padding:8px 12px; border-radius:999px; color:#fff; font-weight:800; box-shadow:0 8px 24px rgba(2,6,23,0.12); }
-.hero-badge.badge-sale { background: linear-gradient(90deg,#2563EB,#3B82F6); }
-.hero-badge.badge-rent { background: linear-gradient(90deg,#7C3AED,#A855F7); }
+/* Back button that sits on top of the hero image (inside hero) */
+.offer-hero > .back-btn {
+  position: fixed; /* fixed relative to viewport */
+  top: 84px; /* just below the main navbar — adjust if your navbar height differs */
+  right: 18px;
+  background: transparent !important;
+  border: none !important;
+  color: #111827 !important; /* black/dark for contrast as requested */
+  padding: 6px !important;
+  cursor: pointer !important;
+  z-index: 999999 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  transition: none !important; /* completely static */
+}
+.offer-hero > .back-btn svg { width: 26px; height: 26px; color: inherit; }
+.offer-hero > .back-btn:hover, .offer-hero > .back-btn:focus { background: rgba(0,0,0,0.18); }
+
+/* Hide header-level fixed back buttons (we're using hero-level button now) */
+.offer-details-root .offer-header,
+.offer-details-root .details-header,
+.details-header { display: none !important; }
+
+/* Hero image adjustments for details page */
+.offer-hero .hero-image {
+  height: 60vh; /* make hero image taller */
+  max-height: 80vh; /* limit max height */
+  border-radius: 0 0 12px 12px; /* round only bottom corners */
+  overflow: hidden;
+}
+
+.offer-hero .hero-image img {
+  object-fit: cover; /* cover to fill area */
+  object-position: center center;
+}
 
 /* Main content area */
 .offer-content { max-width:1100px; margin:28px auto; padding:18px; }
@@ -1215,5 +1279,3 @@ textarea.form-control {
   justify-content: center;
 }
 
-/* Ensure phone box appears centered under the button */
-.phone-box { margin: 12px auto 0; }

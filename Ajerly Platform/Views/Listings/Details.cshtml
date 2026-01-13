@@ -29,15 +29,16 @@
     <!-- Header: sticky white with thin bottom border -->
     <header class="offer-header" role="banner">
         <div class="header-inner">
-            <button class="back-btn" onclick="history.back()" aria-label="رجوع">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="header-title">تفاصيل العرض</div>
+                    <!-- header kept for sticky area; back button moved into hero for visual placement -->
         </div>
     </header>
 
     <!-- Hero image full-width -->
     <section class="offer-hero">
+        <button class="back-btn" onclick="history.back()" aria-label="رجوع">
+            <!-- Arrow pointing right (over image) -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <img class="hero-image" src="@(Model.Images?.FirstOrDefault()?.ImageUrl ?? "/images/default.jpg")" alt="@Model.Title" />
         <div class="hero-badge @badgeClass">@badgeText</div>
     </section>
@@ -116,6 +117,30 @@
                     box.setAttribute('aria-hidden', !open);
                 });
             }
+
+            // position the fixed back button so it sits directly over the hero image on the right
+            function positionBackButton(){
+                try{
+                    var hero = document.querySelector('.offer-hero');
+                    var btn = document.querySelector('.offer-hero > .back-btn');
+                    if(!hero || !btn) return;
+                    var rect = hero.getBoundingClientRect();
+                    // rect.top is relative to viewport; use that so the button is fixed at the same viewport spot
+                    var top = rect.top;
+                    // if hero is above viewport (user scrolled), snap it to a reasonable value
+                    if(top < 8) top = 8;
+                    btn.style.position = 'fixed';
+                    btn.style.top = (top + 8) + 'px';
+                    btn.style.right = '18px';
+                    btn.style.zIndex = '999999';
+                }catch(e){ console && console.error(e); }
+            }
+
+            window.addEventListener('DOMContentLoaded', positionBackButton);
+            window.addEventListener('load', positionBackButton);
+            window.addEventListener('resize', positionBackButton);
+            // also run once more after a short delay to account for images loading
+            setTimeout(positionBackButton, 600);
         })();
     </script>
 }
