@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4otm1xTGsxCtXslMx4+RKb7d0G1vKjpUcK1O+R8vMHM=",
+  "Hash": "tgXkTvTs5XfCr2MXNUamK+cs2s1ARScvEKkFH9l1W6E=",
   "Source": "Ajerly Platform",
   "BasePath": "_content/Ajerly Platform",
   "Mode": "Default",
@@ -1250,6 +1250,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/default.jpg"
+    },
+    {
+      "Identity": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/lgoo.png",
+      "SourceId": "Ajerly Platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/",
+      "BasePath": "_content/Ajerly Platform",
+      "RelativePath": "images/lgoo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/lgoo.png"
     },
     {
       "Identity": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/logo.svg",

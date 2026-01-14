@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets/images/default.jpg"
     },
     {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/lgoo.png",
+      "PackagePath": "staticwebassets/images/lgoo.png"
+    },
+    {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/logo.svg",
       "PackagePath": "staticwebassets/images/logo.svg"
     },

@@ -179,7 +179,8 @@ body {
 }
 
 .create-section {
-  padding: 60px 20px;
+  /* ensure content starts below fixed navbar (header height ~64-72px) */
+  padding: 84px 20px 60px; /* top padding increased to avoid header overlap */
   max-width: 700px;
   margin: auto;
   font-family: 'Cairo', sans-serif;
@@ -631,6 +632,7 @@ textarea.form-control {
 
 /* single-column on narrow screens */
 @media (max-width: 900px) {
+  .create-section { padding-top: 96px; }
   .details-grid { grid-template-columns: 1fr; }
   .centered-details { padding: 12px; }
   .centered-actions { justify-content:center; }
@@ -821,14 +823,18 @@ textarea.form-control {
 
 /* Site logo in navbar */
 .site-logo {
-  width: 36px;
-  height: 36px;
+  /* rectangular logo: fixed height, fluid width (keeps aspect ratio) */
+  height: 44px;           /* control visual height */
+  width: auto;            /* allow width to adapt for rectangular logos */
+  max-width: 220px;       /* prevent overly wide logos */
   vertical-align: middle;
-  margin-inline-end: 10px; /* space between logo and text */
+  margin-inline-end: 12px; /* space between logo and text */
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(2,6,23,0.08);
   background: var(--color-bg); /* keep logo background white for contrast */
-  padding: 4px;
+  padding: 6px;
+  display: block;
+  object-fit: contain;    /* ensure image scales correctly */
 }
 
 .btn-run {

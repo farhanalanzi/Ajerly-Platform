@@ -11,15 +11,16 @@
     <title>@ViewData["Title"] - Ajerly_Platform</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Ajerly_Platform.styles.css" asp-append-version="true"/>
+    <!-- removed missing stylesheet to avoid build warning: Ajerly_Platform.styles.css -->
 </head>
 <body>
 <nav class="custom-navbar">
     <div class="nav-right">
-        <button class="btn-run" onclick="location.href='@Url.Action("Index","Home")'">
-            <img src="~/images/logo.svg" alt="Ajerly" class="site-logo" />
-          اجرلي
-        </button>
+        <!-- use an anchor for the logo instead of a button -->
+        <a class="brand-link" href="@Url.Action("Index","Home")" aria-label="الرئيسية" title="الرئيسية">
+            <!-- Using the uploaded logo file (lgoo.png). If it's missing, fallback to logo.svg -->
+            <img src="~/images/lgoo.png" alt="شعار الموقع" class="site-logo" onerror="this.onerror=null; this.src='@Url.Content("~/images/logo.svg")';" />
+        </a>
     </div>
 
     <div class="nav-left">
