@@ -21,17 +21,32 @@ body {
   margin-bottom: 60px;
 }
 
+/* Palette variables (professional blue theme) */
+:root {
+  --color-bg: #ffffff; /* white background */
+  --color-text: #0f172a; /* dark text (slate-900) */
+  --blue-dark: #0b3d91; /* deep navy blue */
+  --blue-primary: #2563eb; /* primary blue */
+  --blue-light: #93c5fd; /* light blue */
+  --muted: #6b7280; /* muted gray */
+  --danger: #ef4444;
+  --accent-gold: #f59e0b;
+  --card-shadow: rgba(11,61,145,0.08);
+}
+
 /* الناف بار */
 .custom-navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  background: #ffffff;
+  /* Blue gradient header to match site palette */
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-primary));
+  color: var(--color-bg);
   padding: 12px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
   z-index: 1000;
   direction: rtl; /* لأن الواجهة عربية */
 }
@@ -50,20 +65,23 @@ body {
 
 /* زر تسجيل */
 .btn-register {
-  background: #007bff;
-  color: white;
+  /* white pill button on blue header */
+  background: var(--color-bg);
+  color: var(--blue-primary);
   border: none;
   padding: 8px 18px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  box-shadow: 0 6px 20px rgba(37,99,235,0.08);
 }
 
 /* زر دخول */
 .btn-login {
-  background: white;
-  color: #007bff;
-  border: 2px solid #007bff;
+  /* outline button with translucent white border for header */
+  background: transparent;
+  color: rgba(255,255,255,0.95);
+  border: 2px solid rgba(255,255,255,0.18);
   padding: 8px 18px;
   border-radius: 8px;
   font-size: 16px;
@@ -72,8 +90,9 @@ body {
 
 /* زر اجري! */
 .btn-run {
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
-  color: white;
+  /* logo button: white background so it stands out on blue header */
+  background: var(--color-bg);
+  color: var(--blue-primary);
   border: none;
   padding: 8px 20px;
   border-radius: 8px;
@@ -82,6 +101,7 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.06);
 }
 
 /* أيقونة */
@@ -91,8 +111,8 @@ body {
 
 
 .hero-section {
-  background: linear-gradient(to right, #007bff, #ff7e5f);
-  color: white;
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-primary));
+  color: var(--color-bg);
   padding: 100px 20px 60px;
   text-align: center;
   font-family: 'Cairo', sans-serif;
@@ -116,6 +136,8 @@ body {
   border-radius: 8px;
   border: none;
   margin-bottom: 30px;
+  background: rgba(255,255,255,0.06);
+  color: var(--color-bg);
 }
 
 /* Align search input text to the right for RTL languages (affects homepage and listings search) */
@@ -137,8 +159,8 @@ body {
 }
 
 .btn-request {
-  background-color: #ff7e5f;
-  color: white;
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
   border: none;
   padding: 10px 24px;
   font-size: 16px;
@@ -147,8 +169,8 @@ body {
 }
 
 .btn-add {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
   border: none;
   padding: 10px 24px;
   font-size: 16px;
@@ -185,7 +207,9 @@ body {
   padding: 10px 14px;
   font-size: 16px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #e6eefc;
+  background: #fff; /* keep inputs white for readability */
+  color: var(--color-text);
 }
 
 textarea.form-control {
@@ -194,8 +218,8 @@ textarea.form-control {
 }
 
 .btn-publish {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
   border: none;
   padding: 12px 24px;
   font-size: 16px;
@@ -207,7 +231,7 @@ textarea.form-control {
 
 /**Request Order */
 .btn-request-offer {
-  background-color: #007bff;
+  background-color: var(--blue-primary);
   color: white;
   border: none;
   padding: 12px 28px;
@@ -221,7 +245,7 @@ textarea.form-control {
 }
 
 .btn-request-offer:hover {
-  background-color: #0056b3;
+  background-color: var(--blue-dark);
 }
 
 /**---------------------------------Request Order----------------------*/
@@ -251,8 +275,8 @@ textarea.form-control {
 
 .category-btn:hover,
 .category-btn.active {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
 }
 
 
@@ -278,9 +302,9 @@ textarea.form-control {
 
 /* Square, elegant cards: use aspect-ratio so height == width, with image on top and info below */
 .listing-card {
-  background: #fff;
+  background: var(--color-bg);
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px var(--card-shadow);
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
@@ -311,7 +335,7 @@ textarea.form-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--color-bg);
 }
 
 .listing-image img {
@@ -340,8 +364,8 @@ textarea.form-control {
   border-radius: 8px;
 }
 
-.card-actions .btn-warning { background-color: #f59e0b; border: none; color: white; }
-.card-actions .btn-danger { background-color: #ef4444; border: none; color: white; }
+.card-actions .btn-warning { background-color: var(--accent-gold); border: none; color: white; }
+.card-actions .btn-danger { background-color: var(--danger); border: none; color: white; }
 
 /* Responsive: single column on narrow screens */
 @media (max-width: 880px) {
@@ -453,7 +477,7 @@ textarea.form-control {
 }
 
 .thumbs .thumb:hover {
-  border-color: #007bff;
+  border-color: var(--blue-primary);
 }
 
 .details-info {
@@ -593,14 +617,14 @@ textarea.form-control {
 .centered-actions { display:flex; justify-content:flex-end; }
 
 .btn-contact.large {
-  background: #ff7e5f; /* prominent orange */
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-light));
   color: white;
   padding: 12px 22px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 700;
   font-size: 16px;
-  box-shadow: 0 8px 20px rgba(255,126,95,0.18);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.15);
 }
 
 .btn-contact.large:hover { transform: translateY(-2px); }
@@ -734,10 +758,10 @@ textarea.form-control {
   top: 12px;
   right: 12px;
   z-index: 40;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.9);
   border-radius: 8px;
   padding: 6px 10px;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
 }
 
 .card-preview.vertical .preview-city,
@@ -803,7 +827,7 @@ textarea.form-control {
   margin-inline-end: 10px; /* space between logo and text */
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(2,6,23,0.08);
-  background: white;
+  background: var(--color-bg); /* keep logo background white for contrast */
   padding: 4px;
 }
 
@@ -813,8 +837,8 @@ textarea.form-control {
   gap: 8px;
 }
 
-/* ensure navbar buttons keep proper padding with logo */
-.btn-run .icon { display: none; }
+/* ensure navbar buttons have accessible focus styles on the colored header */
+.btn-register:focus, .btn-login:focus, .btn-run:focus { outline: 3px solid rgba(37,99,235,0.14); outline-offset: 2px; }
 
 /* Ensure listing card images and preview/details images render whole image (not cropped) */
 .listing-image img,
@@ -924,13 +948,14 @@ textarea.form-control {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: linear-gradient(90deg, #06b6d4, #f59e0b); /* teal to gold */
-  color: white;
+  /* use site blue palette for price pill: primary -> dark for consistency */
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-dark));
+  color: var(--color-bg);
   padding: 8px 12px;
   border-radius: 999px;
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
   white-space: nowrap; /* adjust price pill to not include extra text placeholders */
 }
 
@@ -1114,7 +1139,7 @@ textarea.form-control {
 .image-card img { width: 100%; max-width: 500px; height: 500px; object-fit: cover; border-radius: 18px; display:block; box-shadow: 0 12px 40px rgba(2,6,23,0.3); transition: transform 300ms ease; }
 .image-card img:hover { transform: translateY(-2px); }
 
-.type-badge { position: absolute; top: 16px; right: 16px; padding: 8px 12px; border-radius: 999px; color: white; font-weight:700; box-shadow: 0 6px 18px rgba(2,6,23,0.18); background: linear-gradient(90deg, #06b6d4, #f59e0b); }
+.type-badge { position: absolute; top: 16px; right: 16px; padding: 8px 12px; border-radius: 999px; color: white; font-weight:700; box-shadow: 0 6px 18px rgba(2,6,23,0.3); background: linear-gradient(90deg, var(--blue-primary), var(--blue-light)); }
 .type-badge.request { background: linear-gradient(90deg, #ef4444, #dc2626); }
 
 .product-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 8px 28px rgba(2,6,23,0.08); }
@@ -1269,7 +1294,7 @@ textarea.form-control {
 .phone-icon { font-size:16px; }
 
 /* Phone box under contact button */
-.phone-box { max-width:420px; background: #fff; border: 2px solid #2563EB; padding:14px; border-radius:10px; margin-top:12px; overflow:hidden; height:0; opacity:0; transition: height 300ms ease, opacity 300ms ease, transform 300ms ease; transform-origin: top; }
+.phone-box { max-width:420px; background: #fff; border: 2px solid var(--blue-primary); padding:14px; border-radius:10px; margin-top:12px; overflow:hidden; height:0; opacity:0; transition: height 300ms ease, opacity 300ms ease, transform 300ms ease; transform-origin: top; }
 .phone-box.open { height:120px; opacity:1; transform: translateY(0); }
 .phone-number { text-align:center; font-weight:900; font-size:20px; margin-bottom:10px; }
 .phone-actions { display:flex; gap:12px; justify-content:flex-end; }
