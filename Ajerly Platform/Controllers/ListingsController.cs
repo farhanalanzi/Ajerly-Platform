@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 
 namespace Ajerly_Platform.Controllers
 {
@@ -156,14 +157,61 @@ namespace Ajerly_Platform.Controllers
         public async Task<IActionResult> MyAds()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var myListings = await _context.Listings
+
+            // fetch listings (with images)
+            var listings = await _context.Listings
                 .Where(l => l.UserId == userId)
                 .Include(l => l.Images)
-                .OrderByDescending(l => l.CreatedAt)
+                .Include(l => l.User)
                 .ToListAsync();
 
-            return View(myListings);
-        }
+            // map listings to CombinedItem
+            var combined = listings.Select(l => new CombinedItem
+            {
+                Id = l.Id,
+                Title = l.Title,
+                CreatedAt = l.CreatedAt,
+                Type = "Listing",
+                ImageUrl = l.Images?.FirstOrDefault()?.ImageUrl,
+                Category = l.Category,
+                Description = l.Description,
+                City = l.City,
+                Price = l.Price,
+                PriceUnit = l.PriceUnit,
+                Phone = l.Phone,
+                SellerName = l.User?.FullName ?? l.User?.UserName,
+                OwnerId = l.UserId
+            }).ToList();
+
+            // fetch requests created by user
+            var requests = await _context.Requests
+                .Where(r => r.UserId == userId)
+                .Include(r => r.User)
+                .ToListAsync();
+
+            var requestsMapped = requests.Select(r => new CombinedItem
+            {
+                Id = r.Id,
+                Title = r.Title,
+                CreatedAt = r.CreatedAt,
+                Type = "Request",
+                ImageUrl = r.ImagePath,
+                Category = r.Category,
+                Description = r.Description,
+                City = r.City,
+                Price = r.Price,
+                PriceUnit = r.PriceUnit,
+                Phone = r.Phone,
+                SellerName = r.User?.FullName ?? r.User?.UserName,
+                OwnerId = r.UserId
+            }).ToList();
+
+            combined.AddRange(requestsMapped);
+
+            var ordered = combined.OrderByDescending(c => c.CreatedAt).ToList();
+
+            return View(ordered);
+         }
 
         // Edit GET
         [Authorize]

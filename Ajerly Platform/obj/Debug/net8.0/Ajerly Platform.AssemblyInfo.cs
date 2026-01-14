@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ajerly Platform")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca93770bca58b8a943fb677c50f20accbbaaad90")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+293101ae40cb549c7b7785fd8eae07ec25439414")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ajerly Platform")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ajerly Platform")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

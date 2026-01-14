@@ -1,0 +1,49 @@
+@model Ajerly_Platform.Models.Request
+
+<section class="create-section">
+    <h1>تعديل الطلب</h1>
+    <p>قم بتحديث تفاصيل طلبك</p>
+
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label>عنوان الطلب *</label>
+            <input asp-for="Title" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>التصنيف *</label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>تفاصيل الطلب *</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>السعر *</label>
+            <input asp-for="Price" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>الوحدة</label>
+            <input asp-for="PriceUnit" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>المدينة *</label>
+            <input asp-for="City" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>رقم الجوال للتواصل *</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn-publish">حفظ التعديلات</button>
+        <a class="btn btn-secondary" href="@Url.Action("MyAds","Listings")">إلغاء</a>
+    </form>
+</section>

@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Ajerly_Platform.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -8,7 +7,14 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Ajerly_Platform</title>
+    <!-- Show Arabic platform name in browser tab and include page title when available -->
+    <title>@(ViewData["Title"] != null ? ViewData["Title"] + " - أجرلي" : "أجرلي")</title>
+    <!-- Favicon / tab icon: prefer uploaded logo (lgoo.png) as PNG, fallback to default favicon.ico -->
+    <link rel="icon" type="image/png" href="~/images/lgoo.png" asp-append-version="true" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/lgoo.png" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.ico" asp-append-version="true" />
+    <!-- Theme color for Chrome/Android (helps the address bar color on mobile) -->
+    <meta name="theme-color" content="#2563eb" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <!-- removed missing stylesheet to avoid build warning: Ajerly_Platform.styles.css -->
@@ -17,7 +23,7 @@
 <nav class="custom-navbar">
     <div class="nav-right">
         <!-- use an anchor for the logo instead of a button -->
-        <a class="brand-link" href="@Url.Action("Index","Home")" aria-label="الرئيسية" title="الرئيسية">
+        <a class="brand-link" href='@Url.Action("Index","Home")' aria-label="الرئيسية" title="الرئيسية">
             <!-- Using the uploaded logo file (lgoo.png). If it's missing, fallback to logo.svg -->
             <img src="~/images/lgoo.png" alt="شعار الموقع" class="site-logo" onerror="this.onerror=null; this.src='@Url.Content("~/images/logo.svg")';" />
         </a>

@@ -2,10 +2,10 @@
 @using System.Globalization
 
 @{
-    var pu = (Model.PriceUnit ?? string.Empty).ToLower();
+    var pu = Model.PriceUnit?.ToLower() ?? string.Empty;
     bool isRental = pu.Contains("ساعة") || pu.Contains("يوم") || pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("hour") || pu.Contains("day") || pu.Contains("week");
-    var badgeText = isRental ? "للإيجار" : "للشراء"; // requests can be for buying
-    var badgeClass = isRental ? "badge-rent" : "badge-sale";
+
+    var firstImageUrl = Model.ImagePath;
 
     var priceValue = Model.Price;
     string priceDisplay;
@@ -13,7 +13,7 @@
     else if (decimal.Truncate(priceValue) == priceValue) priceDisplay = ((int)priceValue).ToString(CultureInfo.InvariantCulture);
     else priceDisplay = priceValue.ToString("0.##", CultureInfo.InvariantCulture);
 
-    string priceTypeText = isRental ? "سعر الإيجار" : "سعر الشراء";
+    string priceTypeText = isRental ? "سعر الإيجار" : "سعر البيع";
     if (isRental && !string.IsNullOrEmpty(pu))
     {
         if (pu.Contains("ساعة") || pu.Contains("hour")) priceTypeText += " / ساعة";
@@ -24,20 +24,16 @@
 
 <div class="offer-details-root">
     <header class="offer-header" role="banner">
-        <div class="header-inner">
-            <!-- header kept for sticky area; back button moved into hero for visual placement -->
-        </div>
+        <div class="header-inner"></div>
     </header>
 
-    <!-- Hero image full-width -->
     <section class="offer-hero">
         <button class="back-btn" onclick="history.back()" aria-label="رجوع">
-            <!-- Arrow pointing right (over image) -->
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        @if (!string.IsNullOrEmpty(firstImageUrl))
         {
-            <img class="hero-image" src="@Model.ImagePath" alt="@Model.Title" />
+            <img class="hero-image" src="@firstImageUrl" alt="@Model.Title" />
         }
         else
         {
@@ -45,10 +41,8 @@
         }
     </section>
 
-    <!-- Main content container (white background) -->
     <main class="offer-content">
         <div class="content-inner">
-            <!-- Offer type badge shown under the image and above the title -->
             <div class="offer-type">طلب</div>
 
             <div class="section title-section">
@@ -67,7 +61,7 @@
 
             <div class="section price-section">
                 <div class="price-box">
-                    <div class="price-label">السعر المتوقع</div>
+                    <div class="price-label">السعر</div>
                     <div class="price-row">
                         <div class="price-number">@priceDisplay <span class="price-currency">ر.س</span></div>
                     </div>
@@ -80,6 +74,33 @@
                 <div class="seller-name-under">@Model.User?.FullName</div>
             </div>
 
+            @{
+                var fromQuery = (Context?.Request?.Query["from"].ToString() ?? string.Empty).ToLower();
+                var isOwner = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.UserId;
+                var showControls = isOwner || fromQuery == "myads";
+                if (showControls)
+                {
+                     <div class="section myads-actions">
+                         <a class="btn btn-warning" href="@Url.Action("Edit","Requests", new { id = Model.Id })">تعديل</a>
+                         <form id="deleteForm" method="post" action="@Url.Action("Delete","Requests", new { id = Model.Id })" style="display:inline-block;">
+                             @Html.AntiForgeryToken()
+                             <button type="button" id="openDeleteModal" class="btn btn-danger">حذف</button>
+                         </form>
+                     </div>
+
+                     <div id="deleteConfirmModal" class="delete-modal" aria-hidden="true" style="display:none;">
+                         <div class="delete-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+                             <h3 id="deleteTitle">تأكيد الحذف</h3>
+                             <p>هل أنت متأكد أنك تريد حذف هذا الطلب؟ سيتم حذف الإعلان نهائيًا.</p>
+                             <div class="delete-actions">
+                                 <button id="confirmDelete" class="btn btn-danger">حذف</button>
+                                 <button id="cancelDelete" class="btn btn-secondary">إلغاء</button>
+                             </div>
+                         </div>
+                     </div>
+                }
+            }
+
             <div class="section contact-section">
                 <button id="contactToggle" class="contact-btn">
                     <span class="chev" aria-hidden="true">▾</span>
@@ -91,7 +112,7 @@
                     <div class="phone-number">@Model.Phone</div>
                     <div class="phone-actions">
                         <a class="btn-call" href="tel:@Model.Phone">اتصال</a>
-                        <a class="btn-wa" target="_blank" href="https://wa.me/@(Model.Phone?.Replace("+",""))">واتساب</a>
+                        <a class="btn-wa" target="_blank" href="https://wa.me/@(Model.Phone?.Replace("+","").Replace(" ",""))">واتساب</a>
                     </div>
                 </div>
             </div>
@@ -134,6 +155,54 @@
             window.addEventListener('load', positionBackButton);
             window.addEventListener('resize', positionBackButton);
             setTimeout(positionBackButton, 600);
+
+            window.addEventListener('DOMContentLoaded', function(){
+                var deleteModal = document.getElementById('deleteConfirmModal');
+                var openDeleteModalBtn = document.getElementById('openDeleteModal');
+                var cancelDeleteBtn = document.getElementById('cancelDelete');
+                var confirmDeleteBtn = document.getElementById('confirmDelete');
+
+                if(openDeleteModalBtn && deleteModal){
+                    openDeleteModalBtn.addEventListener('click', function(){
+                        deleteModal.style.display = 'flex';
+                        deleteModal.setAttribute('aria-hidden', 'false');
+                        if(confirmDeleteBtn) confirmDeleteBtn.focus();
+                    });
+                }
+
+                function closeDeleteModal(){
+                    if(!deleteModal) return;
+                    deleteModal.style.display = 'none';
+                    deleteModal.setAttribute('aria-hidden', 'true');
+                    if(openDeleteModalBtn) openDeleteModalBtn.focus();
+                }
+
+                if(cancelDeleteBtn){
+                    cancelDeleteBtn.addEventListener('click', function(){
+                        closeDeleteModal();
+                    });
+                }
+
+                if(confirmDeleteBtn){
+                    confirmDeleteBtn.addEventListener('click', function(){
+                        var form = document.getElementById('deleteForm');
+                        if(form){ form.submit(); }
+                    });
+                }
+
+                window.addEventListener('click', function(event) {
+                    if (deleteModal && event.target == deleteModal) {
+                        closeDeleteModal();
+                    }
+                });
+
+                window.addEventListener('keydown', function(event){
+                    if(event.key === 'Escape' || event.key === 'Esc'){
+                        if(deleteModal && deleteModal.style.display === 'flex') closeDeleteModal();
+                    }
+                });
+
+            });
         })();
     </script>
 }
