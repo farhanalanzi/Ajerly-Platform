@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets/images/uploads/61fc213d-46eb-4b5b-84b0-121f3d41e6f8.png"
     },
     {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/827b93c0-7005-4380-8dfd-1d404bf6a335.png",
+      "PackagePath": "staticwebassets/images/uploads/827b93c0-7005-4380-8dfd-1d404bf6a335.png"
+    },
+    {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/83dca5c3-db1c-42fe-9be2-695fbf74c52c.png",
       "PackagePath": "staticwebassets/images/uploads/83dca5c3-db1c-42fe-9be2-695fbf74c52c.png"
     },
@@ -57,8 +61,16 @@
       "PackagePath": "staticwebassets/images/uploads/8ad7135f-30cc-4a31-a8d7-673bc866e56d.png"
     },
     {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/8b2bdcdd-9f96-47ac-a636-a1e1f8b0dc3f.png",
+      "PackagePath": "staticwebassets/images/uploads/8b2bdcdd-9f96-47ac-a636-a1e1f8b0dc3f.png"
+    },
+    {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/91e10edb-0903-45d3-bbf1-9773365f93f7.png",
       "PackagePath": "staticwebassets/images/uploads/91e10edb-0903-45d3-bbf1-9773365f93f7.png"
+    },
+    {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/a256c4af-52a4-40bf-8847-f9732681fda4.png",
+      "PackagePath": "staticwebassets/images/uploads/a256c4af-52a4-40bf-8847-f9732681fda4.png"
     },
     {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/aa33e2e9-21ed-4d4c-a30c-54c417a38621.png",
@@ -69,8 +81,24 @@
       "PackagePath": "staticwebassets/images/uploads/c78e90c3-f7fd-4b22-ad5f-b6170187b57e.png"
     },
     {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/cb0b02e5-2e92-4c97-a932-96a4c4e14dbc.png",
+      "PackagePath": "staticwebassets/images/uploads/cb0b02e5-2e92-4c97-a932-96a4c4e14dbc.png"
+    },
+    {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/e22cf304-99aa-482d-8ea8-257a90fcf143.png",
+      "PackagePath": "staticwebassets/images/uploads/e22cf304-99aa-482d-8ea8-257a90fcf143.png"
+    },
+    {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/ebace7f7-e68d-49b0-bda4-4e98c00b876d.png",
+      "PackagePath": "staticwebassets/images/uploads/ebace7f7-e68d-49b0-bda4-4e98c00b876d.png"
+    },
+    {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/ec3e4e94-f3d2-4fd6-8ccd-daf2655f0707.png",
       "PackagePath": "staticwebassets/images/uploads/ec3e4e94-f3d2-4fd6-8ccd-daf2655f0707.png"
+    },
+    {
+      "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/images/uploads/ed45f954-4691-476d-8fbc-857049deda9e.png",
+      "PackagePath": "staticwebassets/images/uploads/ed45f954-4691-476d-8fbc-857049deda9e.png"
     },
     {
       "Id": "/Users/farhan/Desktop/Ajerly Platform/Ajerly Platform/wwwroot/js/site.js",
