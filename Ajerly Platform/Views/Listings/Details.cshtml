@@ -1,0 +1,243 @@
+@model Ajerly_Platform.Models.Listing
+@using System.Globalization
+
+@{
+    // determine if this is a rental (has a unit) or sale
+    var pu = Model.PriceUnit?.ToLower() ?? string.Empty;
+    bool isRental = pu.Contains("ساعة") || pu.Contains("يوم") || pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("hour") || pu.Contains("day") || pu.Contains("week");
+
+    // get first image if any
+    var firstImageUrl = Model.Images?.FirstOrDefault()?.ImageUrl;
+
+    // price display
+    var priceValue = Model.Price;
+    string priceDisplay;
+    if (priceValue == 0m) priceDisplay = "0";
+    else if (decimal.Truncate(priceValue) == priceValue) priceDisplay = ((int)priceValue).ToString(CultureInfo.InvariantCulture);
+    else priceDisplay = priceValue.ToString("0.##", CultureInfo.InvariantCulture);
+
+    // price type text
+    string priceTypeText = isRental ? "سعر الإيجار" : "سعر البيع";
+    if (isRental && !string.IsNullOrEmpty(pu))
+    {
+        if (pu.Contains("ساعة") || pu.Contains("hour")) priceTypeText += " / ساعة";
+        else if (pu.Contains("يوم") || pu.Contains("day")) priceTypeText += " / يوم";
+        else if (pu.Contains("أسبوع") || pu.Contains("week") || pu.Contains("اسبوع")) priceTypeText += " / أسبوع";
+    }
+}
+
+<div class="offer-details-root">
+    <!-- Header: sticky white with thin bottom border -->
+    <header class="offer-header" role="banner">
+        <div class="header-inner">
+                    <!-- header kept for sticky area; back button moved into hero for visual placement -->
+        </div>
+    </header>
+
+    <!-- Hero image full-width -->
+    <section class="offer-hero">
+        <button class="back-btn" onclick="history.back()" aria-label="رجوع">
+            <!-- Arrow pointing right (over image) -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        @if (!string.IsNullOrEmpty(firstImageUrl))
+        {
+            <img class="hero-image" src="@firstImageUrl" alt="@Model.Title" />
+        }
+        else
+        {
+            <div class="hero-empty" aria-hidden="true"></div>
+        }
+    </section>
+
+    <!-- Main content container (white background) -->
+    <main class="offer-content">
+        <div class="content-inner">
+            <!-- Offer type badge shown under the image and above the title -->
+            <div class="offer-type">عرض</div>
+
+            <!-- Title & Category (right-aligned) with city under the title -->
+            <div class="section title-section">
+                <div class="category">@Model.Category</div>
+                <h1 class="title">@Model.Title</h1>
+                <div class="city-under">
+                    <span class="city-value">@Model.City</span>
+                    <svg class="loc-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+                </div>
+            </div>
+
+            <!-- Listing Details -->
+            <div class="section details-section">
+                <h2>التفاصيل</h2>
+                <div class="details-box">@Model.Description</div>
+            </div>
+
+            <!-- Price (stacked under label, right-aligned) -->
+            <div class="section price-section">
+                <div class="price-box">
+                    <div class="price-label">السعر</div>
+                    <div class="price-row">
+                        <div class="price-number">@priceDisplay <span class="price-currency">ر.س</span></div>
+                    </div>
+                    <div class="price-type">@priceTypeText</div>
+                </div>
+            </div>
+
+            <!-- Seller information: show seller name directly under the heading -->
+            <div class="section seller-section">
+                <div class="seller-header"><h2>البائع</h2></div>
+                <div class="seller-name-under">@Model.User?.FullName</div>
+            </div>
+
+            @{
+                var fromQuery = (Context?.Request?.Query["from"].ToString() ?? string.Empty).ToLower();
+                var isOwner = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.UserId;
+                var showControls = isOwner || fromQuery == "myads";
+                if (showControls)
+                {
+                     <div class="section myads-actions">
+                         <a class="btn btn-warning" href="@Url.Action("Edit","Listings", new { id = Model.Id })">تعديل</a>
+                         <form id="deleteForm" method="post" action="@Url.Action("Delete","Listings", new { id = Model.Id })" style="display:inline-block;">
+                             @Html.AntiForgeryToken()
+                             <button type="button" id="openDeleteModal" class="btn btn-danger">حذف</button>
+                             <noscript>
+                                 <!-- If JS is disabled, provide a classical submit button fallback -->
+                                 <button type="submit" class="btn btn-danger">حذف</button>
+                             </noscript>
+                         </form>
+                     </div>
+
+                     <!-- Delete confirmation modal (hidden by default) -->
+                     <div id="deleteConfirmModal" class="delete-modal" aria-hidden="true" style="display:none;">
+                         <div class="delete-card" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+                             <h3 id="deleteTitle">تأكيد الحذف</h3>
+                             <p>هل أنت متأكد أنك تريد حذف هذا الإعلان؟ سيتم حذف الإعلان نهائياً ولا يمكن استعادته.</p>
+                             <div class="delete-actions">
+                                 <button id="confirmDelete" class="btn btn-danger">حذف</button>
+                                 <button id="cancelDelete" class="btn btn-secondary">إلغاء</button>
+                             </div>
+                         </div>
+                     </div>
+                }
+             }
+
+            <!-- Contact button and phone box -->
+            <div class="section contact-section">
+                <button id="contactToggle" class="contact-btn">
+                    <span class="chev" aria-hidden="true">▾</span>
+                    <span class="contact-text">اتصل بالبائع</span>
+                    <span class="phone-icon" aria-hidden="true">📞</span>
+                </button>
+
+                <div id="phoneBox" class="phone-box" aria-hidden="true">
+                    <div class="phone-number">@Model.Phone</div>
+                    <div class="phone-actions">
+                        <a class="btn-call" href="tel:@Model.Phone">اتصال</a>
+                        <a class="btn-wa" target="_blank" href="https://wa.me/@(Model.Phone?.Replace("+","").Replace(" ",""))">واتساب</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posted date centered (moved under contact section) -->
+            <div class="section posted-date">نُشر في: @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</div>
+
+        </div>
+    </main>
+</div>
+
+@section Scripts {
+    <script>
+        (function(){
+            // contact toggle with smooth transition
+            var toggle = document.getElementById('contactToggle');
+            var box = document.getElementById('phoneBox');
+            if(toggle && box){
+                toggle.addEventListener('click', function(){
+                    var open = box.classList.toggle('open');
+                    // rotate chevron
+                    toggle.classList.toggle('open');
+                    box.setAttribute('aria-hidden', !open);
+                });
+            }
+
+            // position the fixed back button so it sits directly over the hero image on the right
+            function positionBackButton(){
+                try{
+                    var hero = document.querySelector('.offer-hero');
+                    var btn = document.querySelector('.offer-hero > .back-btn');
+                    if(!hero || !btn) return;
+                    var rect = hero.getBoundingClientRect();
+                    // rect.top is relative to viewport; use that so the button is fixed at the same viewport spot
+                    var top = rect.top;
+                    // if hero is above viewport (user scrolled), snap it to a reasonable value
+                    if(top < 8) top = 8;
+                    btn.style.position = 'fixed';
+                    btn.style.top = (top + 8) + 'px';
+                    btn.style.right = '18px';
+                    btn.style.zIndex = '999999';
+                }catch(e){ console && console.error(e); }
+            }
+
+            window.addEventListener('DOMContentLoaded', positionBackButton);
+            window.addEventListener('load', positionBackButton);
+            window.addEventListener('resize', positionBackButton);
+            // also run once more after a short delay to account for images loading
+            setTimeout(positionBackButton, 600);
+
+            // Delete confirmation modal logic - run after DOM content loaded to ensure elements exist
+            window.addEventListener('DOMContentLoaded', function(){
+                var deleteModal = document.getElementById('deleteConfirmModal');
+                var openDeleteModalBtn = document.getElementById('openDeleteModal');
+                var cancelDeleteBtn = document.getElementById('cancelDelete');
+                var confirmDeleteBtn = document.getElementById('confirmDelete');
+
+                if(openDeleteModalBtn && deleteModal){
+                    openDeleteModalBtn.addEventListener('click', function(){
+                        deleteModal.style.display = 'flex';
+                        deleteModal.setAttribute('aria-hidden', 'false');
+                        // focus confirm button for keyboard users
+                        if(confirmDeleteBtn) confirmDeleteBtn.focus();
+                    });
+                }
+
+                function closeDeleteModal(){
+                    if(!deleteModal) return;
+                    deleteModal.style.display = 'none';
+                    deleteModal.setAttribute('aria-hidden', 'true');
+                    if(openDeleteModalBtn) openDeleteModalBtn.focus();
+                }
+
+                if(cancelDeleteBtn){
+                    cancelDeleteBtn.addEventListener('click', function(){
+                        closeDeleteModal();
+                    });
+                }
+
+                if(confirmDeleteBtn){
+                    confirmDeleteBtn.addEventListener('click', function(){
+                        var form = document.getElementById('deleteForm');
+                        if(form){
+                            // submit the form to delete the listing
+                            form.submit();
+                        }
+                    });
+                }
+
+                // Close modal if clicking outside of it
+                window.addEventListener('click', function(event) {
+                    if (deleteModal && event.target == deleteModal) {
+                        closeDeleteModal();
+                    }
+                });
+
+                // Close on Escape key
+                window.addEventListener('keydown', function(event){
+                    if(event.key === 'Escape' || event.key === 'Esc'){
+                        if(deleteModal && deleteModal.style.display === 'flex') closeDeleteModal();
+                    }
+                });
+                
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Ajerly logo">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ff7e5f"/>
+      <stop offset="100%" stop-color="#feb47b"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="18" fill="#fff"/>
+  <!-- awning -->
+  <path d="M10 34 C22 20, 98 20, 110 34 L110 64 C110 81, 98 96, 86 96 L34 96 C22 96, 10 81, 10 64 Z" fill="url(#g)" opacity="0.95"/>
+  <!-- store body -->
+  <rect x="24" y="54" width="72" height="44" rx="6" fill="#ffffff" opacity="0.95" stroke="#e6e6e6"/>
+  <!-- door -->
+  <rect x="48" y="70" width="24" height="28" rx="4" fill="#f3f4f6"/>
+  <!-- letter A (stylized) -->
+  <path d="M60 42 L70 70 L50 70 Z" fill="#111827" opacity="0.95"/>
+  <circle cx="60" cy="58" r="2.5" fill="#ffffff"/>
+</svg>
+

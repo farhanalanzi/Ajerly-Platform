@@ -1,0 +1,19 @@
+@page
+@model Ajerly_Platform.Areas.Identity.Pages.Account.LogoutModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="create-section" style="max-width:600px;margin:40px auto;text-align:center;">
+    <h1>تسجيل الخروج</h1>
+    <p>هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟</p>
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;">
+            <button type="submit" class="btn-publish">نعم، تسجيل الخروج</button>
+            <a class="btn-publish" href="@Url.Action("Index","Home")" style="background:#ccc;color:#000;text-decoration:none;padding:10px 18px;border-radius:6px;">إلغاء</a>
+        </div>
+    </form>
+</section>

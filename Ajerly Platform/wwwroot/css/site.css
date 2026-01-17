@@ -20,3 +20,1367 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Palette variables (professional blue theme) */
+:root {
+  --color-bg: #ffffff; /* white background */
+  --color-text: #0f172a; /* dark text (slate-900) */
+  --blue-dark: #0b3d91; /* deep navy blue */
+  --blue-primary: #2563eb; /* primary blue */
+  --blue-light: #93c5fd; /* light blue */
+  --muted: #6b7280; /* muted gray */
+  --danger: #ef4444;
+  --accent-gold: #f59e0b;
+  --card-shadow: rgba(11,61,145,0.08);
+}
+
+/* الناف بار */
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* Blue gradient header to match site palette */
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-primary));
+  color: var(--color-bg);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+  z-index: 1000;
+  direction: rtl; /* لأن الواجهة عربية */
+}
+
+/* الجهة اليمنى (زر اجري!) */
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+/* الجهة اليسرى (تسجيل + دخول) */
+.nav-left {
+  display: flex;
+  gap: 12px;
+}
+
+/* زر تسجيل */
+.btn-register {
+  /* white pill button on blue header */
+  background: var(--color-bg);
+  color: var(--blue-primary);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(37,99,235,0.08);
+}
+
+/* زر دخول */
+.btn-login {
+  /* outline button with translucent white border for header */
+  background: transparent;
+  color: rgba(255,255,255,0.95);
+  border: 2px solid rgba(255,255,255,0.18);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* زر اجري! */
+.btn-run {
+  /* logo button: white background so it stands out on blue header */
+  background: var(--color-bg);
+  color: var(--blue-primary);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 6px 20px rgba(2,6,23,0.06);
+}
+
+/* أيقونة */
+.icon {
+  font-size: 18px;
+}
+
+
+.hero-section {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue-primary));
+  color: var(--color-bg);
+  padding: 100px 20px 60px;
+  text-align: center;
+  font-family: 'Cairo', sans-serif;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  width: 60%;
+  max-width: 500px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 30px;
+  background: rgba(255,255,255,0.06);
+  color: var(--color-bg);
+}
+
+/* Align search input text to the right for RTL languages (affects homepage and listings search) */
+#searchInput,
+.search-bar {
+  direction: rtl;
+  text-align: right;
+}
+
+#searchInput::placeholder,
+.search-bar::placeholder {
+  text-align: right;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-request {
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-add {
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.create-section {
+  /* ensure content starts below fixed navbar (header height ~64-72px) */
+  padding: 84px 20px 60px; /* top padding increased to avoid header overlap */
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+.create-section h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.create-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #e6eefc;
+  background: #fff; /* keep inputs white for readability */
+  color: var(--color-text);
+}
+
+textarea.form-control {
+  height: 100px;
+  resize: vertical;
+}
+
+.btn-publish {
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto 0;
+}
+
+/**Request Order */
+.btn-request-offer {
+  background-color: var(--blue-primary);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 40px auto 0;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.btn-request-offer:hover {
+  background-color: var(--blue-dark);
+}
+
+/**---------------------------------Request Order----------------------*/
+
+
+/*          Filter buttons     */
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 40px 0;
+  direction: rtl;
+}
+
+.category-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: var(--blue-primary);
+  color: var(--color-bg);
+}
+
+
+/*          ------Filter buttons ---------     */
+
+.listings-grid {
+  display: grid;
+  /* make cards larger by increasing minimum column width */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+  direction: rtl;
+  justify-content: start;
+  justify-items: start;
+}
+
+/* Make the whole card clickable and remove default anchor styles */
+.listing-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Square, elegant cards: use aspect-ratio so height == width, with image on top and info below */
+.listing-card {
+  background: var(--color-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  direction: rtl;
+  text-align: right;
+  /* make the card square */
+  aspect-ratio: 1 / 1;
+  min-height: 320px; /* fallback for older browsers */
+}
+
+/* Card image sizing: use consistent heights for a professional grid */
+.listing-card {
+  /* keep flex column so content stacks */
+  display: flex;
+  flex-direction: column;
+  /* ensure card content doesn't overflow visually */
+  overflow: hidden;
+  min-height: 320px; /* ensure reasonable card height */
+}
+
+.listing-image {
+  /* fixed height area for the image to create consistent cards */
+  flex: 0 0 auto;
+  height: 220px; /* desktop image height */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+}
+
+.listing-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain !important; /* show whole image */
+  display: block;
+  margin: 0 auto;
+}
+
+/* Buttons area inside card so they don't overflow */
+.card-actions {
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end; /* place actions on the left or right as needed; for RTL, right is start */
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  background: transparent;
+}
+
+.card-actions .btn {
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.card-actions .btn-warning { background-color: var(--accent-gold); border: none; color: white; }
+.card-actions .btn-danger { background-color: var(--danger); border: none; color: white; }
+
+/* Responsive: single column on narrow screens */
+@media (max-width: 880px) {
+  .card-preview { grid-template-columns: 1fr; max-height: 90vh; }
+  .preview-image { min-height: 260px; }
+}
+
+/* Responsive: use smaller squares on narrow screens */
+@media (max-width: 900px) {
+  .listings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  .listing-card {
+    aspect-ratio: 1 / 1;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .listings-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+    padding: 24px 12px;
+  }
+  .listing-card {
+    aspect-ratio: 1 / 1;
+    min-height: 200px;
+  }
+  .listing-info h3 { font-size: 16px; }
+  .listing-info p { font-size: 13px; }
+}
+
+/* Details page styles (updated: full-width, larger text, RTL right-aligned) */
+.details-container {
+  max-width: none; /* allow full page width */
+  width: 100%;
+  margin: 20px 0 60px;
+  padding: 0 24px;
+  direction: rtl;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+/* single-column layout so text starts at the right and spans full width */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* single column always */
+  gap: 20px;
+  align-items: start;
+}
+
+.details-image {
+  width: 100%;
+  border-radius: 12px;
+  /* make container a centered flex box so the image sits centered both axes */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* allow the container to size based on content; keep a sensible maximum height */
+  max-height: 70vh;
+  overflow: visible; /* allow image to be fully visible within the viewport constraints */
+}
+
+.details-image img {
+  /* do NOT force height:100% here; allow the image to keep its natural aspect ratio */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 70vh; /* constrain to viewport height so it never overflows the screen */
+  object-fit: contain; /* fallback, keeps aspect */
+  object-position: center center;
+  display: block;
+}
+
+/* Force details page main image to show fully (override conflicts) */
+.details-container .details-image img#mainImg,
+.details-container .details-image img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+.thumbs {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end; /* thumbnails on the right for RTL */
+}
+
+.thumbs .thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumbs .thumb:hover {
+  border-color: var(--blue-primary);
+}
+
+.details-info {
+  text-align: right; /* force right alignment for Arabic */
+  padding: 20px 12px;
+}
+
+.details-info h1 {
+  margin-top: 0;
+  font-size: 36px; /* larger title */
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.details-info .meta {
+  margin: 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.details-info .desc {
+  margin: 14px 0 18px 0;
+  color: #444;
+  line-height: 1.75;
+  font-size: 18px; /* larger body text */
+}
+
+.details-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end; /* align buttons to the right */
+}
+
+.btn-contact, .btn-message {
+  display: inline-block;
+  padding: 12px 18px; /* larger buttons */
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.btn-contact {
+  background: #ff7e5f; /* orange */
+}
+
+.btn-message {
+  background: #007bff; /* blue */
+}
+
+.phone-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.created { color: #666; margin-top: 12px; font-size: 14px; }
+
+/* Centered professional details page */
+.centered-details {
+  max-width: 1100px;
+  margin: 28px auto 60px;
+  padding: 12px 20px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+  direction: rtl;
+}
+
+.details-image {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  max-height: 80vh;
+}
+
+.details-image img#mainImg {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.thumbs {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.details-info.professional {
+  /* make it plain and centered instead of a white card */
+  padding: 8px 12px;
+  background: transparent; /* remove white background */
+  border-radius: 0;
+  box-shadow: none;
+  text-align: right; /* change to right alignment */
+  max-width: 900px; /* keep content narrow and centered */
+  margin: 0 auto; /* center the block */
+}
+
+.details-info.professional h1 {
+  margin-top: 0;
+  font-size: 36px; /* larger title */
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+/* center metadata and description text for a clean, minimal layout */
+.details-info.professional .meta,
+.details-info.professional .desc {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-actions { display:flex; justify-content:flex-end; }
+
+.btn-contact.large {
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-light));
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.15);
+}
+
+.btn-contact.large:hover { transform: translateY(-2px); }
+
+/* single-column on narrow screens */
+@media (max-width: 900px) {
+  .create-section { padding-top: 96px; }
+  .details-grid { grid-template-columns: 1fr; }
+  .centered-details { padding: 12px; }
+  .centered-actions { justify-content:center; }
+}
+
+/* Compact, stacked details: details above, image below, call button under image */
+.compact-details .single-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* 'fixed-size' image should use same height as card image area (keep aspect ratio centered) */
+.details-image.fixed-size {
+  width: 100%;
+  height: 320px; /* match .listing-card min-height to keep consistent */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.details-image.fixed-size img#mainImg,
+.details-image.fixed-size img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* show whole image, no cropping */
+  display: block;
+  margin: 0 auto;
+}
+
+/* small thumbs row under the main image (optional) */
+.small-thumbs { margin-top: 8px; }
+.small-thumbs .thumb { width: 54px; height: 40px; }
+
+/* keep details card compact and centered text */
+.top-details { padding: 16px; background: transparent; box-shadow: none; }
+.top-details h1 { font-size: 24px; margin-bottom: 8px; }
+
+/* ensure top-details keep compact spacing */
+.top-details { padding: 8px 12px; }
+.top-details h1 { font-size: 26px; }
+
+/* Title box in the top-details: large, right-aligned, light-gray box */
+.top-details h1 {
+  font-size: 34px; /* larger */
+  font-weight: 900;
+  color: #6b7280; /* slate/lead color */
+  background: #f3f4f6; /* very light gray box */
+  display: inline-block; /* shrink to content like a pill/box */
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-align: right; /* ensure text in the box is right-aligned */
+  margin: 0 0 12px 0; /* spacing below the title */
+  margin-left: auto;
+}
+
+/* Keep description below the title and slightly muted, right-aligned */
+.top-details .desc {
+  color: #374151; /* darker text for body */
+  margin-top: 8px;
+  text-align: right; /* description right-aligned */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.below-image { margin-top: 12px; }
+
+/* center the call button below the image */
+.centered-actions.below-image { justify-content: center; }
+
+/* larger, prominent CTA */
+.btn-contact.large { padding: 12px 28px; font-size: 18px; border-radius: 10px; }
+
+/* On mobile, reduce image height slightly */
+@media (max-width: 480px) {
+  .details-image.fixed-size { height: 260px; }
+  .btn-contact.large { width: 90%; }
+}
+
+/* Vertical modal variant: big modal with image covering the top */
+.card-preview.vertical {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  width: min(900px, 96%);
+  max-height: 90vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.card-preview.vertical .preview-image {
+  width: 100%;
+  height: 420px; /* prominent top image area */
+  min-height: 240px;
+  max-height: 60vh;
+  border-radius: 12px 12px 0 0; /* rounded top corners */
+  overflow: hidden;
+  background: #000; /* helps during image load */
+}
+
+.card-preview.vertical .preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* cover so it fills area and may crop edges */
+  object-position: center center;
+  display: block;
+}
+
+.card-preview.vertical .preview-content {
+  padding: 18px 20px 28px 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Place close button over the image, top-right inside the modal */
+.card-preview.vertical .preview-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 40;
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+}
+
+.card-preview.vertical .preview-city,
+.card-preview.vertical .preview-desc,
+.card-preview.vertical .seller-box,
+.card-preview.vertical .preview-meta {
+  text-align: right;
+}
+
+.card-preview.vertical .preview-content h2 {
+  font-size: 28px;
+  color: #111827;
+  margin: 0;
+}
+
+.card-preview.vertical .preview-desc { font-size: 18px; color: #374151; }
+
+/* Remove boxed card appearance for full-page details (make it look like a normal page) */
+.card-preview.vertical.details-page {
+  background: transparent; /* remove white card background */
+  box-shadow: none; /* remove shadow */
+  border-radius: 0; /* no rounded corners */
+  padding: 0; /* no inner padding so image can touch edges */
+  width: 100%;
+  max-width: 1100px; /* keep content width constraint centered */
+  margin: 18px auto; /* center the content */
+  overflow: visible;
+  display: block; /* use block layout for page feel */
+}
+
+.card-preview.vertical.details-page .preview-image {
+  border-radius: 0; /* flush image to page edges */
+  width: 100%;
+  height: 60vh; /* prominent tall image */
+  max-height: 80vh;
+}
+
+.card-preview.vertical.details-page .preview-content {
+  background: transparent; /* no white box under content */
+  padding: 20px 18px 36px 18px; /* comfortable padding for text */
+  border-radius: 0;
+}
+
+/* ensure links and seller box align nicely in page layout */
+.card-preview.vertical.details-page .seller-box {
+  background: transparent; /* make seller box blend with page */
+  padding: 8px 0;
+}
+
+/* keep the title style but allow it to flow with the page */
+.card-preview.vertical.details-page h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Site logo in navbar */
+.site-logo {
+  /* rectangular logo: fixed height, fluid width (keeps aspect ratio) */
+  height: 44px;           /* control visual height */
+  width: auto;            /* allow width to adapt for rectangular logos */
+  max-width: 220px;       /* prevent overly wide logos */
+  vertical-align: middle;
+  margin-inline-end: 12px; /* space between logo and text */
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
+  background: var(--color-bg); /* keep logo background white for contrast */
+  padding: 6px;
+  display: block;
+  object-fit: contain;    /* ensure image scales correctly */
+}
+
+.btn-run {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ensure navbar buttons have accessible focus styles on the colored header */
+.btn-register:focus, .btn-login:focus, .btn-run:focus { outline: 3px solid rgba(37,99,235,0.14); outline-offset: 2px; }
+
+/* Ensure listing card images and preview/details images render whole image (not cropped) */
+.listing-image img,
+.preview-image img,
+.details-image img#mainImg {
+  object-fit: contain !important; /* show whole image without cropping */
+}
+
+/* Modern rental product card (RTL-ready) */
+.listing-card {
+  /* make corners more rounded */
+  border-radius: 1rem; /* rounded-2xl */
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease, filter 300ms ease;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  text-align: right;
+}
+
+.listing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15,23,42,0.18);
+}
+
+/* image container with 4:3 aspect ratio */
+.listing-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* modern browsers */
+  overflow: hidden;
+  flex: 0 0 auto;
+  background: #fff;
+}
+
+.listing-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* full-bleed */
+  display: block;
+  transform-origin: center center;
+  transition: transform 300ms ease;
+}
+
+/* zoom on hover */
+.listing-card:hover .listing-image img {
+  transform: scale(1.10);
+}
+
+/* gradient overlay that fades in on hover */
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 50%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.listing-card:hover .image-overlay { opacity: 1; }
+
+/* frosted category badge (top-right) */
+.badge-category {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #0f172a; /* dark text */
+  box-shadow: 0 2px 8px rgba(2,6,23,0.06);
+}
+
+/* availability badge (top-left) */
+.badge-unavailable {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(2,6,23,0.06);
+}
+
+/* Type badge (عرض/طلب) - top-left */
+.badge-type {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15,23,42,0.9);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(2,6,23,0.08);
+}
+
+/* price pill (bottom-right overlay) */
+.price-pill {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  /* use site blue palette for price pill: primary -> dark for consistency */
+  background: linear-gradient(90deg, var(--blue-primary), var(--blue-dark));
+  color: var(--color-bg);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+  white-space: nowrap; /* adjust price pill to not include extra text placeholders */
+}
+
+/* content section */
+.listing-info {
+  padding: 14px 16px 12px;
+  color: #0f172a; /* dark text */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 17px;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.1;
+  /* clamp 1 line */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 300ms ease;
+}
+.listing-card:hover .card-title { color: #059669; /* teal primary on hover */ }
+
+.card-desc {
+  color: #6b7280; /* muted */
+  font-size: 14px;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* footer: location (right) and rating (left) */
+.card-footer {
+  display: flex;
+  justify-content: flex-end; /* align only city to the right */
+  align-items: center;
+  padding: 4px 12px 12px; /* raised the content slightly more */
+  gap: 12px;
+  box-sizing: border-box; /* ensure padding doesn't cause overflow */
+  width: 100%;
+  overflow: hidden; /* prevent children from visually escaping the card */
+}
+
+/* Ensure footer-right groups icon + city and stays inside the card */
+.footer-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  /* reverse row so the DOM ordering appears mirrored: icon will be placed at the far right visually */
+  flex-direction: row-reverse;
+}
+
+/* Ensure city text is visible and styled for RTL: use margin-inline-end */
+.city-name {
+   color: #374151; /* dark slate */
+   font-size: 14px;
+   font-weight: 600;
+   display: inline-block;
+   vertical-align: middle;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   order: 1; /* show city first in visual order when using row-reverse */
+ }
+ 
+ /* listing-meta inside the card info (ensure proper RTL alignment) */
+ .listing-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0; /* moved up slightly more */
+  color: #374151; /* dark slate for visibility */
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: flex-end; /* right-align the row inside card */
+  /* put icon visually at the far right and city to its left */
+  flex-direction: row-reverse;
+ }
+ 
+ /* Ensure the icon appears to the right of the city name */
+ .listing-meta .loc-icon { order: 2; margin-inline-start: 8px; display: inline-flex; align-items: center; }
+ .listing-meta .loc-icon svg { width:16px; height:16px; display:block; }
+ 
+ /* Footer icon ordering (same logic as listing-meta) */
+ .footer-right .loc-icon, .footer-right svg { order: 2; margin-inline-start: 8px; }
+ /* ensure city in footer appears to the right (first) when using row-reverse */
+ .footer-right .city-name { order: 1; }
+
+/* entrance animation: fade-in + slide-up */
+@keyframes cardFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.listings-grid .listing-card { animation: cardFadeUp 400ms ease both; }
+
+/* make empty-image white without borders */
+.empty-image { background: #ffffff; width:100%; height:100%; }
+
+/* Ensure card-actions stay inside and do not overflow */
+.card-actions { padding: 10px 16px 18px; display:flex; gap:8px; justify-content:flex-end; }
+
+/* small responsive tweaks */
+@media (max-width: 900px) {
+  .price-pill { font-size: 13px; padding: 6px 10px; }
+  .card-title { font-size: 15px; }
+}
+
+/* Details page specific styles (requested RTL design) */
+.details-page-root {
+  min-height: 100vh;
+  background: linear-gradient(90deg, #2563EB 0%, #A855F7 50%, #EC4899 100%);
+  padding-top: 72px; /* leave room for sticky header */
+  direction: rtl;
+  color: #0f172a;
+}
+
+.details-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+}
+.details-header .btn-back {
+  /* fixed and always visible on top-right above the hero image */
+  position: fixed !important;
+  top: 12px !important;
+  right: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #111827 !important; /* black/dark for contrast as requested */
+  padding: 6px !important;
+  cursor: pointer !important;
+  border-radius: 6px !important;
+  z-index: 999999 !important; /* very high so it sits above images */
+  box-shadow: none !important;
+  transition: none !important; /* completely static */
+}
+.details-header .btn-back svg { display:block; }
+.details-header .btn-back:hover,
+.details-header .btn-back:focus,
+.details-header .btn-back:active {
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.details-header h1 { color: white; margin:0; font-weight:800; font-size:20px; }
+
+.details-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 28px auto;
+  align-items: start;
+  padding: 20px;
+}
+
+.left-column { display: flex; flex-direction: column; gap:18px; }
+.right-column { display:flex; flex-direction:column; gap:18px; }
+
+.image-card { background: transparent; border-radius: 12px; overflow: hidden; position: relative; display:flex; align-items:center; justify-content:center; }
+.image-card img { width: 100%; max-width: 500px; height: 500px; object-fit: cover; border-radius: 18px; display:block; box-shadow: 0 12px 40px rgba(2,6,23,0.3); transition: transform 300ms ease; }
+.image-card img:hover { transform: translateY(-2px); }
+
+.type-badge { position: absolute; top: 16px; right: 16px; padding: 8px 12px; border-radius: 999px; color: white; font-weight:700; box-shadow: 0 6px 18px rgba(2,6,23,0.3); background: linear-gradient(90deg, var(--blue-primary), var(--blue-light)); }
+.type-badge.request { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+.product-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 8px 28px rgba(2,6,23,0.08); }
+.product-card .category { font-size:13px; color:#6b7280; margin-bottom:8px; }
+.product-title { font-size:28px; font-weight:900; color:#0f172a; margin:0 0 10px 0; }
+.product-desc { color:#374151; line-height:1.7; }
+.product-location { display:inline-block; margin-top:12px; background: linear-gradient(90deg,#7c3aed,#a78bfa); padding:8px 12px; color:white; border-radius:8px; font-weight:700; }
+
+.price-card { background: linear-gradient(90deg,#2563EB,#A855F7,#EC4899); color:white; padding:18px; border-radius:12px; text-align:center; box-shadow: 0 12px 40px rgba(2,6,23,0.2); }
+.price-amount { font-size:36px; font-weight:900; }
+.price-amount .currency { font-size:18px; margin-inline-start:6px; }
+.price-type { opacity:0.9; margin-top:6px; font-weight:700; }
+.btn-contact-action { margin-top:12px; border-radius:10px; padding:12px 18px; background:white; color:#2563EB; font-weight:800; border:none; cursor:pointer; width:100%; }
+.btn-contact-action:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(2,6,23,0.12); }
+
+.seller-card { background:white; padding:12px; border-radius:12px; display:flex; align-items:center; gap:12px; box-shadow: 0 8px 28px rgba(2,6,23,0.06); }
+.seller-avatar { width:56px; height:56px; border-radius:999px; background:linear-gradient(90deg,#06b6d4,#a855f7); color:white; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:20px; }
+.seller-name { font-weight:800; }
+.seller-trusted { font-size:13px; color:#6b7280; }
+
+/* Contact modal */
+.contact-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.5); z-index:3000; }
+.contact-box { background:white; border-radius:12px; padding:20px; width:420px; max-width:92%; direction:rtl; }
+.contact-box h3 { margin-top:0; }
+.contact-box .form-group { margin-bottom:12px; }
+.contact-box input, .contact-box textarea { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #e5e7eb; font-size:14px; }
+.contact-box textarea { min-height:100px; }
+.btn-send { width:100%; padding:12px; border-radius:10px; border:none; color:white; background:linear-gradient(90deg,#2563EB,#A855F7,#EC4899); font-weight:800; }
+.btn-send:hover { transform: translateY(-2px); }
+
+/* responsive */
+@media (max-width: 900px) {
+  .details-main { grid-template-columns: 1fr; padding:12px; margin:16px; }
+  .image-card img { max-width: 100%; height: auto; border-radius:12px; }
+  .price-card { display:flex; gap:12px; justify-content:space-between; align-items:center; }
+}
+
+/* smooth transitions */
+.details-page-root, .product-card, .price-card, .seller-card, .image-card img { transition: all 300ms ease; }
+
+/* Offer detail page styles (new design per user prompt) */
+.offer-details-root { background: #fff; color: #0f172a; font-family: 'Cairo', sans-serif; direction: rtl; padding-top: 72px; }
+
+/* Header */
+.offer-header { position: sticky; top:0; z-index:2000; background: #fff; border-bottom: 1px solid #e6e6e6; }
+.offer-header .header-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:12px 20px; position:relative; }
+/* position back button on the top-right */
+.offer-header .back-btn { position:fixed; top:12px; right:20px; background:transparent; border:none; color:#111827; padding:6px; cursor:pointer; border-radius:6px; z-index:999999; }
+.offer-header .back-btn svg { display:block; }
+.offer-header .header-title { display:none; }
+
+/* Hero */
+.offer-hero { position: relative; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-top: 48px; }
+.offer-hero .hero-image {
+  /* show the whole image, not cropped; keep it a bit smaller so full image fits */
+  width: 100%;
+  height: auto;            /* let image determine height */
+  max-height: 420px;      /* limit visual height so full image is visible */
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;     /* ensure whole image is visible */
+  object-position: center center;
+  border-radius: 0 0 12px 12px; /* keep bottom corners rounded */
+}
+
+/* Back button that sits on top of the hero image (inside hero) */
+.offer-hero > .back-btn {
+  position: fixed; /* fixed relative to viewport */
+  top: 84px; /* just below the main navbar — adjust if your navbar height differs */
+  right: 18px;
+  background: transparent !important;
+  border: none !important;
+  color: #111827 !important; /* black/dark for contrast as requested */
+  padding: 6px !important;
+  cursor: pointer !important;
+  z-index: 999999 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  transition: none !important; /* completely static */
+}
+.offer-hero > .back-btn svg { width: 26px; height: 26px; color: inherit; }
+.offer-hero > .back-btn:hover, .offer-hero > .back-btn:focus { background: rgba(0,0,0,0.18); }
+
+/* Hide header-level fixed back buttons (we're using hero-level button now) */
+.offer-details-root .offer-header,
+.offer-details-root .details-header,
+.details-header { display: none !important; }
+
+/* Hero image adjustments for details page */
+.offer-hero .hero-image {
+  height: 60vh; /* make hero image taller */
+  max-height: 80vh; /* limit max height */
+  border-radius: 0 0 12px 12px; /* round only bottom corners */
+  overflow: hidden;
+}
+
+.offer-hero .hero-image img {
+  object-fit: cover; /* cover to fill area */
+  object-position: center center;
+}
+
+/* Main content area */
+.offer-content { max-width:1100px; margin:28px auto; padding:18px; }
+.content-inner { background: #fff; padding:20px; border-radius:12px; box-shadow: 0 8px 30px rgba(2,6,23,0.04); }
+
+.section { margin-bottom:18px; text-align:right; }
+.title-section .category { color:#6b7280; font-size:14px; margin-bottom:6px; }
+.title-section .title { font-size:32px; font-weight:900; margin:0; }
+
+.location-row { display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+.location-row .loc-icon { color:#6b7280; }
+.location-row .city { font-size:18px; font-weight:800; }
+
+.details-section h2 { font-size:20px; font-weight:900; margin-bottom:8px; }
+.details-box { background:#fff; padding:16px; border-radius:10px; color:#374151; line-height:1.8; }
+
+.price-box { background:#f3f4f6; padding:14px; border-radius:10px; text-align:right; }
+.price-label { color:#6b7280; font-size:14px; margin-bottom:8px; }
+.price-row { display:block; text-align:right; margin-top:6px; }
+.price-number { font-size:36px; font-weight:900; color:#111827; }
+.price-currency { font-size:16px; margin-inline-start:6px; color:#111827; }
+.posted-date { text-align:center; color:#6b7280; font-size:13px; }
+
+.seller-section .seller-header h2 { font-size:20px; font-weight:900; margin:0 0 8px 0; text-align:right; }
+.seller-row { display:flex; align-items:center; gap:12px; justify-content:flex-end; }
+.seller-avatar { width:64px; height:64px; border-radius:999px; background:linear-gradient(90deg,#06b6d4,#a855f7); display:flex; align-items:center; justify-content:center; color:white; font-weight:900; font-size:24px; }
+.seller-info { text-align:right; }
+.seller-name { font-size:18px; font-weight:800; margin-top:8px; color:#111827; }
+
+/* Contact CTA */
+.contact-btn {
+  display: inline-flex; /* keep as inline so width auto fits content */
+  align-items: center;
+  justify-content: center; /* center text horizontally */
+  gap: 8px;
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  padding: 8px 12px; /* smaller padding (about half) */
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  width: auto;
+  max-width: 210px; /* roughly half of previous 420px */
+  height: 40px; /* fixed comfortable height */
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.contact-btn .chev { display:inline-block; transition: transform 300ms ease; }
+.contact-btn.open .chev { transform: rotate(180deg); }
+.contact-btn:hover { transform: translateY(-2px); box-shadow:0 10px 30px rgba(2,6,23,0.12); }
+.contact-text { font-size:14px; text-align:center; }
+.phone-icon { font-size:16px; }
+
+/* Phone box under contact button */
+.phone-box { max-width:420px; background: #fff; border: 2px solid var(--blue-primary); padding:14px; border-radius:10px; margin-top:12px; overflow:hidden; height:0; opacity:0; transition: height 300ms ease, opacity 300ms ease, transform 300ms ease; transform-origin: top; }
+.phone-box.open { height:120px; opacity:1; transform: translateY(0); }
+.phone-number { text-align:center; font-weight:900; font-size:20px; margin-bottom:10px; }
+.phone-actions { display:flex; gap:12px; justify-content:flex-end; }
+.btn-call { background:#10B981; color:white; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:800; }
+.btn-wa { background:#34D399; color:#063E2B; padding:10px 16px; border-radius:8px; text-decoration:none; font-weight:800; }
+.btn-call:hover, .btn-wa:hover { opacity:0.9; transform:translateY(-2px); }
+
+/* responsive */
+@media (max-width: 880px) {
+  .offer-hero .hero-image { height: 320px; }
+  .title-section .title { font-size:24px; }
+  .price-number { font-size:28px; }
+  .phone-box.open { height:140px; }
+  .contact-btn { max-width:100%; }
+}
+
+/* City under title: keep it directly under the title, right-aligned, no left shift */
+.title-section .city-under { display:inline-flex; flex-direction: row-reverse; align-items:center; gap:8px; margin-top:8px; justify-content:flex-end; }
+.title-section .city-under .city-value { font-weight:800; color:#111827; font-size:16px; }
+.title-section .city-under .loc-icon { color:#6b7280; }
+
+/* Center the contact button block on the details page without changing the button markup */
+.contact-section {
+  max-width: 420px; /* match button max-width so it stays the same size */
+  margin: 0 auto;   /* center the block horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Offer type badge under hero image */
+.offer-type {
+  max-width: 120px;
+  margin: 12px 0 6px auto; /* align to right */
+  padding: 6px 10px;
+  background: linear-gradient(90deg,#06b6d4,#a855f7);
+  color: white;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 999px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+}
+
+.myads-actions { display:flex; gap:12px; justify-content:center; align-items:center; margin: 18px 0; }
+.myads-actions .btn { padding:10px 18px; border-radius:8px; font-weight:700; }
+.myads-actions form { display:inline-block; margin:0; }
+.myads-actions .btn-danger { background:#ef4444; color:#fff; border:none; }
+.myads-actions .btn-warning { background:#f59e0b; color:#fff; border:none; }
+
+/* Delete confirmation modal/card styles */
+.delete-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2,6,23,0.45);
+  z-index: 4000;
+}
+.delete-card {
+  background: #fff;
+  max-width: 520px;
+  width: 92%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(2,6,23,0.24);
+  direction: rtl;
+  text-align: right;
+}
+.delete-card h3 { margin-top: 0; font-size:20px; color:#111827; }
+.delete-card p { color:#374151; margin: 8px 0 14px; line-height:1.6; }
+.delete-actions { display:flex; gap:12px; justify-content:center; margin-top:12px; }
+.delete-actions .btn { padding:10px 18px; border-radius:8px; font-weight:800; }
+.delete-actions .btn-secondary { background:#e5e7eb; color:#111827; border:none; }
+.delete-actions .btn-danger { background:#ef4444; color:#fff; border:none; }
+
+@media (max-width:480px) {
+  .delete-card { padding: 14px; }
+  .delete-actions { flex-direction: column-reverse; gap:10px; }
+  .delete-actions .btn { width:100%; }
+}

@@ -1,0 +1,68 @@
+@model Ajerly_Platform.Models.Listing
+
+<section class="create-section">
+    <h1>تعديل الإعلان</h1>
+    <p>قم بتحديث تفاصيل إعلانك</p>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label>عنوان الإعلان *</label>
+            <input asp-for="Title" class="form-control" placeholder="مثال: دراجة جبلية للإيجار" />
+        </div>
+
+        <div class="form-group">
+            <label>التصنيف *</label>
+            <select asp-for="Category" class="form-control">
+                <option value="">اختر التصنيف</option>
+                <option>ألعاب وترفيه</option>
+                <option>مستلزمات المنزل</option>
+                <option>مستلزمات السفر</option>
+                <option>السيارة</option>
+                <option>الأجهزة</option>
+                <option>الأثاث</option>
+                <option>الملابس والأزياء</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>تفاصيل الإعلان *</label>
+            <textarea asp-for="Description" class="form-control" placeholder="اكتب تفاصيل المنتج، الحالة، والميزات..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>سعر الإيجار *</label>
+            <input asp-for="Price" class="form-control" placeholder="ريال/يوم" />
+        </div>
+
+        <div class="form-group">
+            <label>الوحدة</label>
+            <select asp-for="PriceUnit" class="form-control">
+                <option>ريال/يوم</option>
+                <option>ريال/ساعة</option>
+                <option>ريال/أسبوع</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>المدينة *</label>
+            <input asp-for="City" class="form-control" placeholder="اختر المدينة" />
+        </div>
+
+        <div class="form-group">
+            <label>رقم الجوال للتواصل *</label>
+            <input asp-for="Phone" class="form-control" placeholder="05xxxxxxxx" />
+        </div>
+
+        <div class="form-group">
+            <label>صور المنتج (اختياري)</label>
+            <input type="file" name="images" multiple class="form-control" accept=".jpg,.png" />
+            <small>اختر صوراً أو اسقطها هنا — حتى 10MB PNG, JPG</small>
+        </div>
+
+        <button type="submit" class="btn-publish">حفظ التعديلات</button>
+        <a class="btn btn-secondary" href="@Url.Action("MyAds","Listings")">إلغاء</a>
+    </form>
+</section>

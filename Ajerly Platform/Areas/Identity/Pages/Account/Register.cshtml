@@ -1,0 +1,51 @@
+@page
+@model Ajerly_Platform.Areas.Identity.Pages.Account.RegisterModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="create-section" style="max-width:700px;margin:40px auto;">
+    <h1>إنشاء حساب</h1>
+    <p>سجّل حساب جديد لبدء إضافة الإعلانات والتواصل مع العملاء</p>
+
+    <form asp-area="Identity" asp-page="/Account/Register" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="ReturnUrl" type="hidden" />
+
+        <div class="form-group">
+            <label asp-for="Input.FullName">الاسم الكامل (اختياري)</label>
+            <input asp-for="Input.FullName" class="form-control" placeholder="الاسم الكامل" />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Email">البريد الإلكتروني</label>
+            <input asp-for="Input.Email" type="email" class="form-control" placeholder="البريد الإلكتروني" required />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Password">كلمة المرور</label>
+            <input asp-for="Input.Password" type="password" class="form-control" placeholder="كلمة المرور" required />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword">تأكيد كلمة المرور</label>
+            <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="تأكيد كلمة المرور" required />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn-publish">إنشاء حساب</button>
+
+        <div style="margin-top:16px;text-align:center;">
+            <span>هل لديك حساب؟</span>
+            <a href="/Identity/Account/Login"> تسجيل الدخول</a>
+        </div>
+    </form>
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+</section>

@@ -1,0 +1,151 @@
+@model IEnumerable<Ajerly_Platform.Models.Listing>
+
+@{
+    var currentFilter = ViewData["CurrentFilter"] as string ?? string.Empty;
+    var partialUrl = Url.Action("IndexPartial", "Listings");
+}
+
+<div class="search-container" style="display:flex;justify-content:center;margin:20px 0;">
+    <form id="searchForm" asp-action="Index" method="get" style="width:480px;display:flex;gap:8px;">
+        <input id="searchInput" type="text" name="searchString" value="@currentFilter" placeholder="ابحث عن المنتج..." class="form-control" autocomplete="off" oninput="ajAutoSubmit(this)" />
+        <button type="submit" class="btn btn-primary">بحث</button>
+    </form>
+</div>
+
+<h2 style="text-align:center;">العروض - @ViewBag.SelectedCategory</h2>
+
+<div id="listingsContainer">
+    @await Html.PartialAsync("_ListingsGrid", Model)
+</div>
+
+<div id="liveSearchStatus" style="text-align:center;color:#666;margin-top:8px;">Live search: inactive</div>
+
+<script>
+    // Simple debounced auto-submit fallback (submits the form on typing after delay)
+    (function() {
+        window.__aj_auto_submit_timer = null;
+        window.ajAutoSubmit = function(inputEl) {
+            try {
+                if (window.__aj_auto_submit_timer) clearTimeout(window.__aj_auto_submit_timer);
+                window.__aj_auto_submit_timer = setTimeout(function() {
+                    // navigate to the Listings page with the query param as a robust fallback
+                    var q = encodeURIComponent(inputEl.value || '');
+                    window.location.href = '/Listings' + (q ? ('?searchString=' + q) : '');
+                }, 450); // slightly longer debounce for full navigation
+            } catch (e) {
+                // ignore
+            }
+        };
+    })();
+</script>
+
+<script>
+    // Inline backup for attaching live-search AJAX (guarded to avoid double attach)
+    (function() {
+        if (window.__aj_live_search_attached) return;
+        window.__aj_live_search_attached = true;
+
+        try {
+            const input = document.getElementById('searchInput');
+            const container = document.getElementById('listingsContainer');
+            const status = document.getElementById('liveSearchStatus');
+            const form = document.getElementById('searchForm');
+            let timer = null;
+            const delay = 300;
+            const endpoint = '@partialUrl';
+
+            function debugLog(...args) { try { console.debug(...args); } catch(e){} }
+            function setStatus(text) { if (status) status.textContent = text; }
+            debugLog('Inline live search attached, endpoint:', endpoint);
+            setStatus('Live search: ready');
+
+            async function fetchResults(q) {
+                try {
+                    setStatus('Searching...');
+                    const url = new URL(endpoint, window.location.origin);
+                    url.searchParams.set('searchString', q || '');
+                    const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                    if (res.ok) {
+                        const html = await res.text();
+                        container.innerHTML = html;
+                        const count = container.querySelectorAll('.listing-card').length;
+                        setStatus('Live search: ' + count + ' result(s)');
+                        debugLog('Inline updated listings, count=', count);
+                    } else {
+                        setStatus('Live search: server error');
+                        // do not force submit here; fallback auto-submit handles degraded cases
+                    }
+                } catch (e) {
+                    debugLog('Inline fetch failed', e);
+                    setStatus('Live search: failed (fallback submit soon)');
+                    // Let the auto-submit fallback trigger the full submit
+                }
+            }
+
+            if (input) {
+                input.addEventListener('input', function(e) {
+                    const q = e.target.value;
+                    if (timer) clearTimeout(timer);
+                    timer = setTimeout(() => fetchResults(q), delay);
+                });
+            }
+        } catch (e) {
+            // swallow — nothing critical
+        }
+    })();
+</script>
+
+@section Scripts {
+    <script>
+        (function() {
+            if (window.__aj_live_search_attached) return; // main script avoids double attach
+
+            const input = document.getElementById('searchInput');
+            const container = document.getElementById('listingsContainer');
+            const status = document.getElementById('liveSearchStatus');
+            const form = document.getElementById('searchForm');
+            let timer = null;
+            const delay = 300; // debounce delay ms
+            const endpoint = '@partialUrl';
+
+            function setStatus(text) { if (status) status.textContent = text; }
+
+            console.debug('Live search endpoint:', endpoint);
+            setStatus('Live search: ready');
+
+            async function fetchResults(q) {
+                try {
+                    setStatus('Searching...');
+                    const url = new URL(endpoint, window.location.origin);
+                    url.searchParams.set('searchString', q || '');
+
+                    console.debug('Fetching:', url.toString());
+
+                    const res = await fetch(url.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                    if (res.ok) {
+                        const html = await res.text();
+                        container.innerHTML = html;
+                        const count = container.querySelectorAll('.listing-card').length;
+                        setStatus('Live search: ' + count + ' result(s)');
+                        console.debug('Updated listings container, count=', count);
+                    } else {
+                        console.warn('Non-OK response from IndexPartial', res.status);
+                        setStatus('Live search: server error');
+                    }
+                } catch (e) {
+                    console.error('Live search fetch failed', e);
+                    setStatus('Live search: failed (will fallback to full submit)');
+                    // don't submit here; let the auto-submit fallback (ajAutoSubmit) perform the full submit after debounce
+                }
+            }
+
+            if (input) {
+                input.addEventListener('input', function(e) {
+                    const q = e.target.value;
+                    if (timer) clearTimeout(timer);
+                    timer = setTimeout(() => fetchResults(q), delay);
+                });
+            }
+        })();
+    </script>
+}

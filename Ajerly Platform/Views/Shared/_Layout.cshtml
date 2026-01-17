@@ -1,49 +1,69 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Ajerly_Platform</title>
+    <!-- Show Arabic platform name in browser tab and include page title when available -->
+    <title>@(ViewData["Title"] != null ? ViewData["Title"] + " - أجرلي" : "أجرلي")</title>
+    <!-- Favicon / tab icon: prefer uploaded logo (lgoo.png) as PNG, fallback to default favicon.ico -->
+    <link rel="icon" type="image/png" href="~/images/lgoo.png" asp-append-version="true" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/lgoo.png" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.ico" asp-append-version="true" />
+    <!-- Theme color for Chrome/Android (helps the address bar color on mobile) -->
+    <meta name="theme-color" content="#2563eb" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Ajerly_Platform.styles.css" asp-append-version="true"/>
+    <!-- removed missing stylesheet to avoid build warning: Ajerly_Platform.styles.css -->
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ajerly_Platform</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<nav class="custom-navbar">
+    <div class="nav-right">
+        <!-- use an anchor for the logo instead of a button -->
+        <a class="brand-link" href='@Url.Action("Index","Home")' aria-label="الرئيسية" title="الرئيسية">
+            <!-- Using the uploaded logo file (lgoo.png). If it's missing, fallback to logo.svg -->
+            <img src="~/images/lgoo.png" alt="شعار الموقع" class="site-logo" onerror="this.onerror=null; this.src='@Url.Content("~/images/logo.svg")';" />
+        </a>
+    </div>
+
+    <div class="nav-left">
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <a class="btn-login" href="/Identity/Account/Login">دخول</a>
+            <a class="btn-register" href="/Identity/Account/Register">تسجيل</a>
+        }
+        else
+        {
+            var currentUser = UserManager.GetUserAsync(User).Result;
+            var displayName = currentUser?.FullName ?? currentUser?.UserName ?? User.Identity?.Name;
+            <div class="dropdown">
+                <button class="btn-register dropdown-toggle" type="button" id="accountMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    حسابي (@displayName)
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountMenu">
+                    <li><a class="dropdown-item" href="@Url.Action("MyAds","Listings")">إعلاناتي</a></li>
+                    <li><a class="dropdown-item" href="/Identity/Account/Manage">معلوماتي</a></li>
+                    <li><a class="dropdown-item" href="/Identity/Account/Manage">تغيير كلمة المرور</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <!-- Open a confirmation page instead of directly posting logout -->
+                        <a class="dropdown-item" href="/Identity/Account/Logout">تسجيل خروج</a>
                     </li>
                 </ul>
             </div>
-        </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 1447 - Ajerly_Platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        }
     </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+</nav>
+
+
+
+@RenderBody()
+
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@RenderSection("Scripts", required: false)
 </body>
+
 </html>

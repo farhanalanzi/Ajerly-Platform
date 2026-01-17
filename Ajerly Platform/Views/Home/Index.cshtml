@@ -1,8 +1,223 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Ajerly_Platform.Models.HomeIndexViewModel
+@using System.Security.Claims
+@{
+ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>أرني منتجاتك</h1>
+            <p>منصة أجرلي - أسهل طريقة لتأجير واستئجار المنتجات بين الأفراد</p>
+
+            <input id="homeSearchInput" type="text" class="search-bar" placeholder="ابحث عن منتج...">
+
+            <div class="hero-buttons">
+                <button class="btn-request" onclick="location.href='@Url.Action("Create", "Requests")'">طلب عرض</button>
+                <button class="btn-add" onclick="location.href='@Url.Action("Create", "Listings")'">إضافة عرض</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✅ تصنيفات -->
+    <section class="category-filter">
+        <button class="category-btn @(Model.Category == "الكل" ? "active" : "")" data-category="الكل">الكل</button>
+        <button class="category-btn @(Model.Category == "ألعاب وترفيه" ? "active" : "")" data-category="ألعاب وترفيه">ألعاب وترفيه</button>
+        <button class="category-btn @(Model.Category == "مستلزمات المنزل" ? "active" : "")" data-category="مستلزمات المنزل">مستلزمات المنزل</button>
+        <button class="category-btn @(Model.Category == "مستلزمات السفر" ? "active" : "")" data-category="مستلزمات السفر">مستلزمات السفر</button>
+        <button class="category-btn @(Model.Category == "السيارة" ? "active" : "")" data-category="السيارة">السيارة</button>
+        <button class="category-btn @(Model.Category == "الأجهزة" ? "active" : "")" data-category="الأجهزة">الأجهزة</button>
+        <button class="category-btn @(Model.Category == "الأثاث" ? "active" : "")" data-category="الأثاث">الأثاث</button>
+        <button class="category-btn @(Model.Category == "الملابس والأزياء" ? "active" : "")" data-category="الملابس والأزياء">الملابس والأزياء</button>
+    </section>
+
+    <!-- ✅ عرض العروض والطلبات -->
+    <section class="listings-grid" id="listingsContainer">
+        @foreach (var item in Model.CombinedItems)
+        {
+            var controller = item.Type == "Listing" ? "Listings" : "Requests";
+            var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? "/images/default.jpg" : Url.Content(item.ImageUrl);
+            // format price display (no trailing .00), default 0 -> "0"
+            var priceValue = item.Price ?? 0m;
+            string priceDisplay;
+            if (priceValue == 0m) priceDisplay = "0";
+            else if (decimal.Truncate(priceValue) == priceValue) priceDisplay = ((int)priceValue).ToString();
+            else priceDisplay = priceValue.ToString("0.##");
+
+            string unitText = string.Empty;
+            var pu = (item.PriceUnit ?? string.Empty).ToLower();
+            if (pu.Contains("ساعة") || pu.Contains("hour")) unitText = "ساعة";
+            else if (pu.Contains("يوم") || pu.Contains("day")) unitText = "يوم";
+            else if (pu.Contains("أسبوع") || pu.Contains("اسبوع") || pu.Contains("week")) unitText = "أسبوع";
+            else if (pu.Contains("شهر") || pu.Contains("month")) unitText = "شهر";
+            else unitText = string.Empty;
+
+            var unitSuffix = string.IsNullOrEmpty(unitText) ? string.Empty : " / " + unitText;
+        <div class="listing-card" data-category="@item.Category" data-type="@(item.Type?.ToLower())" data-id="@item.Id"
+             data-info='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { title = item.Title, city = item.City, desc = item.Description, image = imageUrl, seller = item.SellerName, phone = item.Phone, createdAt = item.CreatedAt.ToString("yyyy-MM-dd") }))'>
+            <a class="listing-link" href="@Url.Action("Details", controller, new { id = item.Id })" style="text-decoration:none; color:inherit;">
+                <div class="listing-image">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@imageUrl" alt="" />
+                    }
+                    else
+                    {
+                        <div class="empty-image" aria-hidden="true"></div>
+                    }
+
+                    <div class="image-overlay"></div>
+
+                    <div class="badge-category">@item.Category</div>
+                    <div class="badge-type">@(item.Type == "Listing" ? "عرض" : "طلب")</div>
+                    <div class="price-pill">@($"{priceDisplay} ر.س{unitSuffix}")</div>
+                </div>
+
+                <div class="listing-info">
+                    <h3 class="card-title">@item.Title</h3>
+                    <div class="seller-name" style="color:#6b7280;font-size:13px;">بواسطة : @item.SellerName</div>
+                    <div class="listing-meta">
+                        <span class="loc-icon" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+                        </span>
+                        <span class="city-name">@item.City</span>
+                    </div>
+                </div>
+            </a>
+
+            <div class="card-footer">
+                <div class="footer-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a5 5 0 0 0-5 5c0 3.3 5 11 5 11s5-7.7 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/></svg>
+                    <span class="city-name">@item.City</span>
+                </div>
+            </div>
+
+            <!-- owner actions intentionally removed from homepage; editing/deleting only allowed via My Ads page -->
+        </div>
+        }
+
+        <div id="noResults" style="display:none; padding:20px; text-align:center; font-weight:bold;">لا توجد نتائج لهذا التصنيف</div>
+    </section>
 </div>
+
+<!-- Modal preview markup (appended to the page) -->
+<div id="cardPreviewOverlay" class="card-preview-overlay" style="display:none;">
+    <div class="card-preview vertical">
+        <button class="preview-close" aria-label="إغلاق">×</button>
+        <div class="preview-image">
+            <img id="previewImg" src="" alt="" />
+        </div>
+        <div class="preview-content">
+            <h2 id="previewTitle"></h2>
+            <div class="preview-city"><span class="icon">📍</span> <span id="previewCity"></span></div>
+            <div class="preview-desc" id="previewDesc"></div>
+
+            <div class="preview-seller">
+                <div class="seller-box">
+                    <div>
+                        <div class="seller-label" style="font-size:12px;color:#6b7280">المعلن</div>
+                        <div class="seller-name" id="previewSeller"></div>
+                    </div>
+                    <a id="previewPhone" class="btn-contact large" href="#">اتصل</a>
+                </div>
+            </div>
+
+            <div class="preview-meta" style="margin-top:12px;padding:10px;background:#f8fafc;border-radius:8px;text-align:right;">
+                <small>نُشر في: <span id="previewCreatedAt"></span></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function(){
+            function qs(sel, base) { return (base || document).querySelector(sel); }
+            document.addEventListener('DOMContentLoaded', function(){
+                var close = qs('.preview-close');
+                if (close) close.addEventListener('click', function(){ document.getElementById('cardPreviewOverlay').style.display = 'none'; document.body.style.overflow = ''; });
+
+                // Category filter logic
+                var categoryContainer = document.querySelector('.category-filter');
+                var categoryBtns = categoryContainer ? Array.from(categoryContainer.querySelectorAll('.category-btn')) : [];
+                var listings = Array.from(document.querySelectorAll('#listingsContainer .listing-card'));
+                var noResults = document.getElementById('noResults');
+                var searchInput = document.getElementById('homeSearchInput');
+
+                function norm(s){ return (s||'').toString().trim().toLowerCase(); }
+
+                // Debounce helper to avoid filtering on every keystroke immediately
+                function debounce(fn, delay){
+                    var t;
+                    return function(){
+                        var args = arguments;
+                        clearTimeout(t);
+                        t = setTimeout(function(){ fn.apply(null, args); }, delay);
+                    };
+                }
+
+                // Check whether a card matches the active category (or 'الكل')
+                function matchesCategory(card, activeCat){
+                    var catNorm = norm(activeCat);
+                    if(!catNorm || catNorm === 'الكل' || catNorm === 'all') return true;
+                    var cardCat = norm(card.dataset.category);
+                    if(!cardCat) return false;
+                    return cardCat === catNorm || cardCat.indexOf(catNorm) !== -1 || catNorm.indexOf(cardCat) !== -1;
+                }
+
+                // Check whether a card matches the search query across عدة fields
+                function matchesSearch(card, q){
+                    if(!q) return true; // empty query matches everything
+                    var infoJson = card.dataset.info;
+                    try{
+                        var info = infoJson ? JSON.parse(infoJson) : {};
+                    }catch(e){ var info = {}; }
+                    var hay = (info.title || '') + ' ' + (info.city || '') + ' ' + (info.desc || '') + ' ' + (info.seller || '') + ' ' + (card.dataset.category || '');
+                    return norm(hay).indexOf(q) !== -1;
+                }
+
+                // Apply both category and search filters
+                function filterAll(){
+                    var activeBtn = document.querySelector('.category-filter .category-btn.active');
+                    var activeCat = activeBtn ? (activeBtn.getAttribute('data-category') || '') : '';
+                    var q = norm(searchInput ? searchInput.value : '');
+                    var anyVisible = false;
+                    listings.forEach(function(card){
+                        var okCat = matchesCategory(card, activeCat);
+                        var okSearch = matchesSearch(card, q);
+                        if(okCat && okSearch){
+                            card.style.display = '';
+                            anyVisible = true;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    if(noResults) noResults.style.display = anyVisible ? 'none' : 'block';
+                }
+
+                // Wire up search input (debounced for performance)
+                if(searchInput){
+                    searchInput.addEventListener('input', debounce(function(){
+                        filterAll();
+                    }, 180));
+                }
+
+                // Wire up buttons
+                categoryBtns.forEach(function(btn){
+                    btn.addEventListener('click', function(e){
+                        e.preventDefault();
+                        // toggle active class
+                        categoryBtns.forEach(function(b){ b.classList.remove('active'); });
+                        btn.classList.add('active');
+                        // apply combined filter (category + current search text)
+                        filterAll();
+                    });
+                });
+
+                // Apply server-side selected category on load if present
+                var initial = (document.querySelector('.category-filter .category-btn.active') || {}).dataset || {}; 
+                if(initial && initial.category){ filterAll(); }
+             });
+         })();
+     </script>
+ }
